@@ -1,4 +1,4 @@
-import { TIMEOUT } from "./constants/constants.js";
+const TIMEOUT = 200;
 
 
 class SliderWithoutFight {

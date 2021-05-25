@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="icon" type="image/svg+xml" href="./img/logo/logo.svg">
+
+	<title>Libraly JS</title>
+</head>
+
+<body>
+
+	<header class="header">
+	<div class="header__container">
+		<div class="header__back-logo">
+			<img src="./img/logo/logo.svg" alt="logo" class="header__logo">
+			<h4 class="header__title">I brought some favors ;)</h4>
+		</div>
+		<nav class="header__nav">
+			<ul class="header__nav-items">
+				<li class="header__nav-item">
+					<a href="#" class="header__nav-item-link">Sliders</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+	<div class="wrapper">
+		<h2>Slider without fight</h2>
+<div class="slider-without-fight">
+	<div class="slider-list">
+		<div class="slider-track">
+			<div class="slide">1</div>
+			<div class="slide">2</div>
+			<div class="slide">3</div>
+			<div class="slide">4</div>
+			<div class="slide">5</div>
+			<div class="slide">6</div>
+		</div>
+	</div>
+</div>
+
+		<h2>Endless slider</h2>
+<div class="slider-endless">
+	<div class="back-btn-slider-push back-btn-slider-push-left">
+		<a data-direction="last" role="button" class="btn-slider-push btn-slider-push-last">Button</a>
+	</div>
+	<div class="slider-list">
+		<div class="slider-track">
+			<div class="slide">1</div>
+			<div class="slide">2</div>
+			<div class="slide">3</div>
+			<div class="slide">4</div>
+			<div class="slide">5</div>
+		</div>
+	</div>
+	<div class="back-btn-slider-push back-btn-slider-push-right">
+		<a data-direction="next" role="button" class="btn-slider-push btn-slider-push-next">Button</a>
+	</div>
+</div>
+	</div>
+
+	<script type="module" src="./js/SliderWithoutFight.js"></script>
+	<script type="module" src="./js/SliderEndless.js"></script>
+
+</body>
+
+</html>

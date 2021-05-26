@@ -60,11 +60,24 @@ ul {
 
 .header__title {
   margin-left: 10px;
-  font-size: 18px;
+  font-size: 20px;
+}
+
+.header__nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.header__nav-item {
+  margin-right: 20px;
+}
+
+.header__nav-item:last-child {
+  margin-right: 0;
 }
 
 .header__nav-item-link {
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
   transition: color 0.2s;
 }
@@ -232,7 +245,7 @@ ul {
 }
 
 .slider-endless .slide {
-  width: 250px;
+  width: 100%;
   height: 200px;
   flex-shrink: 0;
   font-size: 50px;

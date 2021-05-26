@@ -1,4 +1,4 @@
-import { TIMEOUT } from "./constants/constants.js";
+import { TIMEOUT } from "../constants/constants.js";
 
 
 class SliderWithoutFight {
@@ -24,6 +24,7 @@ class SliderWithoutFight {
         this.positionFingetCurrentMoment_OnSlider = 0;
 
         this.allowSwipe = true;
+        this.aaa = true;
 
         this.measuresMaximumSwipeOfSlider();
 
@@ -34,7 +35,8 @@ class SliderWithoutFight {
             const evt = this.getEvent();
 
             if (Math.abs(evt.clientY - this.positionPressedY) >= 11 && event.type === "touchmove") {
-                return;
+                this.removeEventsSliderTrack();
+                this.allowSwipe = false;
             };
 
             this.positionFingetCurrentMoment_OnSlider = this.positionPressed - evt.clientX;
@@ -63,7 +65,7 @@ class SliderWithoutFight {
     };
 
     measuresMaximumSwipeOfSlider() {
-        /* Измеряет сколько млжно пролистывать слайдер.  */
+        /* Измеряет сколько можно пролистывать слайдер.  */
 
         this.sliderTrack.querySelectorAll(".slide").forEach((slide) => {
             this.maximumSwipingAtSlider += slide.offsetWidth;
@@ -152,6 +154,7 @@ class SliderWithoutFight {
         };
 
         this.allowSwipe = true;
+        this.aaa = true;
 
         this.swipeSlider_Time = new Date().getTime() - this.time_1;
         this.measuresSpeedTrafficSliderTrack();

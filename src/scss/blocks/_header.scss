@@ -22,19 +22,25 @@
 
 	&__title {
 		margin-left: 10px;
-		font-size: 18px;
+		font-size: 20px;
 	}
 
 	&__nav {
 
 		&-items {
-
+			display: flex;
+			align-items: center;
 		}
 
 		&-item {
+			margin-right: 20px;
+
+			&:last-child {
+				margin-right: 0;
+			}
 
 			&-link {
-				font-size: 20px;
+				font-size: 18px;
 				color: $white-color;
 				transition: color $animate;
 

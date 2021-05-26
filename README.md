@@ -8,16 +8,16 @@ There is everything that your heart desires!
 
 ```xml
 <div class="slider-without-fight">
-	<div class="slider-list">
-		<div class="slider-track">
-			<div class="slide">1</div>
-			<div class="slide">2</div>
-			<div class="slide">3</div>
-			<div class="slide">4</div>
-			<div class="slide">5</div>
-			<div class="slide">6</div>
-		</div>
-	</div>
+  <div class="slider-list">
+    <div class="slider-track">
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+      <div class="slide">6</div>
+    </div>
+  </div>
 </div>
 ```
 
@@ -32,21 +32,21 @@ newSliderWithoutFight.run();
 
 ```xml
 <div class="slider-endless">
-	<div class="back-btn-slider-push back-btn-slider-push-left">
-		<a data-direction="last" role="button" class="btn-slider-push btn-slider-push-last">Button</a>
-	</div>
-	<div class="slider-list">
-		<div class="slider-track">
-			<div class="slide">1</div>
-			<div class="slide">2</div>
-			<div class="slide">3</div>
-			<div class="slide">4</div>
-			<div class="slide">5</div>
-		</div>
-	</div>
-	<div class="back-btn-slider-push back-btn-slider-push-right">
-		<a data-direction="next" role="button" class="btn-slider-push btn-slider-push-next">Button</a>
-	</div>
+  <div class="back-btn-slider-push back-btn-slider-push-left">
+    <a data-direction="last" role="button" class="btn-slider-push btn-slider-push-last">Button</a>
+  </div>
+  <div class="slider-list">
+    <div class="slider-track">
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+    </div>
+  </div>
+  <div class="back-btn-slider-push back-btn-slider-push-right">
+    <a data-direction="next" role="button" class="btn-slider-push btn-slider-push-next">Button</a>
+  </div>
 </div>
 ```
 
@@ -67,7 +67,7 @@ new SliderEndless(blockSliderEndless, {
   speed: 250,
   timer_advance: [
     true,
-	3000
+    3000
   ]
 });
 ```

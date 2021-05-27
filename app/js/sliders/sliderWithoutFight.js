@@ -1,13 +1,11 @@
-import { TIMEOUT } from "../constants/constants.js";
-
-
 class SliderWithoutFight {
     /*
     Слайдер без боя.
     */
 
-    constructor(slider) {
+    constructor(slider, options) {
         this.slider = slider;
+        this.options = options;
         this.sliderTrack = this.slider.querySelector(".slider-track");
 
         this.sliderWidth = this.slider.offsetWidth;
@@ -27,6 +25,7 @@ class SliderWithoutFight {
         this.aaa = true;
 
         this.measuresMaximumSwipeOfSlider();
+        this.addOptions();
 
 
         this.swipeAction = () => {
@@ -56,6 +55,14 @@ class SliderWithoutFight {
 
             this.swipeEnd(true);
             this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+        };
+    }
+
+    addOptions() {
+        /* Добавляет пользовательские настройки для слайдера.  */
+
+        if (this.options) {
+            this.setsSpeed_For_slider();
         };
     }
 
@@ -170,6 +177,12 @@ class SliderWithoutFight {
         this.slider.classList.remove("slider-active");
     }
 
+    // Устанавливает пользовательские настройки
+    setsSpeed_For_slider() {
+        /* Устанвливает скорость для слайдера.  */
+        this.speed = (this.options.speed) ? this.options.speed : 200;
+    }
+
     run() {
         /* Запускает слайдер */
 
@@ -183,5 +196,7 @@ class SliderWithoutFight {
 
 const blockSliderWithoutFight = document.querySelector(".slider-without-fight");
 
-const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight);
+const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight, {
+    speed: 400
+});
 newSliderWithoutFight.run();

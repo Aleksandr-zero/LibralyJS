@@ -6,10 +6,13 @@ const sass              = require('gulp-sass');
 const cleanCSS          = require('gulp-clean-css');
 const include           = require('gulp-file-include');
 const del               = require('del');
+const dom               = require('gulp-dom');
 const concat            = require('gulp-concat');
 const htmlmin           = require("gulp-htmlmin");
 const webpack           = require("webpack-stream");
 const sync              = require('browser-sync').create();
+const babel             = require('gulp-babel');
+const uglify            = require('gulp-uglify');
 
 
 const htmlDev = () => {
@@ -24,6 +27,14 @@ const htmlBuild =() => {
     return src('src/**.html')
         .pipe(include({
             prefix: '@@'
+        }))
+        .pipe(dom(function() {
+            this.querySelectorAll('script').forEach((tag) => {
+                tag.remove();
+            });
+            this.querySelector("body").insertAdjacentHTML("beforeend", `
+                <script src="./js/app.js"></script>
+            `);
         }))
         .pipe(htmlmin({
             collapseWhitespace: true,
@@ -49,9 +60,35 @@ const scriptsDev = () => {
 
 const scriptsBuild = () => {
     return src("src/js/**/*")
-        .pipe(webpack( require('./webpack.config.js') ))
+        .pipe(webpack(
+            module.exports = {
+                output: {
+                    filename: 'app.js'
+                },
+                mode: "production",
+                module: {
+                    rules: [{
+                        test: /\.js$/,
+                        loader: 'babel-loader',
+                        exclude: '/node_modules/'
+                    }]
+                }
+            }
+        ))
         .pipe(dest("app/js"));
 };
+
+const scriptsBuildDist = () => {
+    return src("src/js/**/*")
+        .pipe(babel({
+            presets: ['@babel/preset-env']
+        }))
+        .pipe(uglify({
+            keep_fnames: true,
+            mangle: false
+        }))
+        .pipe(dest("TastyLibraryJS/scripts"));
+}
 
 const scssDev = () => {
    return src('src/scss/**.scss')
@@ -90,6 +127,7 @@ const serve = () => {
     watch('src/scss/**/**.scss',        series(scssDev)).on('change', sync.reload);
 };
 
+exports.buildScripts = series(scriptsBuildDist)
 exports.build = series(clear, scssBuild, htmlBuild, scriptsBuild, image);
 exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, serve);
 exports.clear = clear;

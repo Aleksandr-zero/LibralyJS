@@ -25,8 +25,11 @@ class SliderEndless {
 		this.timerAdvance = (this.options && this.options.timer_advance) ?
 									[this.options.timer_advance[0], this.options.timer_advance[1]] : [false];
 
-		this.addSetInterval_For_Slider();
-		this.checks_If_UserOnSite();
+		if (this.options && this.timerAdvance[0]) {
+			this.addSetInterval_For_Slider();
+			this.checks_If_UserOnSite();
+			this.addEventMouseMove_Slider();
+		};
 	}
 
 	addEventClick_BtnsSliderPush() {
@@ -162,10 +165,8 @@ class SliderEndless {
 	addSetInterval_For_Slider() {
 		/* Добавляет setInterval для автоматического продвижения слайдера.  */
 
-		if (this.options && this.timerAdvance[0]) {
-			this.addEventScroll_BlurWindow();
-			this.countsPositionSlider_Window();
-		};
+		this.addEventScroll_BlurWindow();
+		this.countsPositionSlider_Window();
 	}
 
 	addEventScroll_BlurWindow() {
@@ -204,17 +205,7 @@ class SliderEndless {
 				return;
 			};
 
-			this.timeInterval = setInterval(() => {
-				this.sliderTrack.style.transform = `translate3d(-${this.widthSlide * 2}px, 0px, 0px)`;
-				this.addCssSliderTrack();
-
-				if (this.movesSlider_If_OnlyTwoSlides()) return;
-
-				setTimeout(() => {
-					this.movesFirstSlide_TheEnd();
-				}, this.speed * 1.5);
-
-			}, this.timerAdvance[1]);;
+			this.createSetInterval_For_Slider();
 
 			this.isVisible = true;
 
@@ -227,7 +218,7 @@ class SliderEndless {
 	checks_If_UserOnSite() {
 		/* Проверяет находится ли пользователь на сайте. Если нет, то заморозим слайдер.  */
 
-		if (this.options && !this.timerAdvance[0]) {
+		if (!this.timerAdvance[0]) {
 			return;
 		};
 
@@ -241,6 +232,34 @@ class SliderEndless {
 		});
 	}
 
+	addEventMouseMove_Slider() {
+		/* Добавляет события наведение на на блок слайдер.  */
+
+		this.slider.addEventListener("mousemove", () => {
+			window.clearInterval(this.timeInterval);
+		});
+
+		this.slider.addEventListener("mouseout", () => {
+			this.createSetInterval_For_Slider();
+		});
+	}
+
+	createSetInterval_For_Slider() {
+		/* Создаёт setInterval.  */
+
+		this.timeInterval = setInterval(() => {
+			this.sliderTrack.style.transform = `translate3d(-${this.widthSlide * 2}px, 0px, 0px)`;
+			this.addCssSliderTrack();
+
+			if (this.movesSlider_If_OnlyTwoSlides()) return;
+
+			setTimeout(() => {
+				this.movesFirstSlide_TheEnd();
+			}, this.speed * 1.5);
+
+		}, this.timerAdvance[1]);;
+	}
+
 
 	run() {
 		this.addOptions();
@@ -252,14 +271,13 @@ class SliderEndless {
 	}
 };
 
-
 const blockSliderEndless = document.querySelector(".slider-endless");
 
 const newSliderEndless = new SliderEndless(blockSliderEndless, {
 	speed: 250,
 	timer_advance: [
 		true,
-		3000
+		2800
 	]
 });
 newSliderEndless.run();

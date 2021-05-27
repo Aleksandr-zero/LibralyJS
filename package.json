@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp serve",
-    "build": "gulp build"
+    "build": "gulp build",
+    "build-scripts": "gulp buildScripts"
   },
   "author": "",
   "license": "ISC",
@@ -17,12 +18,15 @@
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
+    "gulp-dom": "^1.0.0",
     "gulp-file-include": "^2.3.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-sass": "^4.1.0",
     "gulp-strip-css-comments": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
     "webpack-stream": "^6.1.2"
   }
 }

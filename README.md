@@ -8,7 +8,7 @@ There is everything that your heart desires!
 
 ```xml
 <div class="slider-without-fight">
-	<div class="slider-list">
+ <div class="slider-list">
 		<div class="slider-track">
 			<div class="slide">1</div>
 			<div class="slide">2</div>
@@ -60,14 +60,16 @@ newSliderEndless.run();
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
 | `speed`						 | Slide scrolling speed. | `200`	 |
-| `timer_advance`				 | Automatic slider advancement by timer. Parameters: `[true & false, int(Msec)]` | `[false]` |
+| `timer_advance`		 | Automatic slider advancement by timer. Parameters: `[true - false, int(Msec)]` | `[false]` |
 
 ```js
 new SliderEndless(blockSliderEndless, {
   speed: 250,
   timer_advance: [
-    true,
-	3000
+  	true,
+  	3000
   ]
 });
 ```
+
+## Pop up

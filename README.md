@@ -28,6 +28,15 @@ const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight);
 newSliderWithoutFight.run();
 ```
 
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `speed`            | Slide scrolling speed.      | `200`   |
+
+```js
+new SliderWithoutFight(blockSliderWithoutFight, {
+  speed: 250
+});
+
 #### Endless slider
 
 ```xml
@@ -59,8 +68,8 @@ newSliderEndless.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `speed`						 | Slide scrolling speed. | `200`	 |
-| `timer_advance`		 | Automatic slider advancement by timer. Parameters: `[true - false, int(Msec)]` | `[false]` |
+| `speed`						 | Slide scrolling speed.      | `200`	 |
+| `timer_advance`		 | Automatic slider advancement by timer. Parameters: `[true / false, int(Msec)]` | `[false]` |
 
 ```js
 new SliderEndless(blockSliderEndless, {

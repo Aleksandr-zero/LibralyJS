@@ -49,7 +49,6 @@ class SliderEndless {
 		this.sliderTrack.style.transform = `translate3d(${positionSliderTrack}px, 0px, 0px)`;
 		this.addCssSliderTrack();
 
-		// const isTwoSlides = ;
 		if (this.movesSlider_If_OnlyTwoSlides()) return;
 
 		setTimeout(() => {
@@ -235,13 +234,12 @@ class SliderEndless {
 	addEventMouseMove_Slider() {
 		/* Добавляет события наведение на на блок слайдер.  */
 
-		this.slider.addEventListener("mousemove", () => {
-			window.clearInterval(this.timeInterval);
-		});
+		this.slider.addEventListener("mousemove", () => { window.clearInterval(this.timeInterval); });
+		this.slider.addEventListener("touchstart", () => { window.clearInterval(this.timeInterval); }, { passive: true })
+		this.slider.addEventListener("touchmove", () => { window.clearInterval(this.timeInterval); }, { passive: true });
 
-		this.slider.addEventListener("mouseout", () => {
-			this.createSetInterval_For_Slider();
-		});
+		this.slider.addEventListener("mouseout", () => { this.createSetInterval_For_Slider(); });
+		this.slider.addEventListener("touchend", () => { this.createSetInterval_For_Slider(); }, { passive: true });
 	}
 
 	createSetInterval_For_Slider() {

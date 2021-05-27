@@ -9,39 +9,55 @@ class SliderWithoutFight {
         this.sliderTrack = this.slider.querySelector(".slider-track");
 
         this.sliderWidth = this.slider.offsetWidth;
+        this.sliderHeight = this.slider.offsetHeight;
 
         this.maximumSwipingAtSlider = 0;
 
         this.positionFinal = 0;
         this.singleSwipe = 0;
 
-        this.positionPressed;
+        this.positionPressedX;
         this.positionPressedY;
         this.positionSliderTrack = 0;
-        this.positionFingerPressSlider;
-        this.positionFingetCurrentMoment_OnSlider = 0;
+        this.positionFingerPressSliderX;
+        this.positionFingerPressSliderY;
+        this.positionX_FingetCurrentMoment_OnSlider = 0;
+        this.positionY_FingetCurrentMoment_OnSlider = 0;
 
         this.allowSwipe = true;
-        this.aaa = true;
+
 
         this.measuresMaximumSwipeOfSlider();
         this.addOptions();
 
 
         this.swipeAction = () => {
-            /* Получает координаты продвижения слайдера  и вызывает функцию "pushingSlider".  */
+            /* Получает координаты продвижения слайдера и вызывает функцию "pushingSlider".  */
 
             const evt = this.getEvent();
 
-            if (Math.abs(evt.clientY - this.positionPressedY) >= 11 && event.type === "touchmove") {
-                this.removeEventsSliderTrack();
-                this.allowSwipe = false;
+            if (Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove") {
+                // Если пользователь будет скроллить страницу.
+                if ( this.singleSwipe <= 5 ) {
+                    this.allowSwipe = false;
+                    this.removeEventsSliderTrack();
+
+                } else if ( (this.singleSwipe <= 5) ) {
+                    this.allowSwipe = true;
+                };
             };
 
-            this.positionFingetCurrentMoment_OnSlider = this.positionPressed - evt.clientX;
-            this.positionSliderTrack = this.positionPressed - evt.clientX + this.positionFinal;
+            if (!this.allowSwipe) {
+                return
+            };
 
-            this.checksOutOfBounds();
+            this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
+            this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
+            this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
+
+            if (event.type === "touchmove") {
+                this.checksOutOfBounds();
+            };
 
             if (this.allowSwipe) {
                 this.pushingSlider(
@@ -84,10 +100,10 @@ class SliderWithoutFight {
     checksOutOfBounds() {
         /* Если мышка или палец будет заходить за границы слайдера то запрещаем его двигать.  */
 
-        if ( this.positionFingetCurrentMoment_OnSlider >= this.positionFingerPressSlider ||
-            -this.positionFingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSlider)) {
+        if ( this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX ||
+             this.positionY_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderY ||
+             this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth + this.positionX_FingetCurrentMoment_OnSlider)) {
 
-            this.allowSwipe = false;
             this.sliderTrack.removeEventListener("touchmove", this.swipeAction);
         };
     };
@@ -126,16 +142,17 @@ class SliderWithoutFight {
         При касании слайдера, записыает прошлое значение позиции, на котором остановился пользователь.
         */
 
-        this.time_1 = new Date().getTime();
-
         const evt = this.getEvent();
+
+        this.time_1 = new Date().getTime();
 
         this.sliderTrack.addEventListener("mousemove", this.swipeAction);
         this.sliderTrack.addEventListener("touchmove",   this.swipeAction, { passive: true });
 
-        this.positionPressed = evt.clientX;
+        this.positionPressedX = evt.clientX;
         this.positionPressedY = evt.clientY;
-        this.positionFingerPressSlider = evt.clientX - this.slider.getBoundingClientRect().x;
+        this.positionFingerPressSliderX = evt.clientX - this.slider.getBoundingClientRect().x;
+        this.positionFingerPressSliderY = evt.clientY - this.slider.getBoundingClientRect().y;
 
         this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
@@ -161,7 +178,6 @@ class SliderWithoutFight {
         };
 
         this.allowSwipe = true;
-        this.aaa = true;
 
         this.swipeSlider_Time = new Date().getTime() - this.time_1;
         this.measuresSpeedTrafficSliderTrack();
@@ -193,6 +209,7 @@ class SliderWithoutFight {
         this.sliderTrack.addEventListener("mouseup",   () => { this.swipeEnd(); });
     }
 };
+
 
 const blockSliderWithoutFight = document.querySelector(".slider-without-fight");
 

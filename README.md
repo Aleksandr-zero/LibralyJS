@@ -36,6 +36,7 @@ newSliderWithoutFight.run();
 new SliderWithoutFight(blockSliderWithoutFight, {
   speed: 250
 });
+```
 
 #### Endless slider
 

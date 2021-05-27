@@ -8,18 +8,6 @@ There is everything that your heart desires!
 
 ```xml
 <div class="slider-without-fight">
-<<<<<<< HEAD
- <div class="slider-list">
-		<div class="slider-track">
-			<div class="slide">1</div>
-			<div class="slide">2</div>
-			<div class="slide">3</div>
-			<div class="slide">4</div>
-			<div class="slide">5</div>
-			<div class="slide">6</div>
-		</div>
-	</div>
-=======
   <div class="slider-list">
     <div class="slider-track">
       <div class="slide">1</div>
@@ -30,7 +18,6 @@ There is everything that your heart desires!
       <div class="slide">6</div>
     </div>
   </div>
->>>>>>> 6b06fa40d5735cfef3a8adb0c2e9e0f460cb3f09
 </div>
 ```
 
@@ -79,7 +66,6 @@ newSliderEndless.run();
 new SliderEndless(blockSliderEndless, {
   speed: 250,
   timer_advance: [
-<<<<<<< HEAD
   	true,
   	3000
   ]
@@ -87,10 +73,3 @@ new SliderEndless(blockSliderEndless, {
 ```
 
 ## Pop up
-=======
-    true,
-    3000
-  ]
-});
-```
->>>>>>> 6b06fa40d5735cfef3a8adb0c2e9e0f460cb3f09

@@ -41,11 +41,14 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 });
 ```
 
+
 ### Endless slider
 
 ```xml
 <div class="slider-endless">
   <div class="back-btn-slider-push back-btn-slider-push-left">
+    <!-- work button class for slider - btn-slider-push-last -->
+    <!-- Date attribute of the button for the slider to work - data-direction="last" -->
     <a data-direction="last" role="button" class="btn-slider-push btn-slider-push-last">Button</a>
   </div>
   <div class="slider-list">
@@ -60,6 +63,8 @@ new SliderWithoutFight(blockSliderWithoutFight, {
     </div>
   </div>
   <div class="back-btn-slider-push back-btn-slider-push-right">
+    <!-- work button class for slider - btn-slider-push-next -->
+    <!-- Date attribute of the button for the slider to work - data-direction="next" -->
     <a data-direction="next" role="button" class="btn-slider-push btn-slider-push-next">Button</a>
   </div>
 </div>
@@ -86,6 +91,7 @@ new SliderEndless(blockSliderEndless, {
   ]
 });
 ```
+
 
 ### Self scrolling slider
 
@@ -114,10 +120,10 @@ newSliderSelfScrolling.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `duration`         | Slider duration. Parameters: `int(Msec)` | `10000` |
+| `duration`         | Slider duration. Parameters: `int(sec)`  | `10` |
 | `temporaryFunction`| Temporary function for **transition**.   | `linear` |
 | `delay`            | Delay for **transition**.                | `0` |
-| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. | `linear` |
+| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `int(sec)` | `1.5` |
 | `repeatSlider`     | Repeating the scrolling of the slider after it has finished. | `false` |
 
 ```js
@@ -132,5 +138,6 @@ const newSliderSelfScrolling = new SliderSelfScrolling(blockSliderSelfScrolling,
 });
 newSliderSelfScrolling.run();
 ```
+
 
 ## Pop up

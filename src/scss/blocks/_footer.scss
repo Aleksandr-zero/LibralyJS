@@ -1,5 +1,5 @@
 .footer {
-	padding: 10px 0;
+	margin: 10px 0 20px 0;
 
 	&__items {
 		display: flex;
@@ -7,17 +7,33 @@
 	}
 
 	&__item {
+		margin-right: 120px;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		&-title {
+			font-size: 18px;
+		}
+
+		&-links {
+			display: flex;
+			flex-direction: column;
+			margin-top: 20px;
+		}
 
 		&-link {
+			color: $white-color;
+			transition: color $animate;
+			margin-bottom: 10px;
 
-			svg {
-				transition: opacity $animate;
+			&:last-child {
+				margin-bottom: 0;
 			}
 
 			&:hover {
-				svg {
-					opacity: 0.8;
-				}
+				color: $primary-color-2;
 			}
 		}
 	}

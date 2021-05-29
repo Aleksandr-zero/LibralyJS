@@ -8,7 +8,7 @@
     "build": "gulp build",
     "build-scripts": "gulp buildScripts"
   },
-  "author": "",
+  "author": "Aleksandr Silkin",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.14.3",

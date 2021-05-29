@@ -19,7 +19,17 @@
 
 	&__title {
 		margin-left: 10px;
-		font-size: 20px;
+
+		&-link {
+			font-size: 20px;
+			color: $white-color;
+
+			transition: color $animate;
+
+			&:hover {
+				color: $primary-color-2;
+			}
+		}
 	}
 
 	&__nav {

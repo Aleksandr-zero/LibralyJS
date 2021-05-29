@@ -26,16 +26,16 @@ class SliderSelfScrolling {
 	addOptions() {
 		/* Устанавливает пользовательские настройки.  */
 
-		this.duration = (this.options.duration) ? this.options.duration : 10000;
+		this.duration = (this.options.duration) ? this.options.duration : 10;
 		this.temporaryFunction = (this.options.temporaryFunction) ? this.options.temporaryFunction : "linear";
 		this.delay = (this.options.delay) ? this.options.delay : 0;
-		this.delayBeforeStartingAfterHiding = (this.options.delayBeforeStartingAfterHiding) ? this.options.delay_before_starting_after_hiding : 1.5;
+		this.delayBeforeStartingAfterHiding = (this.options.delayBeforeStartingAfterHiding) ? this.options.delayBeforeStartingAfterHiding : 1.5;
 		this.repeatSlider = (this.options.repeatSlider) ? this.options.repeatSlider : false;
 	}
 
     getSpeedSliderTrack() {
     	/* Вычисляет скорость прокрутки слайдера (px/s).  */
-    	this.speedSliderTrack = this.maximumSwipingAtSlider / (this.duration / 1000);
+    	this.speedSliderTrack = this.maximumSwipingAtSlider / (this.duration);
     }
 
 	measuresMaximumSwipeOfSlider() {
@@ -90,7 +90,9 @@ class SliderSelfScrolling {
 				this.unblockingSlider();
 
 				if (!this.isHideSlider_For_FirstTime) {
-					this.sliderTrack.addEventListener("transitionend", () => {  this.prohibitsMovingSliderAfter_TheEndTransition(); });
+					this.sliderTrack.addEventListener("transitionend", () => {
+						this.prohibitsMovingSliderAfter_TheEndTransition();
+					});
 				};
 			};
 
@@ -115,6 +117,16 @@ class SliderSelfScrolling {
 		/* Производит блокировку слайдера.  */
 
 		this.deleteStyleSlider();
+		window.clearTimeout(this.seTimeoutStartSlider);
+
+		if ( !this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delay ||
+			  this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delayBeforeStartingAfterHiding) {
+			
+			this.positionSliderTrack = (this.positionSliderTrack === 1200) ? 0 : this.positionSliderTrack;
+
+			this.resetTimers();
+			return;
+		};
 
 		this.countsTimeSinceStartOfSlider();
 		this.countsDistanceAfterStartingSlider();
@@ -124,13 +136,13 @@ class SliderSelfScrolling {
 		/* Производит разблокировку слайдера  */
 
 		if (!this.isHideSlider_For_FirstTime) {
-			this.sliderTrack.style.transition = `transform ${this.duration}ms ${this.temporaryFunction} ${this.delay}s`;
+			this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction} ${this.delay}s`;
 		};
 		this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
 
 		if (this.isHideSlider_For_FirstTime) {
-			setTimeout(() => {
-				this.sliderTrack.style.transition = `transform ${this.duration}ms ${this.temporaryFunction}`;
+			this.seTimeoutStartSlider = setTimeout(() => {
+				this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction}`;
 				this.sliderTrack.style.transform = `translate3d(-${this.maximumSwipingAtSlider}px, 0px, 0px)`;
 			}, this.delayBeforeStartingAfterHiding * 1000);
 		};
@@ -145,7 +157,7 @@ class SliderSelfScrolling {
 			((this.time_2 - this.time_1) / 1000) - this.delayBeforeStartingAfterHiding;
 		this.numberSecondsAfterStartingSlider = this.numberSecondsAfterStartingSlider.toFixed(2);
 
-		this.duration -= this.numberSecondsAfterStartingSlider  * 1000;
+		this.duration -= this.numberSecondsAfterStartingSlider;
 
 		this.resetTimers();
 	}
@@ -193,7 +205,7 @@ class SliderSelfScrolling {
 const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling");
 
 const newSliderSelfScrolling = new SliderSelfScrolling(blockSliderSelfScrolling, {
-	duration: 10000,
+	duration: 10,
 	temporaryFunction: "linear",
 	delay: 2,
 	delayBeforeStartingAfterHiding: 2,

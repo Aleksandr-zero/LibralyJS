@@ -60,21 +60,7 @@ const scriptsDev = () => {
 
 const scriptsBuild = () => {
     return src("src/js/**/*")
-        .pipe(webpack(
-            module.exports = {
-                output: {
-                    filename: 'app.js'
-                },
-                mode: "production",
-                module: {
-                    rules: [{
-                        test: /\.js$/,
-                        loader: 'babel-loader',
-                        exclude: '/node_modules/'
-                    }]
-                }
-            }
-        ))
+        .pipe(webpack(require("./webpack.config.js")))
         .pipe(dest("app/js"));
 };
 
@@ -117,6 +103,11 @@ const clear = () => {
     return del(['app', "dist"]);
 };
 
+const clearScripts = () => {
+    return del("TastyLibraryJS/scripts");
+};
+
+
 const serve = () => {
     sync.init({
         server: './app/'
@@ -127,7 +118,7 @@ const serve = () => {
     watch('src/scss/**/**.scss',        series(scssDev)).on('change', sync.reload);
 };
 
-exports.buildScripts = series(scriptsBuildDist)
+exports.buildScripts = series(clearScripts, scriptsBuildDist)
 exports.build = series(clear, scssBuild, htmlBuild, scriptsBuild, image);
 exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, serve);
 exports.clear = clear;

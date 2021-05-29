@@ -1,0 +1,19 @@
+.footer {
+	padding: 10px 0;
+
+	&__item {
+
+		&-link {
+
+			svg {
+				transition: opacity $animate;
+			}
+
+			&:hover {
+				svg {
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+}

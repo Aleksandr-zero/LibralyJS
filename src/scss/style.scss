@@ -1,11 +1,15 @@
 @import "variables/variables";
 @import "reset/reset";
-
+@import "reset/common";
 
 // BLOCKS
 @import "blocks/header";
+@import "blocks/footer";
 
 /* SLIDERS  */
 @import "sliders/sliderWithoutFight";
 @import "sliders/sliderEndless";
 @import "sliders/sliderSelfScrolling";
+
+// POPUPS
+@import "popups/popupMultiple";

@@ -25,7 +25,7 @@ class SliderWithoutFight {
         this.positionY_FingetCurrentMoment_OnSlider = 0;
 
         this.allowSwipe = true;
-
+        this.isScrollingSlider = false;
 
         this.measuresMaximumSwipeOfSlider();
         this.addOptions();
@@ -36,13 +36,16 @@ class SliderWithoutFight {
 
             const evt = this.getEvent();
 
-            if (Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove") {
-                // Если пользователь будет скроллить страницу.
-                if ( this.singleSwipe <= 5 ) {
-                    this.allowSwipe = false;
-                    this.removeEventsSliderTrack();
+            if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
+                // Если пользователь будет  скроллить страницу.
 
-                } else if ( (this.singleSwipe <= 5) ) {
+                this.isScrolledPage = true;
+
+                if (  this.isScrolledPage && !this.isScrollingSlider ) {
+                    this.allowSwipe = false;
+                    this.removeEventsSliderTrack();  
+
+                } else if ( this.isScrolledPage && this.isScrollingSlider ) {
                     this.allowSwipe = true;
                 };
             };
@@ -51,15 +54,14 @@ class SliderWithoutFight {
                 return
             };
 
-            this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
-            this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
-            this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
-
             if (event.type === "touchmove") {
+                this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
+                this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
                 this.checksOutOfBounds();
             };
 
             if (this.allowSwipe) {
+                this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
                 this.pushingSlider(
                     this.positionFingerMovement = this.positionSliderTrack
                 );
@@ -69,7 +71,7 @@ class SliderWithoutFight {
         this.goingOutBoundsSlider = () => {
             /* Выход за границы слайдера мышкой. */
 
-            this.swipeEnd(true);
+            this.swipeEnd();
             this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
         };
     }
@@ -100,9 +102,10 @@ class SliderWithoutFight {
     checksOutOfBounds() {
         /* Если мышка или палец будет заходить за границы слайдера то запрещаем его двигать.  */
 
-        if ( this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX ||
-             this.positionY_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderY ||
-             this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth + this.positionX_FingetCurrentMoment_OnSlider)) {
+        if (
+            (this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX && this.positionSliderTrack - this.positionFinal > 0) ||
+            (this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
+            ) {
 
             this.sliderTrack.removeEventListener("touchmove", this.swipeAction);
         };
@@ -130,7 +133,11 @@ class SliderWithoutFight {
     pushingSlider() {
         /* Продвигает слайдер.  */
 
-        this.singleSwipe = this.positionSliderTrack - this.positionFinal;
+        this.singleSwipe = Math.abs(this.positionSliderTrack - this.positionFinal);
+
+        if (this.singleSwipe >= 5) {
+            this.isScrollingSlider = true;
+        };
 
         if (this.positionSliderTrack <= this.maximumSwipingAtSlider && this.allowSwipe) {
             this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
@@ -178,6 +185,7 @@ class SliderWithoutFight {
         };
 
         this.allowSwipe = true;
+        this.isScrollingSlider = false;
 
         this.swipeSlider_Time = new Date().getTime() - this.time_1;
         this.measuresSpeedTrafficSliderTrack();

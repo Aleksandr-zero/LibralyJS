@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="./css/style.css">
 	<link rel="icon" type="image/svg+xml" href="./img/logo/logo.svg">
 
-	<title>Libraly JS</title>
+	<title>Libraly JS - Sliders</title>
 </head>
 
 <body>
@@ -15,10 +15,16 @@
 	@@include("./templates/blocks/header.html")
 
 	<div class="wrapper">
-		
+		@@include("./templates/sliders/sliderWithoutFight.html")
+		@@include("./templates/sliders/sliderEndless.html")
+		@@include("./templates/sliders/sliderSelfScrolling.html")
 	</div>
 
 	@@include("./templates/blocks/footer.html")
+
+	<script src="./js/sliders/sliderWithoutFight.js"></script>
+	<script src="./js/sliders/sliderEndless.js"></script>
+	<script src="./js/sliders/sliderSelfScrolling.js"></script>
 
 </body>
 

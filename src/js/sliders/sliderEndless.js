@@ -169,7 +169,7 @@ class SliderEndless {
 	}
 
 	addEventScroll_BlurWindow() {
-		/* Добавляет событие скроллинга на страницу, для прослушиваения, блока slider */
+		/* Добавляет события скролла на всё окно для измерения области видимиости слайдера.  */
 
 		this.isVisible = false;
 
@@ -191,11 +191,11 @@ class SliderEndless {
 			bottom: window.pageYOffset + document.documentElement.clientHeight
 		};
 
-		this.checks_If_blockVisible(positionSlider, positionWindow);
+		this.checks_If_SliderVisible(positionSlider, positionWindow);
 	}
 
-	checks_If_blockVisible(positionSlider, positionWindow) {
-		/* Проверяет находится ли блок в зоне видимости.  */
+	checks_If_SliderVisible(positionSlider, positionWindow) {
+		/* Проверяет находится ли слайдер в зоне видимости.  */
 
 		if (positionWindow.top - this.slider.clientHeight <= positionSlider.top &&
 			positionSlider.top < positionWindow.bottom) {
@@ -235,11 +235,10 @@ class SliderEndless {
 		/* Добавляет события наведение на на блок слайдер.  */
 
 		this.slider.addEventListener("mousemove", () => { window.clearInterval(this.timeInterval); });
-		this.slider.addEventListener("touchstart", () => { window.clearInterval(this.timeInterval); }, { passive: true })
-		this.slider.addEventListener("touchmove", () => { window.clearInterval(this.timeInterval); }, { passive: true });
-
 		this.slider.addEventListener("mouseout", () => { this.createSetInterval_For_Slider(); });
-		this.slider.addEventListener("touchend", () => { this.createSetInterval_For_Slider(); }, { passive: true });
+
+		this.slider.addEventListener("touchstart", () => { console.log(1); window.clearInterval(this.timeInterval); }, { passive: true });
+		this.slider.addEventListener("touchend", () => { console.log(2); this.createSetInterval_For_Slider(); }, { passive: true });
 	}
 
 	createSetInterval_For_Slider() {

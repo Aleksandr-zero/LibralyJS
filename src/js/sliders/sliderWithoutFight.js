@@ -41,7 +41,7 @@ class SliderWithoutFight {
 
                 this.isScrolledPage = true;
 
-                if (  this.isScrolledPage && !this.isScrollingSlider ) {
+                if ( this.isScrolledPage && !this.isScrollingSlider ) {
                     this.allowSwipe = false;
                     this.removeEventsSliderTrack();  
 

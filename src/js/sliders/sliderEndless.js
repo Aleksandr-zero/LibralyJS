@@ -22,8 +22,8 @@ class SliderEndless {
 		/* Добавляет пользовательские настройки для слайдера.  */
 
 		this.speed = (this.options && this.options.speed) ? this.options.speed : 200;
-		this.timerAdvance = (this.options && this.options.timer_advance) ?
-									[this.options.timer_advance[0], this.options.timer_advance[1]] : [false];
+		this.timerAdvance = (this.options && this.options.timerAdvance) ?
+									[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
 
 		if (this.options && this.timerAdvance[0]) {
 			this.addSetInterval_For_Slider();
@@ -272,8 +272,8 @@ const blockSliderEndless = document.querySelector(".slider-endless");
 
 const newSliderEndless = new SliderEndless(blockSliderEndless, {
 	speed: 250,
-	timer_advance: [
-		true,
+	timerAdvance: [
+		false,
 		2800
 	]
 });

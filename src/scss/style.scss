@@ -1,17 +1,22 @@
+@import "./fonts/fonts";
 @import "variables/variables";
 @import "reset/reset";
 @import "reset/common";
 
 // BLOCKS
 @import "blocks/header";
-@import "blocks/homeIntro";
-@import "blocks/footer";
+@import "./blocks/homeIntro";
+@import "blocks/capabilities";
+@import "./blocks/footer";
+
+// CODE
+@import "./code/code";
 
 /* SLIDERS  */
-@import "sliders/sliderWithoutFight";
-@import "sliders/sliderEndless";
-@import "sliders/sliderSelfScrolling";
+@import "./sliders/sliderWithoutFight";
+@import "./sliders/sliderEndless";
+@import "./sliders/sliderSelfScrolling";
 
 // POPUPS
-@import "popups/popupMultiple";
-
+@import "./popups/popupMultiple";
+@import "./popups/popupDisposable";

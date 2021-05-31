@@ -1,0 +1,12 @@
+{
+	"name": "LibraryOfGoodieJS",
+	"version": "1.0.0",
+	"description": "Library of goodies for your site. There is everything that your heart desires!",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Aleksandr-zero/LibralyJS.git"
+	},
+	"author": "Aleksandr Silkin",
+	"license": "MIT",
+	"homepage": "https://github.com/Aleksandr-zero/LibralyJS#readme"
+}

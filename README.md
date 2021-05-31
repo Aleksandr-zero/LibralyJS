@@ -8,6 +8,7 @@ There is everything that your heart desires!
 ### Slider without fight
 
 ```xml
+<!-- Slider main container -->
 <div class="slider-without-fight">
   <div class="slider-list">
     <div class="slider-track">
@@ -45,6 +46,7 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 ### Endless slider
 
 ```xml
+<!-- Slider main container -->
 <div class="slider-endless">
   <div class="back-btn-slider-push back-btn-slider-push-left">
     <!-- work button class for slider - btn-slider-push-last -->
@@ -96,6 +98,7 @@ new SliderEndless(blockSliderEndless, {
 ### Self scrolling slider
 
 ```xml
+<!-- Slider main container -->
 <div class="slider-self-scrolling">
   <div class="slider-list">
     <div class="slider-track">

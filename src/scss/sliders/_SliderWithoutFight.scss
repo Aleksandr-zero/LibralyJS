@@ -1,6 +1,6 @@
 .slider-without-fight {
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    height: 250px;
     margin: 50px auto 0;
     user-select: none;
     touch-action: pan-y;
@@ -16,7 +16,7 @@
 
     .slider-list {
         width: 100%;
-        height: 200px;
+        height: 250px;
         overflow: hidden;
         margin: 0 auto;
     }
@@ -26,7 +26,7 @@
     }
 
     .slide {
-        height: 200px;
+        height: 250px;
         flex-shrink: 0;
         font-size: 50px;
         display: flex;
@@ -37,11 +37,12 @@
 
         &:first-child { width: 300px; }
 
-        &:nth-child(2) { width: 270px; }
-        &:nth-child(3) { width: 200px; }
-        &:nth-child(4) { width: 180px; }
+        &:nth-child(2) { width: 430px; }
+        &:nth-child(3) { width: 340px; }
+        &:nth-child(4) { width: 590px; }
         &:nth-child(5) { width: 250px; }
+        &:nth-child(6) { width: 380px; }
 
-        &:last-child { width: 230px; }
+        &:last-child { width: 460px; }
     }
 }

@@ -1,4 +1,4 @@
-class SliderSelfScrolling {
+export class SliderSelfScrolling {
     /*
 	Самопрокручиваемый слайдер.
     */
@@ -33,6 +33,7 @@ class SliderSelfScrolling {
 		this.repeatSlider = (this.options.repeatSlider) ? this.options.repeatSlider : false;
 	}
 
+	// Вспомогательные методы.
     getSpeedSliderTrack() {
     	/* Вычисляет скорость прокрутки слайдера (px/s).  */
     	this.speedSliderTrack = this.maximumSwipingAtSlider / (this.duration);
@@ -51,6 +52,42 @@ class SliderSelfScrolling {
         this.positionSliderTrack = this.maximumSwipingAtSlider;
     }
 
+	countsTimeSinceStartOfSlider() {
+		/* Считает время после запуска слайдера.  */
+
+		this.numberSecondsAfterStartingSlider = 
+			(!this.isHideSlider_For_FirstTime) ?
+			((this.time_2 - this.time_1) / 1000 - this.delay) :
+			((this.time_2 - this.time_1) / 1000) - this.delayBeforeStartingAfterHiding;
+		this.numberSecondsAfterStartingSlider = this.numberSecondsAfterStartingSlider.toFixed(2);
+
+		this.duration -= this.numberSecondsAfterStartingSlider;
+
+		this.resetTimers();
+	}
+
+	calculateDistanceAfterStartingSlider() {
+		/* Выщитывает пройденное расстояние от начала запуска слайдера.  */
+
+		this.positionSliderTrack = (!this.isHideSlider_For_FirstTime) ?
+				this.numberSecondsAfterStartingSlider * this.speedSliderTrack :
+				this.positionSliderTrack + this.numberSecondsAfterStartingSlider * this.speedSliderTrack;
+		this.positionSliderTrack = Math.round(this.positionSliderTrack);
+	}
+
+	resetTimers() {
+		/* Сбрасывает таймеры.  */
+		this.time_1 = 0;
+		this.time_2 = 0;
+	}
+
+	deleteStyleSlider() {
+		/* Удаляет стили (transform и transition) для слайдера.  */
+		this.sliderTrack.removeAttribute("style");
+	}
+
+
+	// Отвечают за функционал слайдера.
     addEventScrollWindow() {
     	/* Добавляет события скролла на всё окно для измерения области видимиости слайдера.  */
 
@@ -90,9 +127,7 @@ class SliderSelfScrolling {
 				this.unblockingSlider();
 
 				if (!this.isHideSlider_For_FirstTime) {
-					this.sliderTrack.addEventListener("transitionend", () => {
-						this.prohibitsMovingSliderAfter_TheEndTransition();
-					});
+					this.sliderTrack.addEventListener("transitionend", () => { this.prohibitsMovingSliderAfter_TheEndTransition(); });
 				};
 			};
 
@@ -116,8 +151,18 @@ class SliderSelfScrolling {
 	blockingSlider() {
 		/* Производит блокировку слайдера.  */
 
+		if (!this.repeatSlider) {
+			this.blockingSlider_For_OneEnd();
+		} else if (this.repeatSlider) {
+			this.blockingSlider_For_EndLess();
+		};
+	}
+
+	blockingSlider_For_OneEnd() {
+		/* Производит блокировку слайдера в один конец.  */
+
 		this.deleteStyleSlider();
-		window.clearTimeout(this.seTimeoutStartSlider);
+		window.clearTimeout(this.setTimeoutStartSlider);
 
 		if ( !this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delay ||
 			  this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delayBeforeStartingAfterHiding) {
@@ -129,47 +174,46 @@ class SliderSelfScrolling {
 		};
 
 		this.countsTimeSinceStartOfSlider();
-		this.countsDistanceAfterStartingSlider();
+		this.calculateDistanceAfterStartingSlider();
+	}
+
+	blockingSlider_For_EndLess() {
+
 	}
 
 	unblockingSlider() {
 		/* Производит разблокировку слайдера  */
 
-		if (!this.isHideSlider_For_FirstTime) {
-			this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction} ${this.delay}s`;
+		if (!this.repeatSlider) {
+			this.unblockingSlider_For_OneEnd();
+		} else if (this.repeatSlider) {
+			this.unblockingSlider_For_EndLess();
 		};
+	}
+
+	unblockingSlider_For_OneEnd() {
+		/* Производит разблокировку для обычного слайдера в один конец.  */
+
+		if (!this.isHideSlider_For_FirstTime) {
+			this.setsTransition_For_SliderOneEnd();
+		};
+
 		this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
 
 		if (this.isHideSlider_For_FirstTime) {
-			this.seTimeoutStartSlider = setTimeout(() => {
-				this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction}`;
+			this.setTimeoutStartSlider = setTimeout(() => {
+				this.setsTransition_For_SliderOneEnd();
 				this.sliderTrack.style.transform = `translate3d(-${this.maximumSwipingAtSlider}px, 0px, 0px)`;
 			}, this.delayBeforeStartingAfterHiding * 1000);
 		};
 	}
 
-	countsTimeSinceStartOfSlider() {
-		/* Считает время после запуска слайдера.  */
+	unblockingSlider_For_EndLess() {
+		/* Производит разблокировку для бесконечного слайдера.  */
+		
+		this.setsTransition_For_SliderEndLess();
+	};
 
-		this.numberSecondsAfterStartingSlider = 
-			(!this.isHideSlider_For_FirstTime) ?
-			((this.time_2 - this.time_1) / 1000 - this.delay) :
-			((this.time_2 - this.time_1) / 1000) - this.delayBeforeStartingAfterHiding;
-		this.numberSecondsAfterStartingSlider = this.numberSecondsAfterStartingSlider.toFixed(2);
-
-		this.duration -= this.numberSecondsAfterStartingSlider;
-
-		this.resetTimers();
-	}
-
-	countsDistanceAfterStartingSlider() {
-		/* Выщитывает пройденное расстояние от начала запуска слайдера.  */
-
-		this.positionSliderTrack = (!this.isHideSlider_For_FirstTime) ?
-				this.numberSecondsAfterStartingSlider * this.speedSliderTrack :
-				this.positionSliderTrack + this.numberSecondsAfterStartingSlider * this.speedSliderTrack;
-		this.positionSliderTrack = Math.round(this.positionSliderTrack);
-	}
 
 	prohibitsMovingSliderAfter_TheEndTransition() {
 		/* Зарпещает двигать слайдер после окончании transition.  */
@@ -178,16 +222,79 @@ class SliderSelfScrolling {
 		this.resetTimers();
 	}
 
-	resetTimers() {
-		/* Сбрасывает таймеры.  */
+	setsTransition_For_SliderOneEnd() {
+		/* Устанавливает плавную анимацию для слайдера в один конец.  */
 
-		this.time_1 = 0;
-		this.time_2 = 0;
+		if (!this.isHideSlider_For_FirstTime) {
+			this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction} ${this.delay}s`;
+		} else if (this.isHideSlider_For_FirstTime) {
+			this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction}`;
+		};
 	}
 
-	deleteStyleSlider() {
-		/* Удаляет стили (transform и transition) для слайдера.  */
-		this.sliderTrack.removeAttribute("style");
+	setsTransition_For_SliderEndLess() {
+		/* Устанавливает плавную анимацию для слайдера с бесконечной прокруткой.  */
+
+		this.slides = this.sliderTrack.children;
+
+		const timeToPassOneSlide = this.duration / (this.sliderTrack.querySelectorAll(".slide").length - 1);
+
+		this.sliderTrack.style.transition = `transform ${timeToPassOneSlide}s ${this.temporaryFunction} ${this.delay}s`;
+		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
+
+		this.sliderTrack.addEventListener("transitionend", () => { this.transitionEndAtSlider(timeToPassOneSlide); });
+	}
+
+
+	// Методы для реализации пользоватеских команд.
+	transitionEndAtSlider(timeToPassOneSlide) {
+		/* Анимация закончилась.  */
+
+		this.movesFirstSlide_TheEnd();
+
+		this.nullifiesCssSliderTrack();
+		setTimeout(() => {
+			this.setsStyle_For_SliderEndLess(timeToPassOneSlide);
+		}, 0);
+	}
+
+	movesFirstSlide_TheEnd() {
+		/* Премещает первый слайд в самый конец.  */
+
+		const firstSlide = this.slides[0];
+		firstSlide.remove();
+
+		this.sliderTrack.append(firstSlide);
+	}
+
+	calculatesTransitTimeOneSlide() {
+		/* Вычисляет время прохождения одного слайда.  */
+
+		const timeToPassOneSlide = this.duration / (this.sliderTrack.querySelectorAll(".slide").length - 1);
+		return timeToPassOneSlide;
+	}
+
+	setsInteval_For_EndLessSlider(timeToPassOneSlide) {
+		/* Устанавливает setInterval чтобы наш слайдер передвигался беконечно.  */
+
+		setInterval(() => {
+			this.movesFirstSlide_TheEnd();
+			this.nullifiesCssSliderTrack();
+		}, timeToPassOneSlide);
+	}
+
+	nullifiesCssSliderTrack() {
+		/* Обнуляет все стили у блока - sliderTrack  */
+
+		this.sliderTrack.style.transition = "none";
+		this.sliderTrack.style.transform = `translate3d(0px, 0px, 0px)`;
+	}
+
+	setsStyle_For_SliderEndLess(timeToPassOneSlide) {
+		/* Устанавливает стили для бесконечной прокрутки  слайдера.  */
+
+		this.sliderTrack.style.transition = `transform ${timeToPassOneSlide}s ${this.temporaryFunction}`;
+		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 	}
 
 
@@ -200,15 +307,3 @@ class SliderSelfScrolling {
 		this.addEventScrollWindow();
 	}
 };
-
-
-const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling");
-
-const newSliderSelfScrolling = new SliderSelfScrolling(blockSliderSelfScrolling, {
-	duration: 10,
-	temporaryFunction: "linear",
-	delay: 2,
-	delayBeforeStartingAfterHiding: 2,
-	repeatSlider: false,
-});
-newSliderSelfScrolling.run();

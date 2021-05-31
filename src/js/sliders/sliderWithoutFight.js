@@ -1,4 +1,4 @@
-class SliderWithoutFight {
+export class SliderWithoutFight {
     /*
     Слайдер без боя.
     */
@@ -217,11 +217,3 @@ class SliderWithoutFight {
         this.sliderTrack.addEventListener("mouseup",   () => { this.swipeEnd(); });
     }
 };
-
-
-const blockSliderWithoutFight = document.querySelector(".slider-without-fight");
-
-const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight, {
-    speed: 400
-});
-newSliderWithoutFight.run();

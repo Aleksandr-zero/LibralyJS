@@ -77,8 +77,8 @@ export class SliderSelfScrolling {
 
 	resetTimers() {
 		/* Сбрасывает таймеры.  */
-		this.time_1 = 0;
 		this.time_2 = 0;
+		this.time_1 = 0;
 	}
 
 	deleteStyleSlider() {
@@ -139,9 +139,7 @@ export class SliderSelfScrolling {
 				this.time_2 = performance.now();
 				this.blockingSlider();
 
-				if (!this.isHideSlider_For_FirstTime) {
-					this.isHideSlider_For_FirstTime = true;
-				};
+				this.isHideSlider_For_FirstTime = true;
 			};
 
 			this.isVisible = false;
@@ -159,7 +157,7 @@ export class SliderSelfScrolling {
 	}
 
 	blockingSlider_For_OneEnd() {
-		/* Производит блокировку слайдера в один конец.  */
+		/* Блокирует слайдер в один конец.  */
 
 		this.deleteStyleSlider();
 		window.clearTimeout(this.setTimeoutStartSlider);
@@ -178,7 +176,7 @@ export class SliderSelfScrolling {
 	}
 
 	blockingSlider_For_EndLess() {
-
+		/* Производит блокировку для бесконечного слайдера.  */
 	}
 
 	unblockingSlider() {
@@ -196,6 +194,10 @@ export class SliderSelfScrolling {
 
 		if (!this.isHideSlider_For_FirstTime) {
 			this.setsTransition_For_SliderOneEnd();
+		};
+
+		if (this.positionSliderTrack === 1600 && this.isHideSlider_For_FirstTime) {
+			this.positionSliderTrack = 0;
 		};
 
 		this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
@@ -216,7 +218,7 @@ export class SliderSelfScrolling {
 
 
 	prohibitsMovingSliderAfter_TheEndTransition() {
-		/* Зарпещает двигать слайдер после окончании transition.  */
+		/* Запрещает двигать слайдер после окончании transition.  */
 
 		this.isSwiping = false;
 		this.resetTimers();
@@ -243,6 +245,24 @@ export class SliderSelfScrolling {
 		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 
 		this.sliderTrack.addEventListener("transitionend", () => { this.transitionEndAtSlider(timeToPassOneSlide); });
+	}
+
+	checks_If_UserOnSite() {
+		/* Проверяет находится ли пользователь на сайте. Если нет, то заморозим слайдер.  */
+
+		document.addEventListener("visibilitychange", () => {
+
+			if (!this.isVisible || !this.isSwiping) {
+				return;
+			};
+
+			if (document.hidden){
+				this.time_2 = performance.now();
+				this.blockingSlider();
+			} else {
+				this.unblockingSlider();
+			};
+		});
 	}
 
 
@@ -305,5 +325,6 @@ export class SliderSelfScrolling {
 		this.countsPositionSlider_Window();
 
 		this.addEventScrollWindow();
+		this.checks_If_UserOnSite();
 	}
 };

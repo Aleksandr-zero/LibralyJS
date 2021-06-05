@@ -27,11 +27,15 @@ export class SliderEndless {
 		this.speed = (this.options && this.options.speed) ? this.options.speed : 200;
 		this.timerAdvance = (this.options && this.options.timerAdvance) ?
 									[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
+		this.freezeSliderMouseHover = (this.options.freezeSliderMouseHover) ? this.options.freezeSliderMouseHover : false;
 
 		if (this.options && this.timerAdvance[0]) {
 			this.addSetInterval_For_Slider();
 			this.checks_If_UserOnSite();
-			this.addEventMouse_TouchMove_Slider();
+
+			if (this.freezeSliderMouseHover) {
+				this.addEventMouse_TouchMove_Slider();
+			};
 		};
 	}
 
@@ -80,6 +84,11 @@ export class SliderEndless {
 
 		setTimeout(() => {
 			this.blocking_unlockingBtnsSliders("auto");
+
+			if (!this.freezeSliderMouseHover) {
+				this.createSetInterval_For_Slider();
+			};
+
 		}, this.speed * 1.5);
 	}
 

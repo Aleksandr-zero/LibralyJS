@@ -2,13 +2,13 @@ import { SliderWithoutFight } from "./sliders/sliderWithoutFight.js";
 import { SliderEndless } from "./sliders/sliderEndless.js";
 import { SliderSelfScrolling } from "./sliders/sliderSelfScrolling.js";
 
+import { PopupDisposable } from "./popups/popupDisposable.js";
 import { PopupMuliple } from "./popups/popupMultiple.js";
 
 
 const blockSliderWithoutFight = document.querySelector(".slider-without-fight");
 if (blockSliderWithoutFight) {
     const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight, {
-        speed: 400,
         scrollAfterAbruptStop: true
     });
     newSliderWithoutFight.run();
@@ -18,11 +18,12 @@ if (blockSliderWithoutFight) {
 const blockSliderEndless = document.querySelector(".slider-endless");
 if (blockSliderEndless) {
     const newSliderEndless = new SliderEndless(blockSliderEndless, {
-        speed: 450,
+        speed: 400,
         timerAdvance: [
             true,
             2500
         ],
+        freezeSliderMouseHover: false
     });
     newSliderEndless.run();
 };
@@ -35,7 +36,7 @@ const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling"
         temporaryFunction: "linear",
         delay: 2,
         delayBeforeStartingAfterHiding: 2,
-        repeatSlider: true,
+        repeatSlider: false,
     });
     newSliderSelfScrolling.run();
 };
@@ -47,6 +48,9 @@ if (blockPopupMuliple) {
     const templatePopup = `
         <div class="popup">
             <h4 class="popup-title">{{ title }}</h4>
+            <div class="popup-back-img">
+                <img src="{{ img.srcImg }}" alt="{{ img.altImg }}" class="popup-img">
+            </div>
             <div class="popup-text">
                 <p>{{ text }}</p>
             </div>
@@ -57,17 +61,36 @@ if (blockPopupMuliple) {
         popups: {
             one: {
                 title: "Popup 1",
-                text: "Popup text at number 1"
+                text: "Popup text at number 1",
+                img: {
+                    srcImg: "../../doc/popupExample-1.png",
+                    altImg: "popup 1"
+                }
             },
             two: {
                 title: "Popup 2",
-                text: "Popup text at number 2"
+                text: "Popup text at number 2",
+                img: {
+                    srcImg: "../doc/popupExample-2.png",
+                    altImg: "popup 2"
+                }
             },
             three: {
                 title: "Popup 3",
-                text: "Popup text at number 3"
+                text: "Popup text at number 3",
+                img: {
+                    srcImg: "../doc/popupExample-3.png",
+                    altImg: "popup 3"
+                }
             }
         }
     });
     newPopupMuliple.run();
+};
+
+const blockPopupDisposable = document.querySelector(".popup-disposable");
+
+if (blockPopupDisposable) {
+    const newPopupDisposable = new PopupDisposable(blockPopupDisposable);
+    newPopupDisposable.run();
 };

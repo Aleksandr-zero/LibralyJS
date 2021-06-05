@@ -28,24 +28,8 @@
     .slide {
         height: 250px;
         flex-shrink: 0;
-        font-size: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1.5px solid $secondary-color-1;
-        background: $primary-color-2;
-
-        &:first-child { width: 300px; }
-
-        &:nth-child(2) { width: 430px; }
-        &:nth-child(3) { width: 340px; }
-        &:nth-child(4) { width: 590px; }
-        &:nth-child(5) { width: 250px; }
-        &:nth-child(6) { width: 380px; }
-        &:nth-child(7) { width: 250px; }
-        &:nth-child(8) { width: 400px; }
-        &:nth-child(9) { width: 290px; }
-
-        &:last-child { width: 460px; }
     }
 }

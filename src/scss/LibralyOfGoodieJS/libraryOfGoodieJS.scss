@@ -1,0 +1,11 @@
+$animate: 0.2s;
+$animation-multiplication-factor: 1.5;
+
+// SLIDERS
+@import "./sliders/sliderWithoutFight";
+@import "./sliders/sliderEndLess";
+@import "./sliders/sliderSelfScrolling";
+
+// POPUPS
+@import "./popups/popupDisposable";
+@import "./popups/popupMultiple";

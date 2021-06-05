@@ -24,13 +24,9 @@
     .slide {
         height: 100%;
         flex-shrink: 0;
-        font-size: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1.5px solid $secondary-color-1;
-        background: $primary-color-2;
-
         width: 400px;
     }
 }

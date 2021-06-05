@@ -101,6 +101,16 @@ export class PopupMuliple {
 		let newPopup = this.templatePopup;
 
 		for (const key in data) {
+
+			// Если в настройки будет передан обьект.
+			if (typeof data[key] === "object") {
+				for (const keyObj in data[key]) {
+					newPopup = newPopup.replace(`{{ ${key}.${keyObj} }}`, data[key][keyObj]);
+				};
+
+				continue;
+			};
+
 			newPopup = newPopup.replace(`{{ ${key} }}`, data[key]);
 		};
 

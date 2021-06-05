@@ -24,7 +24,7 @@ const htmlDev = () => {
 };
 
 const htmlBuild =() => {
-    return src(['src/**/**.html'])
+    return src(['src/**.html'])
         .pipe(include({
             prefix: '@@'
         }))
@@ -55,6 +55,11 @@ const fonts = () => {
         .pipe(dest("app/fonts"));
 };
 
+const doc = () => {
+    return src("src/doc/**/*")
+        .pipe(dest("app/doc"))
+}
+
 
 const scriptsDev = () => {
     return src("src/js/**/*")
@@ -68,7 +73,7 @@ const scriptsBuild = () => {
 };
 
 const scriptsBuildDist = () => {
-    return src(["src/js/**/*", "!src/js/app.js"])
+    return src(["src/js/**/*", "!src/js/app.js", "!src/js/workWebSite/**/**.js"])
         .pipe(replace(/export class/g, 'class'))
         .pipe(babel({
             presets: ['@babel/preset-env']
@@ -76,11 +81,12 @@ const scriptsBuildDist = () => {
         .pipe(uglify({
             keep_fnames: true
         }))
-        .pipe(dest("LibraryOfGoodieJS/scripts"));
+        .pipe(dest("LibralyOfGoodieJS/scripts"));
 }
 
+
 const scssDev = () => {
-   return src('src/scss/**.scss')
+   return src('src/scss/style.scss')
        .pipe(sass({
             outputStyle:'expanded'
         }))
@@ -89,24 +95,40 @@ const scssDev = () => {
 };
 
 const scssBuild = () => {
-   return src('src/scss/**.scss')
+   return src('./src/scss/style.scss')
         .pipe(sass({
             outputStyle:'compressed'
         }))
         .pipe(removeCommentsCss())
-        .pipe(cleanCSS())
         .pipe(autoprefixer())
+        .pipe(cleanCSS({
+            level: 2
+        }))
         .pipe(concat('css/style.css'))
         .pipe(dest('app'));
 };
 
+const scssBuildScripts = () => {
+   return src('./src/scss/LibralyOfGoodieJS/libraryOfGoodieJS.scss')
+        .pipe(sass({
+            outputStyle:'compressed'
+        }))
+        .pipe(removeCommentsCss())
+        .pipe(autoprefixer())
+        .pipe(cleanCSS({
+            level: 2
+        }))
+        .pipe(concat('css/style.css'))
+        .pipe(dest('./LibralyOfGoodieJS'));
+}
+
 
 const clear = () => {
-    return del(['app', "dist"]);
+    return del(['app']);
 };
 
 const clearScripts = () => {
-    return del("LibraryOfGoodieJS/scripts");
+    return del(["LibraryOfGoodieJS/scripts", "LibralyOfGoodieJS/css"]);
 };
 
 
@@ -120,7 +142,8 @@ const serve = () => {
     watch('src/scss/**/**.scss',        series(scssDev)).on('change', sync.reload);
 };
 
-exports.buildScripts = series(clearScripts, scriptsBuildDist)
-exports.build = series(clear, parallel(scssBuild, htmlBuild, scriptsBuild, image, fonts));
-exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, fonts, serve);
+
+exports.buildScripts = series(clearScripts, parallel(scriptsBuildDist, scssBuildScripts));
+exports.build = series(clear, parallel(scssBuild, htmlBuild, scriptsBuild, image, fonts, doc));
+exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, fonts, doc, serve);
 exports.clear = clear;

@@ -42,6 +42,41 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 });
 ```
 
+### Slider with fight
+
+```xml
+<div class="slider-with-fight">
+  <div class="slider-list">
+    <div class="slider-track">
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockSliderWithFight = document.querySelector(".slider-with-fight");
+
+const newSliderWithFight = new SliderWithFight(blockSliderWithFight);
+newSliderWithoutFight.run();
+```
+
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `percentageForSuccessfulScrolling` | The percentage of slider scrolling to advance.| `35` |
+| `infinity`                     | Add infinity for the slider. | `false` |
+
+```js
+new SliderWithFight(blockSliderWithFight, {
+  percentageForSuccessfulScrolling: 50,
+  infinity: true
+});
+newSliderWitFight.run();
+```
 
 ### Endless slider
 

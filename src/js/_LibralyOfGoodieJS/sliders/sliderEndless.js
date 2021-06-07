@@ -239,7 +239,7 @@ export class SliderEndless {
 				this.clearnsSetIntervals();
 				this.isVisible = false;
 			} else {
-				this.countsPositionSlider_Window(); 
+				this.countsPositionSlider_Window();
 			};
 		});
 	}
@@ -251,7 +251,7 @@ export class SliderEndless {
 		this.slider.addEventListener("mouseout", () => { this.createSetInterval_For_Slider(); });
 
 		this.slider.addEventListener("touchstart", () => {
-			this.clearnsSetIntervals(); 
+			this.clearnsSetIntervals();
 			this.clearnsSetTimeouts();
 		}, { passive: true });
 

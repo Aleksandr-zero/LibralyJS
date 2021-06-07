@@ -62,18 +62,18 @@ const doc = () => {
 
 
 const scriptsDev = () => {
-    return src("src/js/**/*")
+    return src("./src/js/**/**/*")
         .pipe(dest("app/js"))
 };
 
 const scriptsBuild = () => {
-    return src("src/js/**/*")
+    return src("./src/js/app.js")
         .pipe(webpack(require("./webpack.config.js")))
         .pipe(dest("app/js"));
 };
 
 const scriptsBuildDist = () => {
-    return src(["src/js/**/*", "!src/js/app.js", "!src/js/workWebSite/**/**.js"])
+    return src(["./src/js/_LibralyOfGoodieJS/**/**.js", "!src/js/app.js", "!src/js/workWebSite/ "])
         .pipe(replace(/export class/g, 'class'))
         .pipe(babel({
             presets: ['@babel/preset-env']
@@ -82,7 +82,7 @@ const scriptsBuildDist = () => {
             keep_fnames: true
         }))
         .pipe(dest("LibralyOfGoodieJS/scripts"));
-}
+};
 
 
 const scssDev = () => {
@@ -109,7 +109,7 @@ const scssBuild = () => {
 };
 
 const scssBuildScripts = () => {
-   return src('./src/scss/LibralyOfGoodieJS/libraryOfGoodieJS.scss')
+   return src('./src/scss/_LibralyOfGoodieJS/libraryOfGoodieJS.scss')
         .pipe(sass({
             outputStyle:'compressed'
         }))

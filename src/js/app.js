@@ -1,12 +1,15 @@
-import { SliderWithoutFight } from "./sliders/sliderWithoutFight.js";
-import { SliderEndless } from "./sliders/sliderEndless.js";
-import { SliderSelfScrolling } from "./sliders/sliderSelfScrolling.js";
+import { SliderWithoutFight } from "./_LibralyOfGoodieJS/sliders/sliderWithoutFight.js";
+import { SliderWithFight } from "./_LibralyOfGoodieJS/sliders/sliderWithFight.js";
+import { SliderEndless } from "./_LibralyOfGoodieJS/sliders/sliderEndless.js";
+import { SliderSelfScrolling } from "./_LibralyOfGoodieJS/sliders/sliderSelfScrolling.js";
 
-import { PopupDisposable } from "./popups/popupDisposable.js";
-import { PopupMuliple } from "./popups/popupMultiple.js";
+import { PopupDisposable } from "./_LibralyOfGoodieJS/popups/popupDisposable.js";
+import { PopupMuliple } from "./_LibralyOfGoodieJS/popups/popupMultiple.js";
 
 
+// SLIDERS
 const blockSliderWithoutFight = document.querySelector(".slider-without-fight");
+
 if (blockSliderWithoutFight) {
     const newSliderWithoutFight = new SliderWithoutFight(blockSliderWithoutFight, {
         scrollAfterAbruptStop: true
@@ -15,7 +18,19 @@ if (blockSliderWithoutFight) {
 };
 
 
+const blockSliderWithFight = document.querySelector(".slider-with-fight");
+
+if (blockSliderWithFight) {
+    const newSliderWitFight = new SliderWithFight(blockSliderWithFight, {
+        percentageForSuccessfulScrolling: 35,
+        infinity: false
+    });
+    newSliderWitFight.run();
+};
+
+
 const blockSliderEndless = document.querySelector(".slider-endless");
+
 if (blockSliderEndless) {
     const newSliderEndless = new SliderEndless(blockSliderEndless, {
         speed: 400,
@@ -30,7 +45,8 @@ if (blockSliderEndless) {
 
 
 const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling");
-    if (blockSliderSelfScrolling) {
+
+if (blockSliderSelfScrolling) {
     const newSliderSelfScrolling = new SliderSelfScrolling(blockSliderSelfScrolling, {
         duration: 10,
         temporaryFunction: "linear",
@@ -42,6 +58,7 @@ const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling"
 };
 
 
+// POPUPS
 const blockPopupMuliple = document.querySelector(".popup-multiple");
 
 if (blockPopupMuliple) {

@@ -22,8 +22,8 @@ export class SliderWithoutFight {
         this.positionSliderTrack = 0;
         this.positionFingerPressSliderX;
         this.positionFingerPressSliderY;
-        this.positionX_FingetCurrentMoment_OnSlider = 0;
-        this.positionY_FingetCurrentMoment_OnSlider = 0;
+        this.positionX_FingetCurrentMoment_OnSlider;
+        this.positionY_FingetCurrentMoment_OnSlider;
 
         this.allowSwipe = true;
         this.isScrollingSlider = false;
@@ -31,8 +31,8 @@ export class SliderWithoutFight {
         this.measuresMaximumSwipeOfSlider();
         this.addOptions();
 
-        this.swipeAction_ = () => { this.swipeAction(); }
-        this.swipeEnd_ = () => { this.swipeEnd(); }
+        this._swipeAction = () => { this.swipeAction(); }
+        this._swipeEnd = () => { this.swipeEnd(); }
 
         this.goingOutBoundsSlider = () => {
             /* Выход за границы слайдера мышкой. */
@@ -50,7 +50,6 @@ export class SliderWithoutFight {
 
     // Вспомогательные методы.
     getEvent() {
-        /* Получаем события (чтобы наш слайдер работал и на десктопах, и на мобилках).  */
         return (event.type.search('touch') != -1) ? event.touches[0] : event;
     };
 
@@ -72,16 +71,27 @@ export class SliderWithoutFight {
             (this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
             ) {
 
-            this.sliderTrack.removeEventListener("touchmove", this.swipeAction);
+            this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
             this.swipeEnd();
         };
     };
 
-    checkSliderCanBeMoved() {
+    checkSliderCanBeMoved(evt) {
         /* Проверяет: если мы будем одновременно скролить страницу и сам слайдер, то блокируем слайдер.  */
 
-        const evt = this.getEvent();
-        const positionPressedY = evt.clientY;
+        if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
+            // Если пользователь будет  скроллить страницу.
+
+            this.isScrolledPage = true;
+
+            if ( this.isScrolledPage && !this.isScrollingSlider ) {
+                this.allowSwipe = false;
+                this.removeEventsSliderTrack();
+
+            } else if ( this.isScrolledPage && this.isScrollingSlider ) {
+                this.allowSwipe = true;
+            };
+        };
     }
 
 
@@ -137,7 +147,6 @@ export class SliderWithoutFight {
 
     stopsAutoScrolling() {
         /* Останавливает автоматическую прокрутку при захвата слайдера.  */
-
         this.sliderTrack.style.transition = `none`;
     }
 
@@ -170,9 +179,6 @@ export class SliderWithoutFight {
 
         this.time_1 = performance.now();
 
-        this.sliderTrack.addEventListener("mousemove", this.swipeAction_);
-        this.sliderTrack.addEventListener("touchmove", this.swipeAction_, { passive: true });
-
         this.positionPressedX = evt.clientX;
         this.positionPressedY = evt.clientY;
         this.positionFingerPressSliderX = evt.clientX - this.slider.getBoundingClientRect().x;
@@ -180,6 +186,8 @@ export class SliderWithoutFight {
 
         this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
+        this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+        this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
         this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
         this.slider.classList.add("slider-active");
     }
@@ -190,19 +198,9 @@ export class SliderWithoutFight {
         const evt = this.getEvent();
         this.directionSliderTrack = (this.positionPressedX < evt.clientX) ? "right" : "left";
 
-        if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
-            // Если пользователь будет  скроллить страницу.
-
-            this.isScrolledPage = true;
-
-            if ( this.isScrolledPage && !this.isScrollingSlider ) {
-                this.allowSwipe = false;
-                this.removeEventsSliderTrack();
-
-            } else if ( this.isScrolledPage && this.isScrollingSlider ) {
-                this.allowSwipe = true;
-            };
-        };
+        this.checkSliderCanBeMoved(
+            this.evt = evt
+        );
 
         if (!this.allowSwipe) {
             return
@@ -223,7 +221,10 @@ export class SliderWithoutFight {
     swipeEnd() {
         /* Записывает конечную позицию слайдера.  */
 
-        const auxiliaryVal_For_LastSwipe = this.positionFinal;
+        if (!this.allowSwipe) {
+            this.allowSwipe = true;
+            return;
+        };
 
         this.singleSwipe = Math.abs(this.positionSliderTrack - this.positionFinal);
         this.positionFinal = this.positionSliderTrack;
@@ -251,21 +252,18 @@ export class SliderWithoutFight {
     removeEventsSliderTrack() {
         /* Удаляет события у блока - sliderTrack и у самого слайдер  */
 
-        this.sliderTrack.removeEventListener("mousemove", this.swipeAction_);
-        this.sliderTrack.removeEventListener("touchmove", this.swipeAction_);
+        this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
+        this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
         this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-        this.sliderTrack.removeEventListener("touchend", this.swipeEnd_);
         this.slider.classList.remove("slider-active");
     }
 
 
     run() {
-        /* Запускает слайдер */
-
         this.sliderTrack.addEventListener("touchstart", () => { this.swipeStart(); }, { passive: true });
-        this.sliderTrack.addEventListener("touchend", this.swipeEnd_, { passive: true });
+        this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
 
         this.sliderTrack.addEventListener("mousedown", () => { this.swipeStart(); });
-        this.sliderTrack.addEventListener("mouseup", this.swipeEnd_);
+        this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
     }
 };

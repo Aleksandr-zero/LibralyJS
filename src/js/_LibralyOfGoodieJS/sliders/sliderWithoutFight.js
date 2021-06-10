@@ -73,6 +73,7 @@ export class SliderWithoutFight {
             ) {
 
             this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
+            this.swipeEnd();
         };
     };
 
@@ -189,6 +190,8 @@ export class SliderWithoutFight {
 
         this.sliderTrack.addEventListener("mousemove", this._swipeAction);
         this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+        this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+        this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
         this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
         this.slider.classList.add("slider-active");
     }
@@ -256,15 +259,14 @@ export class SliderWithoutFight {
         this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
         this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
         this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+        this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
+        this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
         this.slider.classList.remove("slider-active");
     }
 
 
     run() {
         this.sliderTrack.addEventListener("touchstart", () => { this.swipeStart(); }, { passive: true });
-        this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-
         this.sliderTrack.addEventListener("mousedown", () => { this.swipeStart(); });
-        this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
     }
 };

@@ -13,6 +13,7 @@ export class SliderWithoutFight {
         this.sliderWidth = this.slider.offsetWidth;
 
         this.maximumSwipingAtSlider = 0;
+        this.positionSliderTrackClientRect = Math.round(this.sliderTrack.getBoundingClientRect().x);
 
         this.positionFinal = 0;
         this.singleSwipe = 0;
@@ -54,7 +55,7 @@ export class SliderWithoutFight {
     };
 
     measuresMaximumSwipeOfSlider() {
-        /* Измеряет сколько можно пролистывать слайдер.  */
+        /* Измеряет максимальную длину прокрутки слайдера.  */
 
         this.sliderTrack.querySelectorAll(".slide").forEach((slide) => {
             this.maximumSwipingAtSlider += slide.offsetWidth;
@@ -72,7 +73,6 @@ export class SliderWithoutFight {
             ) {
 
             this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-            this.swipeEnd();
         };
     };
 
@@ -100,14 +100,13 @@ export class SliderWithoutFight {
         /* Измеряет скорость движение трека.  */
 
         const speedSlider = (this.singleSwipe / this.swipeSlider_Time).toFixed(2);
-
         this.autoPushingSlider(speedSlider);
     }
 
     autoPushingSlider(speedSlider) {
         /* Автоматически пролистывает слайдер  */
 
-        if (speedSlider <= 0.6) {
+        if (speedSlider <= 0.6 || this.positionSliderTrack > this.maximumSwipingAtSlider) {
             return;
         };
 
@@ -133,21 +132,22 @@ export class SliderWithoutFight {
     setsStyle_For_autoPushingSlider(newPosition) {
         /* Устанавливает стили для автоматической прокрутки.  */
 
-        this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
-        setTimeout(() => {
-            this.sliderTrack.style.transform = `translate3d(-${newPosition}px, 0px, 0px)`;
-            this.sliderTrack.style.transition = `transform 1s ease-out`;
+        this.sliderTrack.style.transform = `translate3d(-${newPosition}px, 0px, 0px)`;
+        this.sliderTrack.style.transition = `transform 1s ease-out`;
 
-            this.sliderTrack.addEventListener("transitionend", () => {
-                this.sliderTrack.style.transition = "none";
-                this.positionFinal = newPosition;
-            });
-        }, 0);
+        this.sliderTrack.addEventListener("transitionend", () => {
+            this.sliderTrack.style.transition = `none`;
+            this.positionFinal = this.positionSliderTrack = newPosition;
+        });
     }
 
     stopsAutoScrolling() {
         /* Останавливает автоматическую прокрутку при захвата слайдера.  */
-        this.sliderTrack.style.transition = `none`;
+
+        const curretnPositionSliderTrack = Math.abs(Math.round(this.sliderTrack.getBoundingClientRect().x) - this.positionSliderTrackClientRect);
+        this.positionFinal = this.positionSliderTrack = curretnPositionSliderTrack;
+
+        this.sliderTrack.style.transform = `translate3d(-${this.positionFinal}px, 0px, 0px)`
     }
 
 
@@ -185,6 +185,7 @@ export class SliderWithoutFight {
         this.positionFingerPressSliderY = evt.clientY - this.slider.getBoundingClientRect().y;
 
         this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
+        this.sliderTrack.style.transition = `none`;
 
         this.sliderTrack.addEventListener("mousemove", this._swipeAction);
         this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });

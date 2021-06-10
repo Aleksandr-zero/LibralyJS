@@ -40,7 +40,7 @@ export class SliderSelfScrolling {
     }
 
 	measuresMaximumSwipeOfSlider() {
-        /* Измеряет сколько можно пролистывать слайдер.  */
+        /* Измеряет максимальную длину прокрутки слайдера.  */
 
         this.maximumSwipingAtSlider = 0;
 
@@ -55,7 +55,7 @@ export class SliderSelfScrolling {
 	countsTimeSinceStartOfSlider() {
 		/* Считает время после запуска слайдера.  */
 
-		this.numberSecondsAfterStartingSlider = 
+		this.numberSecondsAfterStartingSlider =
 			(!this.isHideSlider_For_FirstTime) ?
 			((this.time_2 - this.time_1) / 1000 - this.delay) :
 			((this.time_2 - this.time_1) / 1000) - this.delayBeforeStartingAfterHiding;
@@ -164,7 +164,7 @@ export class SliderSelfScrolling {
 
 		if ( !this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delay ||
 			  this.isHideSlider_For_FirstTime && ((this.time_2 - this.time_1) / 1000) <= this.delayBeforeStartingAfterHiding) {
-			
+
 			this.positionSliderTrack = (this.positionSliderTrack === 1200) ? 0 : this.positionSliderTrack;
 
 			this.resetTimers();
@@ -212,7 +212,7 @@ export class SliderSelfScrolling {
 
 	unblockingSlider_For_EndLess() {
 		/* Производит разблокировку для бесконечного слайдера.  */
-		
+
 		this.setsTransition_For_SliderEndLess();
 	};
 

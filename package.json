@@ -12,6 +12,11 @@
   "browserslist": [
     "last 2 versions"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleksandr-zero/LibralyJS.git"
+  },
+  "homepage": "https://github.com/Aleksandr-zero/LibralyJS#readme",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.14.3",
@@ -30,7 +35,8 @@
     "gulp-sass": "^4.1.0",
     "gulp-strip-css-comments": "^2.0.0",
     "gulp-uglify": "^3.0.2",
-    "webpack-stream": "^6.1.2"
+    "webpack-stream": "^6.1.2",
+    "webpack": "^5.33.2"
   },
   "dependencies": {}
 }

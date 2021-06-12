@@ -3,9 +3,22 @@
 Library of goodies for your site ;)</br>
 There is everything that your heart desires!
 
+## Getting started
+
+Connect common CSS:
+
+```xml
+<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/css/libralyOfGoodieJS.css">
+```
+
 ## Sliders
 
 ### Slider without fight
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
+```
 
 ```xml
 <!-- Slider main container -->
@@ -44,6 +57,11 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 
 ### Slider with fight
 
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
+```
+
 ```xml
 <!-- Slider main container -->
 <div class="slider-with-fight">
@@ -71,17 +89,19 @@ newSliderWithoutFight.run();
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
 | `percentageForSuccessfulScrolling` | The percentage of slider scrolling to advance.| `35` |
-| `infinity`                     | Add infinity for the slider. | `false` |
 
 ```js
 new SliderWithFight(blockSliderWithFight, {
-  percentageForSuccessfulScrolling: 50,
-  infinity: true
+  percentageForSuccessfulScrolling: 50
 });
-newSliderWitFight.run();
 ```
 
 ### Endless slider
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
+```
 
 ```xml
 <!-- Slider main container -->
@@ -115,9 +135,10 @@ newSliderEndless.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `speed`						 | Slide scrolling speed.      | `200`	 |
-| `timerAdvance`		 | Automatic slider advancement by timer. **Parameters**: `[true / false, int(Msec)]` | `[false]` |
-| `freezeSliderMouseHover` | Freeze slider on mouse hover (`timerAdvance` must be `true`) | `false` |
+| `speed`						 | Slider scrolling speed.     | `200`	 |
+| `timerAdvance`		 | Automatic slider advancement by timer. **Parameters**: `[true / false, float(Msec)]`. | `[false]` |
+| `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance` must be `true`). | `false` |
+| `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance` must be `true`). | `false` |
 
 ```js
 new SliderEndless(blockSliderEndless, {
@@ -126,12 +147,17 @@ new SliderEndless(blockSliderEndless, {
     true,
     3000
   ],
-  freezeSliderMouseHover: true
+  freezeSliderMouseHover: true,
+  freezeSliderOnLossFocus: true
 });
 ```
 
-
 ### Self scrolling slider
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
+```
 
 ```xml
 <!-- Slider main container -->
@@ -162,21 +188,52 @@ newSliderSelfScrolling.run();
 | `duration`         | Slider duration. Parameters: `int(sec)`  | `10` |
 | `temporaryFunction`| Temporary function for **transition**.   | `linear` |
 | `delay`            | Delay for **transition**.                | `0` |
-| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `int(sec)` | `1.5` |
+| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `float(sec)`. | `1.5` |
 | `repeatSlider`     | Repeating the scrolling of the slider after it has finished. | `false` |
 
 ```js
-const blockSliderSelfScrolling = document.querySelector(".slider-self-scrolling");
-
-const newSliderSelfScrolling = new SliderSelfScrolling(blockSliderSelfScrolling, {
+new SliderSelfScrolling(blockSliderSelfScrolling, {
   duration: 12000,
   temporaryFunction: "linear",
   delay: 2,
   delayBeforeStartingAfterHiding: 2,
   repeatSlider: false,
 });
-newSliderSelfScrolling.run();
 ```
 
+### Slider with automatic adjustment
+
+```xml
+<div class="slider-automatic-adjustment">
+  <div class="slider-list">
+    <div class="slider-track">
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockSliderAutomaticAdjustment = document.querySelector(".slider-automatic-adjustment");
+
+const newSliderWithAutomaticAdjustment = new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+  speed: 250
+});
+newSliderWithAutomaticAdjustment.run();
+```
+
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `speed`            | Slider scrolling speed.     | `200`   |
+
+```js
+new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+  speed: 250
+});
+```
 
 ## Pop up

@@ -8,7 +8,6 @@ const include           = require('gulp-file-include');
 const del               = require('del');
 const concat            = require('gulp-concat');
 const htmlmin           = require("gulp-htmlmin");
-const webpack           = require("webpack-stream");
 const sync              = require('browser-sync').create();
 const babel             = require('gulp-babel');
 const uglify            = require('gulp-uglify');
@@ -66,23 +65,15 @@ const scriptsDev = () => {
         .pipe(dest("app/js"))
 };
 
-const scriptsBuild = () => {
-    return src("./src/js/app.js")
-        .pipe(webpack(require("./webpack.config.js")))
-        .pipe(dest("app/js"));
-};
 
-const scriptsBuildDist = () => {
-    return src(["./src/js/_LibralyOfGoodieJS/**/**.js", "!src/js/app.js", "!src/js/workWebSite/ "])
-        .pipe(replace(/export class/g, 'class'))
-        .pipe(babel({
-            presets: ['@babel/preset-env']
-        }))
+const scriptsOptimization = () => {
+    return src(["./LibralyOfGoodieJS/scripts/**/**.js"])
+        .pipe(replace(/export { (SliderEndless|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight) };/g, ""))
         .pipe(uglify({
             keep_fnames: true
         }))
-        .pipe(dest("LibralyOfGoodieJS/scripts"));
-};
+        .pipe(dest("./LibralyOfGoodieJS/scripts"));
+}
 
 
 const scssDev = () => {
@@ -118,7 +109,7 @@ const scssBuildScripts = () => {
         .pipe(cleanCSS({
             level: 2
         }))
-        .pipe(concat('css/style.css'))
+        .pipe(concat('css/libralyOfGoodieJS.css'))
         .pipe(dest('./LibralyOfGoodieJS'));
 }
 
@@ -143,7 +134,7 @@ const serve = () => {
 };
 
 
-exports.buildScripts = series(clearScripts, parallel(scriptsBuildDist, scssBuildScripts));
-exports.build = series(clear, parallel(scssBuild, htmlBuild, scriptsBuild, image, fonts, doc));
+exports.buildScripts = series(clearScripts, parallel(scssBuildScripts));
+exports.build = series(clear, parallel(scssBuild, htmlBuild, image, fonts, doc));
 exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, fonts, doc, serve);
-exports.clear = clear;
+exports.scriptsBuild = parallel(scriptsOptimization, scssBuildScripts);

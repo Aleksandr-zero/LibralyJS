@@ -1,7 +1,8 @@
 import { SliderWithoutFight } from "./_LibralyOfGoodieJS/sliders/sliderWithoutFight.js";
 import { SliderWithFight } from "./_LibralyOfGoodieJS/sliders/sliderWithFight.js";
-import { SliderEndless } from "./_LibralyOfGoodieJS/sliders/sliderEndless.js";
+import { SliderEndless } from "./_LibralyOfGoodieJS/sliders/sliderEndLess.js";
 import { SliderSelfScrolling } from "./_LibralyOfGoodieJS/sliders/sliderSelfScrolling.js";
+import { SliderWithAutomaticAdjustment } from "./_LibralyOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js";
 
 import { PopupDisposable } from "./_LibralyOfGoodieJS/popups/popupDisposable.js";
 import { PopupMuliple } from "./_LibralyOfGoodieJS/popups/popupMultiple.js";
@@ -22,7 +23,7 @@ const blockSliderWithFight = document.querySelector(".slider-with-fight");
 
 if (blockSliderWithFight) {
     const newSliderWitFight = new SliderWithFight(blockSliderWithFight, {
-        percentageForSuccessfulScrolling: 35,
+        percentageForSuccessfulScrolling: 40,
         infinity: false
     });
     newSliderWitFight.run();
@@ -38,7 +39,8 @@ if (blockSliderEndless) {
             true,
             2500
         ],
-        freezeSliderMouseHover: false
+        freezeSliderMouseHover: true,
+        freezeSliderOnLossFocus: true
     });
     newSliderEndless.run();
 };
@@ -55,6 +57,16 @@ if (blockSliderSelfScrolling) {
         repeatSlider: false,
     });
     newSliderSelfScrolling.run();
+};
+
+
+const blockSliderAutomaticAdjustment = document.querySelector(".slider-automatic-adjustment");
+
+if (blockSliderAutomaticAdjustment) {
+    const newSliderWithAutomaticAdjustment = new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+        speed: 250
+    });
+    newSliderWithAutomaticAdjustment.run();
 };
 
 

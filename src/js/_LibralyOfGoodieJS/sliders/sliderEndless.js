@@ -1,11 +1,18 @@
-export class SliderEndless {
-    /*
-	Бесконечный слайдер, с дополнительной поддержкой автоматического продвига по таймеру.
+import Slider from "./module.js"
+
+
+export class SliderEndless extends Slider {
+    /**
+    Бесконечный слайдер.
+    * @param slider -> block "slider-with-fight"
+    * @param options -> custom settings
     */
 
 	constructor(slider, options) {
+		super();
+
 		this.slider = slider;
-		this.options = options
+		this.options = options;
 
 		this.sliderTrack = this.slider.querySelector(".slider-track");
 		this.positionSliderTrack = 0;
@@ -19,6 +26,8 @@ export class SliderEndless {
 
 		this.sliderBtnPushLast = this.slider.querySelector(".btn-slider-push-last");
 		this.sliderBtnPushNext = this.slider.querySelector(".btn-slider-push-next");
+
+		this.addOptions();
 	}
 
 	addOptions() {
@@ -28,6 +37,7 @@ export class SliderEndless {
 		this.timerAdvance = (this.options && this.options.timerAdvance) ?
 									[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
 		this.freezeSliderMouseHover = (this.options.freezeSliderMouseHover) ? this.options.freezeSliderMouseHover : false;
+		this.freezeSliderOnLossFocus = (this.options.freezeSliderOnLossFocus) ? this.options.freezeSliderOnLossFocus : false;
 
 		if (this.options && this.timerAdvance[0]) {
 			this.addSetInterval_For_Slider();
@@ -177,8 +187,12 @@ export class SliderEndless {
 	addSetInterval_For_Slider() {
 		/* Добавляет setInterval для автоматического продвижения слайдера.  */
 
-		this.addEventScroll_BlurWindow();
-		this.countsPositionSlider_Window();
+		if (this.freezeSliderOnLossFocus) {
+			this.addEventScroll_BlurWindow();
+			this.countsPositionSlider_Window();
+		} else {
+			this.createSetInterval_For_Slider();
+		};
 	}
 
 	addEventScroll_BlurWindow() {
@@ -245,7 +259,7 @@ export class SliderEndless {
 	}
 
 	addEventMouse_TouchMove_Slider() {
-		/* Добавляет события наведение на блок слайдер.  */
+		/* Добавляет события наведение на слайдер чтобы его заморозить.  */
 
 		this.slider.addEventListener("mousemove", () => { this.clearnsSetIntervals(); });
 		this.slider.addEventListener("mouseout", () => { this.createSetInterval_For_Slider(); });
@@ -285,6 +299,7 @@ export class SliderEndless {
 		this.intervals.push(this.timeInterval);
 	}
 
+
 	clearnsSetIntervals() {
 		/* Чистит все созданные setInterval. */
 
@@ -303,8 +318,6 @@ export class SliderEndless {
 
 
 	run() {
-		this.addOptions();
-
 		this.addLastSlideStart();
 		this.addEventClick_BtnsSliderPush();
 

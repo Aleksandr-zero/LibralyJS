@@ -9,7 +9,7 @@ export class SliderWithFight {
 		this.slider = slider;
 		this.options = options;
 
-		this.sliderWidth = this.slider.clientWidth;
+		this.sliderWidth = Math.round(this.slider.getBoundingClientRect().width);
 
 		this.sliderTrack = this.slider.querySelector(".slider-track");
 
@@ -46,7 +46,6 @@ export class SliderWithFight {
 	addOptions() {
 		this.percentageForSuccessfulScrolling = (this.options.percentageForSuccessfulScrolling) ?
 												 this.options.percentageForSuccessfulScrolling : 35;
-		this.infinity = (this.options.infinity) ? this.options.infinity : false;
 	}
 
 

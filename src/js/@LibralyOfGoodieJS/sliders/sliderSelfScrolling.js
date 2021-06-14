@@ -1,6 +1,8 @@
 export class SliderSelfScrolling {
-    /*
+    /**
 	Самопрокручиваемый слайдер.
+	* @param slider - block "slider-automatic-adjustment" ( type -> HTMLElement )
+	* @param options -> custom settings ( type -> Object )
     */
 
 	constructor(slider, options) {

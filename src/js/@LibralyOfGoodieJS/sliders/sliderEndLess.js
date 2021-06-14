@@ -1,11 +1,11 @@
-import Slider from "./module.js"
+import Slider from "./slider.js"
 
 
-export class SliderEndless extends Slider {
+export class SliderEndLess extends Slider {
     /**
     Бесконечный слайдер.
-    * @param slider -> block "slider-with-fight"
-    * @param options -> custom settings
+    * @param slider -> block "slider-with-fight" ( type -> HTMLElement )
+    * @param options -> custom settings ( type -> Object )
     */
 
 	constructor(slider, options) {

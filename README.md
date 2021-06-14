@@ -129,7 +129,7 @@ Connect:
 ```js
 const blockSliderEndless = document.querySelector(".slider-endless");
 
-const newSliderEndless = new SliderEndless(blockSliderEndless);
+const newSliderEndless = new SliderEndLess(blockSliderEndless);
 newSliderEndless.run();
 ```
 
@@ -141,7 +141,7 @@ newSliderEndless.run();
 | `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance` must be `true`). | `false` |
 
 ```js
-new SliderEndless(blockSliderEndless, {
+new SliderEndLess(blockSliderEndless, {
   speed: 250,
   timerAdvance: [
     true,
@@ -204,14 +204,17 @@ new SliderSelfScrolling(blockSliderSelfScrolling, {
 ### Slider with automatic adjustment
 
 ```xml
+<!-- Slider main container -->
 <div class="slider-automatic-adjustment">
   <div class="slider-list">
     <div class="slider-track">
+      <!-- Your slides -->
       <div class="slide">1</div>
       <div class="slide">2</div>
       <div class="slide">3</div>
       <div class="slide">4</div>
       <div class="slide">5</div>
+      <!-- Your slides -->
     </div>
   </div>
 </div>
@@ -237,3 +240,97 @@ new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
 ```
 
 ## Pop up
+
+### Disposable popup
+
+```xml
+<!-- Pop-up main container -->
+<div class="popup-disposable">
+  <button type="button" class="popup-disposable-btn-open btn-open-popup">Open popup</button>
+  <div class="popup-disposable__container popup-container">
+    <div class="popup-disposable__container-content">
+      <!-- Your pop-up -->
+      <div class="pop-up">
+        <h2 class="pop-up__title">Hello</h2>
+        <div class="pop-up__description">
+          <p>
+            One-time popup demo
+          </p>
+        </div>
+      </div>
+      <!-- Your pop-up -->  
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockPopupDisposable = document.querySelector(".popup-disposable");
+
+const newPopupDisposable = new PopupDisposable(blockPopupDisposable);
+newPopupDisposable.run();
+```
+
+### Reusable pop up
+
+```xml
+<!-- Pop-up main container -->
+<div class="popup-multiple">
+  <!--  -->
+  <button data-popup-number="one" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 1</button>
+  <button data-popup-number="two" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 2</button>
+  <button data-popup-number="three" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 3</button>
+  <div class="popup-multiple__container popup-container">
+     <!-- This is where the generation will take place -->
+    <div class="popup-multiple__container-content">
+
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockPopupMuliple = document.querySelector(".popup-multiple");
+
+const templatePopup = `
+<div class="popup">
+  <h4 class="popup-title">{{ title }}</h4>
+  <div class="popup-back-img">
+    <img src="{{ img.srcImg }}" alt="{{ img.altImg }}" class="popup-img">
+  </div>
+  <div class="popup-text">
+    <p>{{ text }}</p>
+  </div>
+</div>
+`;
+const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
+  numberOfPopup: 3,
+  popups: {
+    one: {
+      title: "Popup 1",
+      text: "Popup text at number 1",
+      img: {
+        srcImg: "../../doc/popupExample-1.png",
+        altImg: "popup 1"
+      }
+    },
+    two: {
+      title: "Popup 2",
+      text: "Popup text at number 2",
+      img: {
+        srcImg: "../doc/popupExample-2.png",
+        altImg: "popup 2"
+      }
+    },
+    three: {
+      title: "Popup 3",
+      text: "Popup text at number 3",
+      img: {
+        srcImg: "../doc/popupExample-3.png",
+        altImg: "popup 3"
+      }
+    }
+  }
+});
+newPopupMuliple.run();
+```

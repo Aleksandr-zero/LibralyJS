@@ -1,11 +1,16 @@
-export class SliderWithFight {
+import Slider from "./slider.js";
+
+
+export class SliderWithFight extends Slider {
     /**
 	Слайдер с боем.
-    * @param slider -> block "slider-with-fight"
-    * @param options -> custom settings
+    * @param slider -> block "slider-with-fight" ( type -> HTMLElement )
+    * @param options -> custom settings ( type -> Object )
     */
 
 	constructor(slider, options) {
+        super();
+
 		this.slider = slider;
 		this.options = options;
 
@@ -35,6 +40,8 @@ export class SliderWithFight {
 		this._swipeAction = () => { this.swipeAction(); };
 		this._swipeEnd = () => 	  { this.swipeEnd(); };
 
+        this.percentForSuccessfulScrolling = Math.round((this.sliderWidth / 100) * this.percentageForSuccessfulScrolling);
+
         this.goingOutBoundsSlider = () => {
             /* Выход за границы слайдера мышкой. */
 
@@ -50,41 +57,6 @@ export class SliderWithFight {
 
 
     // Вспомогательные методы.
-	getEvent() {
-		return (event.type.search('touch') != -1) ? event.touches[0] : event;
-	}
-
-    checksOutOfBounds() {
-        /* Если палец будет заходить за границы слайдера то запрещаем его двигать.  */
-
-        if (
-            (this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX && this.positionSliderTrack - this.positionFinal > 0) ||
-            (this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
-            ) {
-
-            this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-            this.swipeEnd();
-        };
-    }
-
-    checkSliderCanBeMoved(evt) {
-        /* Проверяет: если мы будем одновременно скролить страницу и сам слайдер, то блокируем слайдер.  */
-
-        if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
-            // Если пользователь будет  скроллить страницу.
-
-            this.isScrolledPage = true;
-
-            if ( this.isScrolledPage && !this.isScrollingSlider ) {
-                this.allowSwipe = false;
-                this.removeEventsSliderTrack();
-
-            } else if ( this.isScrolledPage && this.isScrollingSlider ) {
-                this.allowSwipe = true;
-            };
-        };
-    }
-
     removeEventsSliderTrack() {
         /* Удаляет события у блока - sliderTrack и у самого слайдер  */
 
@@ -137,26 +109,25 @@ export class SliderWithFight {
 
     // Функционал слайдера.
     pushingSlider() {
+        this.singleSwipe = this.positionSliderTrack - this.positionFinal;
+
     	this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
-        if (this.singleSwipe >= 5) {
+        if (Math.abs(this.singleSwipe) >= 5) {
             this.isScrollingSlider = true;
         };
     }
 
 	swipeStart() {
-		if (!this.allowSwipe) {
-			return;
-		};
+        if (!this.allowSwipe) {
+            return;
+        };
 
-		const evt = this.getEvent();
+		const evt = super.getEvent();
 
-		this.percentForSuccessfulScrolling = Math.round((this.sliderWidth / 100) * this.percentageForSuccessfulScrolling);
-
-		this.positionPressedX = evt.clientX;
-		this.positionPressedY = evt.clientY;
-        this.positionFingerPressSliderX = this.positionPressedX - this.slider.getBoundingClientRect().x;
-        this.positionFingerPressSliderY = this.positionPressedY - this.slider.getBoundingClientRect().y;
+        super.calculatesTouchCoordinates_SwipeStart(
+            this.evt = evt
+        );
 
         this.sliderTrack.style.transform = `translate3d(-${this.positionFinal}px, 0px, 0px)`;
 
@@ -170,9 +141,9 @@ export class SliderWithFight {
 	}
 
     swipeAction() {
-    	const evt = this.getEvent();
+    	const evt = super.getEvent();
 
-        this.checkSliderCanBeMoved(
+        super.checkSliderCanBeMoved(
             this.evt = evt
         );
 
@@ -180,22 +151,20 @@ export class SliderWithFight {
             return
         };
 
-    	this.singleSwipe = this.positionPressedX - evt.clientX;
     	this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
 
         if (event.type === "touchmove") {
             this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
             this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
-            this.checksOutOfBounds();
+            super.checksOutOfBounds();
         };
 
     	this.pushingSlider();
     }
 
 	swipeEnd() {
-		this.isScrollingSlider = false;
-		this.allowSwipe = true;
 		this.removeEventsSliderTrack();
+        this.isScrollingSlider = false;
 
 		if ((Math.abs(this.singleSwipe) <= this.percentForSuccessfulScrolling)) {
 			this.returnsSliderBack();
@@ -204,9 +173,6 @@ export class SliderWithFight {
 
 		this.checksIfSliderNeedsPromoted();
 	}
-
-
-    // Пользовательские настройки.
 
 
 	run() {

@@ -68,7 +68,7 @@ const scriptsDev = () => {
 
 const scriptsOptimization = () => {
     return src(["./LibralyOfGoodieJS/scripts/**/**.js"])
-        .pipe(replace(/export { (SliderEndless|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight) };/g, ""))
+        .pipe(replace(/export { (SliderEndLess|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight|PopupMuliple|PopupDisposable) };/g, ""))
         .pipe(uglify({
             keep_fnames: true
         }))
@@ -92,34 +92,30 @@ const scssBuild = () => {
         }))
         .pipe(removeCommentsCss())
         .pipe(autoprefixer())
+        .pipe(concat('css/style.css'))
         .pipe(cleanCSS({
             level: 2
         }))
-        .pipe(concat('css/style.css'))
         .pipe(dest('app'));
 };
 
 const scssBuildScripts = () => {
-   return src('./src/scss/_LibralyOfGoodieJS/libraryOfGoodieJS.scss')
+   return src('./src/scss/@LibralyOfGoodieJS/libraryOfGoodieJS.scss')
         .pipe(sass({
             outputStyle:'compressed'
         }))
         .pipe(removeCommentsCss())
         .pipe(autoprefixer())
+        .pipe(concat('css/libralyOfGoodieJS.css'))
         .pipe(cleanCSS({
             level: 2
         }))
-        .pipe(concat('css/libralyOfGoodieJS.css'))
         .pipe(dest('./LibralyOfGoodieJS'));
 }
 
 
 const clear = () => {
     return del(['app']);
-};
-
-const clearScripts = () => {
-    return del(["LibraryOfGoodieJS/scripts", "LibralyOfGoodieJS/css"]);
 };
 
 
@@ -134,7 +130,6 @@ const serve = () => {
 };
 
 
-exports.buildScripts = series(clearScripts, parallel(scssBuildScripts));
 exports.build = series(clear, parallel(scssBuild, htmlBuild, image, fonts, doc));
 exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, fonts, doc, serve);
-exports.scriptsBuild = parallel(scriptsOptimization, scssBuildScripts);
+exports.scriptsBuild = series(parallel(scriptsOptimization, scssBuildScripts));

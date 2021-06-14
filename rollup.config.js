@@ -6,7 +6,8 @@ export default {
 	input: ['./src/js/app.js'],
 	plugins: [
 		babel ({
-			presets: ['@babel/preset-env']
+			presets: ['@babel/preset-env'],
+			babelHelpers: 'bundled'
 		}),
 		terser()
 	],

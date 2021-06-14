@@ -1,9 +1,15 @@
-export class PopupDisposable {
-    /*
+import Popup from "./popup.js";
+
+
+export class PopupDisposable extends Popup {
+    /**
 	Одноразовый popup.
+	* @param popupContainer -> block "popup-disposable" ( type -> HTMLElement )
     */
 
 	constructor(popupContainer) {
+		super();
+
 		this.popupContainer = popupContainer;
 		this.btnOpenPopup = this.popupContainer.querySelector(".popup-disposable-btn-open");
 
@@ -20,33 +26,12 @@ export class PopupDisposable {
 
 				setTimeout(() => {
 					popupContainer.classList.remove('popup-disposable-delete-popup');
-					this.hides_showVerticalScrolling();
+					super.hides_showVerticalScrolling();
 				}, 300);
 			};
 		};
 	}
 
-
-	// Вспомогательные методы.
-	hides_showVerticalScrolling() {
-		/* Скрывает вертикальную прокрутку (чтобы не было тряски контента при появления popup).  */
-
-		const body = document.querySelector("body");
-
-		const widthScroll = window.innerWidth - this.popupContainer.querySelector(".popup-disposable__container-content").clientWidth;
-
-		if (widthScroll) {
-			body.style.cssText = `
-				padding-right: ${widthScroll}px;
-				overflow: hidden;
-			`;
-		} else {
-			body.style.cssText = `
-				padding-right: ${widthScroll}px;
-				overflow: auto;
-			`;
-		}
-	}
 
 	// Отвечают за навешивание событий и их обработчиков.
 	addEventClickBtnOpenPopup() {
@@ -58,7 +43,7 @@ export class PopupDisposable {
 	openPopup() {
 		this.popupContainer.classList.add("popup-disposable-active")
 
-		this.hides_showVerticalScrolling();
+		super.hides_showVerticalScrolling();
 		this.addEventClickDocument();
 	}
 
@@ -72,4 +57,3 @@ export class PopupDisposable {
 		this.addEventClickBtnOpenPopup();
 	}
 };
-	

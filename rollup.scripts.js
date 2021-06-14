@@ -3,14 +3,17 @@ import babel from '@rollup/plugin-babel';
 
 const paths = {
 	libraly: {
-		slider_1: "./src/js/_LibralyOfGoodieJS/sliders/sliderWithoutFight.js",
-		slider_2: "./src/js/_LibralyOfGoodieJS/sliders/sliderWithFight.js",
-		slider_3: "./src/js/_LibralyOfGoodieJS/sliders/sliderEndLess.js",
-		slider_4: "./src/js/_LibralyOfGoodieJS/sliders/sliderSelfScrolling.js",
-		slider_5: "./src/js/_LibralyOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js"
+		slider_1: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithoutFight.js",
+		slider_2: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithFight.js",
+		slider_3: "./src/js/@LibralyOfGoodieJS/sliders/sliderEndLess.js",
+		slider_4: "./src/js/@LibralyOfGoodieJS/sliders/sliderSelfScrolling.js",
+		slider_5: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js",
+		popup_1: "./src/js/@LibralyOfGoodieJS/popups/popupDisposable.js",
+		popup_2: "./src/js/@LibralyOfGoodieJS/popups/popupMultiple.js",
 	},
 	build: {
-		js: "./LibralyOfGoodieJS/scripts/sliders"
+		js_sliders: "./LibralyOfGoodieJS/scripts/sliders",
+		js_popup: "./LibralyOfGoodieJS/scripts/popups"
 	}
 };
 
@@ -22,13 +25,12 @@ const getPlugins = () => [
 ];
 
 
-
 export default [
 	{
 	    input: paths.libraly.slider_1,
 	    output: [
 	    	{
-	    		file: `${paths.build.js}/sliderWithoutFight.js`,
+	    		file: `${paths.build.js_sliders}/sliderWithoutFight.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -37,7 +39,7 @@ export default [
 	    input: paths.libraly.slider_2,
 	    output: [
 	    	{
-	    		file: `${paths.build.js}/sliderWithFight.js`,
+	    		file: `${paths.build.js_sliders}/sliderWithFight.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -46,7 +48,7 @@ export default [
 	    input: paths.libraly.slider_3,
 	    output: [
 	    	{
-	    		file: `${paths.build.js}/sliderEndLess.js`,
+	    		file: `${paths.build.js_sliders}/sliderEndLess.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -55,7 +57,7 @@ export default [
 	    input: paths.libraly.slider_4,
 	    output: [
 	    	{
-	    		file: `${paths.build.js}/sliderSelfScrolling.js`,
+	    		file: `${paths.build.js_sliders}/sliderSelfScrolling.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -64,7 +66,25 @@ export default [
 	    input: paths.libraly.slider_5,
 	    output: [
 	    	{
-	    		file: `${paths.build.js}/sliderWithAutomaticAdjustment.js`,
+	    		file: `${paths.build.js_sliders}/sliderWithAutomaticAdjustment.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
+	    input: paths.libraly.popup_1,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_popup}/popupDisposable.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
+	    input: paths.libraly.popup_2,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_popup}/popupMultiple.js`,
 	    		format: 'es'
 	    	}
 	    ],

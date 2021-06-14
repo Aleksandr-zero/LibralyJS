@@ -3,6 +3,10 @@
 	display: inline-flex;
 	background-color: $primary-color-2;
 	margin: 0 20px;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+	color: $white-color;
 
 	box-shadow: 6px 6px 0 2px $primary-color-3;
 	transition: transform $animate linear, box-shadow $animate linear;

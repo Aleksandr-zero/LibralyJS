@@ -1,9 +1,17 @@
-export class PopupMuliple {
-    /*
-	Многоразовай попап.
+import Popup from "./popup.js";
+
+
+export class PopupMuliple extends Popup {
+    /**
+	Многоразовай pop-up.
+	* @param popupContainer -> block "popup-multiple" ( type -> HTMLElement )
+	* @param templatePopup -> template popup ( type -> String )
+	* @param options -> custom settings ( type -> Object )
     */
 
 	constructor(popupContainer, templatePopup, options) {
+		super();
+
 		this.popupContainer = popupContainer;
 		this.popupBlockContainer = this.popupContainer.querySelector(".popup-multiple__container");
 		this.popupContainerContent = this.popupContainer.querySelector(".popup-multiple__container-content");
@@ -27,7 +35,7 @@ export class PopupMuliple {
 				setTimeout(() => {
 					document.querySelector(".popup").remove();
 					popupContainer.classList.remove('popup-multiple-delete-popup');
-					this.hides_showVerticalScrolling();
+					super.hides_showVerticalScrolling();
 				}, 300);
 			};
 		};
@@ -60,7 +68,7 @@ export class PopupMuliple {
 		);
 
 		this.insertsNewPopup_In_Container(newPopup);
-		this.hides_showVerticalScrolling();
+		super.hides_showVerticalScrolling();
 		setTimeout(() => {
 			this.addEventClickDocument();
 		}, 0);
@@ -69,28 +77,6 @@ export class PopupMuliple {
 	addEventClickDocument() {
 		/* Добавляет события клика для всего document (чтобы при клике закрывать popup).  */
 		document.addEventListener("click", this.deletePopup);
-	}
-
-
-	// Вспомогательные методы.
-	hides_showVerticalScrolling() {
-		/* Скрывает вертикальную прокрутку (чтобы не было тряски контента при появления popup).  */
-
-		const body = document.querySelector("body");
-
-		const widthScroll = window.innerWidth - this.popupBlockContainer.clientWidth;
-
-		if (widthScroll) {
-			body.style.cssText = `
-				padding-right: ${widthScroll}px;
-				overflow: hidden;
-			`;
-		} else {
-			body.style.cssText = `
-				padding-right: ${widthScroll}px;
-				overflow: auto;
-			`;
-		}
 	}
 
 

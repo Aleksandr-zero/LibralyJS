@@ -37,9 +37,10 @@
 
         &:first-child { width: 500px; }
 
-        &:nth-child(2) { width: 600px; }
-        &:nth-child(3) { width: 560px; }
-        &:nth-child(4) { width: 650px; }
+        &:nth-child(2) { width: 650px; }
+        &:nth-child(3) { width: 430px; }
+        &:nth-child(4) { width: 600px; }
+        &:nth-child(5) { width: 700px; }
 
         &:last-child { width: 460px; }
     }

@@ -5,13 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp serve",
-
     "build-gulp": "gulp build",
     "build-rollup": "rollup --config ./rollup.config.js",
-
     "build-scripts-rollup": "rollup --config ./rollup.scripts.js",
     "build-scripts-gulp": "gulp scriptsBuild",
-
     "build-scripts": "npm run build-scripts-rollup && npm run build-scripts-gulp",
     "build": "npm run build-gulp && npm run build-rollup"
   },

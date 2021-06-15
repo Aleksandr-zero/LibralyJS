@@ -333,14 +333,14 @@ Connect:
 ```xml
 <!-- Pop-up main container -->
 <div class="popup-multiple">
-  <!--  -->
+  <!-- Buttons for opening pop-ups -->
   <button data-popup-number="one" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 1</button>
   <button data-popup-number="two" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 2</button>
   <button data-popup-number="three" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 3</button>
   <div class="popup-multiple__container popup-container">
      <!-- This is where the generation will take place -->
     <div class="popup-multiple__container-content">
-
+      
     </div>
   </div>
 </div>

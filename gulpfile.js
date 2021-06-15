@@ -100,17 +100,17 @@ const scssBuild = () => {
 };
 
 const scssBuildScripts = () => {
-   return src('./src/scss/@LibralyOfGoodieJS/libraryOfGoodieJS.scss')
+   return src('./src/scss/@LibraryOfGoodieJS/libraryOfGoodieJS.scss')
         .pipe(sass({
             outputStyle:'compressed'
         }))
         .pipe(removeCommentsCss())
         .pipe(autoprefixer())
-        .pipe(concat('css/libralyOfGoodieJS.css'))
+        .pipe(concat('css/libraryOfGoodieJS.css'))
         .pipe(cleanCSS({
             level: 2
         }))
-        .pipe(dest('./LibralyOfGoodieJS'));
+        .pipe(dest('./LibraryOfGoodieJS'));
 }
 
 

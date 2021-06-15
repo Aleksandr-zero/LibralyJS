@@ -26,6 +26,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.maximumSwipingAtSlider = 0;
 		this.positionSliderTrack = 0;
 		this.positionFinal = 0;
+		this.singleSwipe;
 
 		this.positionPressedX;
 		this.positionPressedY;
@@ -74,10 +75,24 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.sliderTrack.classList.remove("slider-active");
 	}
 
+	addEventsSliderTrack() {
+		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+
+		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
+
+		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
+
+		this.sliderTrack.classList.add("slider-active");
+	}
+
 	setsTransition_For_PushingWithFight() {
 		/* Устанавливает плавную прокрутку для передвижения слайдера с боем.  */
 
-		const newPosition = this.checks_In_WhichDirectionMoveSlider();
+		this.checks_In_WhichDirectionMoveSlider();
+
+		const newPosition = this.calculatesPositionSliderTrack();
 		this.positionSliderTrack = newPosition;
 
 		this.allowSwipe = false;
@@ -98,26 +113,11 @@ export class SliderWithAutomaticAdjustment extends Slider {
     checks_In_WhichDirectionMoveSlider() {
     	/* Проверяет, в каком направлении перемещать слайдер.  */
 
-    	const lastSlide = Math.round(this.slides[this.currentSlide].getBoundingClientRect().width);
-    	let nextSlide;
-
-    	if (this.currentSlide) {
-    		nextSlide = Math.round(this.slides[this.currentSlide - 1].getBoundingClientRect().width);
-    	};
-
-    	let newPosition = ( lastSlide > this.sliderWidth ) ?
-    						this.positionFinal + this.sliderWidth :
-    						this.positionFinal + lastSlide;
-
-    	newPosition = ( this.directionSliderTrack === "left" ) ? newPosition - nextSlide : newPosition;
-
     	if ( this.directionSliderTrack === "right" && this.currentSlide !== this.numberSlides ) {
     		this.currentSlide++;
     	} else if ( this.directionSliderTrack === "left" && this.currentSlide !== 0 ) {
     		this.currentSlide--;
     	};
-
-    	return newPosition;
     }
 
     returnsSliderBack() {
@@ -136,6 +136,19 @@ export class SliderWithAutomaticAdjustment extends Slider {
 			this.allowSwipe = true;
 			this.sliderTrack.style.transition = `none`;
 		}, this.speed);
+    }
+
+    calculatesPositionSliderTrack() {
+    	let newPosition = 0;
+
+        for(let i = 0; this.currentSlide > i; i++){
+        	const widthSlide =  Math.round(this.slides[i].getBoundingClientRect().width);
+        	newPosition += widthSlide;
+        };
+
+        newPosition = (newPosition > this.maximumSwipingAtSlider) ? this.maximumSwipingAtSlider : newPosition;
+
+        return newPosition;
     }
 
 
@@ -184,13 +197,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
-		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
-		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-
-		this.sliderTrack.classList.add("slider-active");
+		this.addEventsSliderTrack();
 	}
 
 	swipeAction() {
@@ -207,6 +214,14 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
 		this.singleSwipe = this.positionSliderTrack - this.positionFinal;
 		this.directionSliderTrack = (this.singleSwipe < 0) ? "left" : "right";
+
+		if (Math.abs(this.singleSwipe) >= 5) {
+			this.isScrollingSlider = true;
+		};
+
+		// ИСПРАВЛЕНИЕ БАГА: ПРИ ПЕРЕТАСКИВАНИЕ СЛАЙДЕРА В ЛЕВО ИЛИ В ПРАВО ДО УПОРА
+		// ТО ДОЛЖНЫ ЗАБЛОКИРОВАТЬ ЕГО И ДАТЬ ВОЗМОЖНОСТЬ ПРОКРУТИТЬ В ПРОТИВОПОЛОЖНОЮ
+		// СТОРОНУ
 
 		// if ( this.singleSwipe < 0 && this.isPushSliderWithFight && this.directionSliderTrack === "left" ) {
 		// 	this.isPushSliderWithFight = false;
@@ -231,6 +246,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 	swipeEnd() {
 		this.removeEventsSliderTrack();
+		this.isScrollingSlider = false;
 
 		if ( this.isReturnSlider ) {
 			this.returnsSliderBack();

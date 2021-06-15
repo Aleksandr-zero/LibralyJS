@@ -1,4 +1,4 @@
-# [Libraly JS](https://aleksandr-zero.github.io/LibralyJS/app/)
+# [Library JS](https://aleksandr-zero.github.io/LibraryJS/app/)
 
 Library of goodies for your site ;)</br>
 There is everything that your heart desires!
@@ -6,9 +6,13 @@ There is everything that your heart desires!
 ## Getting started
 
 Connect common CSS:
-
 ```xml
-<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/css/libralyOfGoodieJS.css">
+<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/css/libralyOfGoodieJS.css">
+```
+
+Connect all library:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/libralyOfGoodieJS.js"></script>
 ```
 
 ## Sliders
@@ -17,7 +21,7 @@ Connect common CSS:
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
 ```
 
 ```xml
@@ -59,7 +63,7 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
 ```
 
 ```xml
@@ -100,7 +104,7 @@ new SliderWithFight(blockSliderWithFight, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
 ```
 
 ```xml
@@ -156,7 +160,7 @@ new SliderEndLess(blockSliderEndless, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibralyJS/LibralyOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
 ```
 
 ```xml
@@ -203,6 +207,11 @@ new SliderSelfScrolling(blockSliderSelfScrolling, {
 
 ### Slider with automatic adjustment
 
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
+```
+
 ```xml
 <!-- Slider main container -->
 <div class="slider-automatic-adjustment">
@@ -239,9 +248,52 @@ new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
 });
 ```
 
+### Slider before-after
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderBeforeAfter.js"></script>
+```
+
+```xml
+<!-- Slider main container -->
+<div class="slider-before-after">
+  <div class="slider-list">
+    <div class="slider-track">
+      <!-- Yout slide before -->
+      <div class="slide-before">
+        before
+      </div>
+
+      <!-- Yout slide after -->
+      <div class="slide-after">
+        after
+      </div>
+
+      <div class="slider-switch">
+        <span>Switch</span>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockSliderBeforeAfter = document.querySelector(".slider-before-after");
+
+const newSliderBeforeAfter = new SliderBeforeAfter(blockSliderBeforeAfter);
+newSliderBeforeAfter.run();
+```
+
 ## Pop up
 
 ### Disposable popup
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
+```
+
 
 ```xml
 <!-- Pop-up main container -->
@@ -272,6 +324,11 @@ newPopupDisposable.run();
 ```
 
 ### Reusable pop up
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
+```
 
 ```xml
 <!-- Pop-up main container -->

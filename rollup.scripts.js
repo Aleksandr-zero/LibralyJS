@@ -3,17 +3,20 @@ import babel from '@rollup/plugin-babel';
 
 const paths = {
 	libraly: {
-		slider_1: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithoutFight.js",
-		slider_2: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithFight.js",
-		slider_3: "./src/js/@LibralyOfGoodieJS/sliders/sliderEndLess.js",
-		slider_4: "./src/js/@LibralyOfGoodieJS/sliders/sliderSelfScrolling.js",
-		slider_5: "./src/js/@LibralyOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js",
-		popup_1: "./src/js/@LibralyOfGoodieJS/popups/popupDisposable.js",
-		popup_2: "./src/js/@LibralyOfGoodieJS/popups/popupMultiple.js",
+		slider_all: "./src/js/@LibraryOfGoodieJS/libraryOfGoodieJS.js",
+		slider_1: "./src/js/@LibraryOfGoodieJS/sliders/sliderWithoutFight.js",
+		slider_2: "./src/js/@LibraryOfGoodieJS/sliders/sliderWithFight.js",
+		slider_3: "./src/js/@LibraryOfGoodieJS/sliders/sliderEndLess.js",
+		slider_4: "./src/js/@LibraryOfGoodieJS/sliders/sliderSelfScrolling.js",
+		slider_5: "./src/js/@LibraryOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js",
+		slider_6: "./src/js/@LibraryOfGoodieJS/sliders/sliderBeforeAfter.js",
+		popup_1: "./src/js/@LibraryOfGoodieJS/popups/popupDisposable.js",
+		popup_2: "./src/js/@LibraryOfGoodieJS/popups/popupMultiple.js",
 	},
 	build: {
-		js_sliders: "./LibralyOfGoodieJS/scripts/sliders",
-		js_popup: "./LibralyOfGoodieJS/scripts/popups"
+		js_all: "./LibraryOfGoodieJS/scripts",
+		js_sliders: "./LibraryOfGoodieJS/scripts/sliders",
+		js_popup: "./LibraryOfGoodieJS/scripts/popups"
 	}
 };
 
@@ -27,6 +30,15 @@ const getPlugins = () => [
 
 export default [
 	{
+	    input: paths.libraly.slider_all,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_all}/libraryOfGoodieJS.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
 	    input: paths.libraly.slider_1,
 	    output: [
 	    	{
@@ -67,6 +79,15 @@ export default [
 	    output: [
 	    	{
 	    		file: `${paths.build.js_sliders}/sliderWithAutomaticAdjustment.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
+	    input: paths.libraly.slider_6,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_sliders}/sliderBeforeAfter.js`,
 	    		format: 'es'
 	    	}
 	    ],

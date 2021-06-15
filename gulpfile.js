@@ -67,12 +67,12 @@ const scriptsDev = () => {
 
 
 const scriptsOptimization = () => {
-    return src(["./LibralyOfGoodieJS/scripts/**/**.js"])
-        .pipe(replace(/export { (SliderEndLess|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight|PopupMuliple|PopupDisposable) };/g, ""))
+    return src(["./LibraryOfGoodieJS/scripts/**/**.js"])
+        .pipe(replace(/export { (SliderEndLess|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight|SliderBeforeAfter|PopupMuliple|PopupDisposable) };/g, ""))
         .pipe(uglify({
             keep_fnames: true
         }))
-        .pipe(dest("./LibralyOfGoodieJS/scripts"));
+        .pipe(dest("./LibraryOfGoodieJS/scripts"));
 }
 
 

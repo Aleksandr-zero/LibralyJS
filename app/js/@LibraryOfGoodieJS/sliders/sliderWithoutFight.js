@@ -65,6 +65,30 @@ export class SliderWithoutFight extends Slider {
 		this.slider.classList.remove("slider-active");
 	}
 
+	addEventsSliderTrack() {
+		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+
+		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
+
+		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
+		this.slider.classList.add("slider-active");
+	};
+
+	checksOutOfBounds() {
+		/* Если палец будет заходить за границы слайдера то запрещаем его двигать.  */
+
+		if (
+			(this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX && this.positionSliderTrack - this.positionFinal > 0) ||
+			(this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
+			) {
+
+			this.measuresSpeedTrafficSliderTrack();
+			this.removeEventsSliderTrack();
+		};
+	}
+
 
 	// Автоматическая прокрутка.
 	measuresSpeedTrafficSliderTrack() {
@@ -133,9 +157,7 @@ export class SliderWithoutFight extends Slider {
 			this.isScrollingSlider = true;
 		};
 
-		if ( (this.positionSliderTrack <= this.maximumSwipingAtSlider && this.allowSwipe) &&
-			 (this.positionSliderTrack > 0 && this.allowSwipe)) {
-
+		if ( (this.positionSliderTrack <= this.maximumSwipingAtSlider ) && (this.positionSliderTrack > 0)) {
 			this.sliderTrack.style.transform = `translate3d(-${this.positionSliderTrack}px, 0px, 0px)`;
 		};
 	};
@@ -155,15 +177,7 @@ export class SliderWithoutFight extends Slider {
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 		this.sliderTrack.style.transition = `none`;
 
-
-		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-		this.slider.classList.add("slider-active");
+		this.addEventsSliderTrack();
 	}
 
 	swipeAction() {
@@ -182,7 +196,7 @@ export class SliderWithoutFight extends Slider {
 			this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
 			this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
 
-			super.checksOutOfBounds();
+			this.checksOutOfBounds();
 		};
 
 		if (this.allowSwipe) {

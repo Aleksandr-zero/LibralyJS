@@ -10,8 +10,12 @@ export class SliderBeforeAfter {
 		this.options = options;
 
 		this.sliderSwitch = this.slider.querySelector(".slider-switch");
+		this.slideBefore = this.slider.querySelector(".slide-before");
 
-		this.positionSliderSwitch = 0;
+		this.sliderWidth = this.slider.offsetWidth;
+
+		this.positionSliderSwitch;
+		this.positionFinal = 0;
 
 		this.positionPressedX;
 
@@ -40,9 +44,12 @@ export class SliderBeforeAfter {
 	pushingSliderSwitch() {
 		const evt = this.getEvent();
 
-		this.positionSliderSwitch = this.positionPressedX - evt.clientX;
+		this.positionSliderSwitch = this.positionPressedX - evt.clientX + this.positionFinal;
+
+		const newWidthSlideBefore = this.sliderWidth + this.positionSliderSwitch
 
 		this.sliderSwitch.style.left = `${-this.positionSliderSwitch}px`;
+		this.slideBefore.style.width = `${newWidthSlideBefore}px`;
 	}
 
 	swipeStart() {
@@ -50,12 +57,16 @@ export class SliderBeforeAfter {
 
 		this.positionPressedX = evt.clientX;
 
+		this.sliderSwitch.style.left = `${-this.positionFinal}px`;
+
 		this.sliderSwitch.addEventListener("mousemove", this._pushingSliderSwitch);
 		this.sliderSwitch.addEventListener("touchmove", this._pushingSliderSwitch, { passive: true });
 	}
 
 	swipeEnd() {
 		this.removeEventsSliderSwitch();
+
+		this.positionFinal = this.positionSliderSwitch;
 	}
 
 

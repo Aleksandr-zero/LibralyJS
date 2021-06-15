@@ -1,12 +1,12 @@
-import { SliderWithoutFight } from "./@LibralyOfGoodieJS/sliders/sliderWithoutFight.js";
-import { SliderWithFight } from "./@LibralyOfGoodieJS/sliders/sliderWithFight.js";
-import { SliderEndLess } from "./@LibralyOfGoodieJS/sliders/sliderEndLess.js";
-import { SliderSelfScrolling } from "./@LibralyOfGoodieJS/sliders/sliderSelfScrolling.js";
-import { SliderWithAutomaticAdjustment } from "./@LibralyOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js";
-import { SliderBeforeAfter } from "./@LibralyOfGoodieJS/sliders/sliderBeforeAfter.js";
+import { SliderWithoutFight } from "./@LibraryOfGoodieJS/sliders/sliderWithoutFight.js";
+import { SliderWithFight } from "./@LibraryOfGoodieJS/sliders/sliderWithFight.js";
+import { SliderEndLess } from "./@LibraryOfGoodieJS/sliders/sliderEndLess.js";
+import { SliderSelfScrolling } from "./@LibraryOfGoodieJS/sliders/sliderSelfScrolling.js";
+import { SliderWithAutomaticAdjustment } from "./@LibraryOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js";
+import { SliderBeforeAfter } from "./@LibraryOfGoodieJS/sliders/sliderBeforeAfter.js";
 
-import { PopupDisposable } from "./@LibralyOfGoodieJS/popups/popupDisposable.js";
-import { PopupMuliple } from "./@LibralyOfGoodieJS/popups/popupMultiple.js";
+import { PopupDisposable } from "./@LibraryOfGoodieJS/popups/popupDisposable.js";
+import { PopupMuliple } from "./@LibraryOfGoodieJS/popups/popupMultiple.js";
 
 
 // SLIDERS

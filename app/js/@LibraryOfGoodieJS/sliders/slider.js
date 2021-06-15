@@ -41,13 +41,11 @@ export default class Slider {
 		if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
 			// Если пользователь будет  скроллить страницу.
 
-			const isScrolledPage = true;
-
-			if ( isScrolledPage && !this.isScrollingSlider ) {
+			if ( !this.isScrollingSlider ) {
 				this.allowSwipe = false;
 				this.removeEventsSliderTrack();
 
-			} else if ( isScrolledPage && this.isScrollingSlider ) {
+			} else if ( this.isScrollingSlider ) {
 				this.allowSwipe = true;
 			};
 		};

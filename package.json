@@ -18,9 +18,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Aleksandr-zero/LibralyJS.git"
+    "url": "git+https://github.com/Aleksandr-zero/LibraryJS.git"
   },
-  "homepage": "https://github.com/Aleksandr-zero/LibralyJS#readme",
+  "homepage": "https://github.com/Aleksandr-zero/LibraryJS#readme",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.14.5",

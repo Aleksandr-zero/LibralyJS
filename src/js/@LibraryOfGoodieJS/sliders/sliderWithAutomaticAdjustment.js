@@ -167,6 +167,16 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		positionCurrentSlide = Math.round(positionCurrentSlide);
 
 		if ( (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) <= positionCurrentSlide || positionCurrentSlide < 0) {
+			let finalPosition = this.calculatesPositionSliderTrack();
+
+			finalPosition = (this.directionSliderTrack === "right") ?
+							finalPosition + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) :
+							finalPosition;
+
+			this.sliderTrack.style.transform = `translate3d(${-finalPosition}px, 0px, 0px)`;
+
+			this.positionSliderTrack = finalPosition;
+
 			this.swipeEnd();
 			this.isPushSliderWithFight = true;
 		};
@@ -174,6 +184,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 	swipeStart() {
 		if (!this.allowSwipe) {
+			this.allowSwipe = true;
             return;
         };
 
@@ -187,13 +198,10 @@ export class SliderWithAutomaticAdjustment extends Slider {
 			this.isReturnSlider = true;
 		};
 
-		if ( this.sliderWidth >= this.slides[this.currentSlide].offsetWidth ) {
-			this.isSliderWithFight = true;
-			this.isSliderWithoutFight = false;
-		} else if ( this.sliderWidth <= this.slides[this.currentSlide].offsetWidth ) {
-			this.isSliderWithoutFight = true;
-			this.isSliderWithFight = false;
-		};
+		this.isSliderWithFight = (this.sliderWidth >= this.slides[this.currentSlide].offsetWidth) ?
+								 true : false;
+		this.isSliderWithoutFight = (this.sliderWidth <= this.slides[this.currentSlide].offsetWidth) ?
+									true : false;
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
@@ -215,21 +223,18 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.singleSwipe = this.positionSliderTrack - this.positionFinal;
 		this.directionSliderTrack = (this.singleSwipe < 0) ? "left" : "right";
 
-		if (Math.abs(this.singleSwipe) >= 5) {
-			this.isScrollingSlider = true;
+		this.isScrollingSlider = (Math.abs(this.singleSwipe) >= 5) ? true : false;
+
+		if ( this.isPushSliderWithFight ) {
+			this.isPushSliderWithFight = false;
+
+			if (this.positionSliderTrack <= this.calculatesPositionSliderTrack() ||
+				this.positionSliderTrack >= this.calculatesPositionSliderTrack() + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) ) {
+				this.isPushSliderWithFight = true;
+			};
 		};
 
-		// ИСПРАВЛЕНИЕ БАГА: ПРИ ПЕРЕТАСКИВАНИЕ СЛАЙДЕРА В ЛЕВО ИЛИ В ПРАВО ДО УПОРА
-		// ТО ДОЛЖНЫ ЗАБЛОКИРОВАТЬ ЕГО И ДАТЬ ВОЗМОЖНОСТЬ ПРОКРУТИТЬ В ПРОТИВОПОЛОЖНОЮ
-		// СТОРОНУ
-
-		// if ( this.singleSwipe < 0 && this.isPushSliderWithFight && this.directionSliderTrack === "left" ) {
-		// 	this.isPushSliderWithFight = false;
-		// };
-
-		if ( this.singleSwipe < 0 && this.isReturnSlider ) {
-			this.isReturnSlider = false;
-		};
+		this.isReturnSlider = (this.singleSwipe < 0 && this.isReturnSlider) ? false : this.isReturnSlider;
 
 		if ( this.isSliderWithFight || this.isPushSliderWithFight ) {
 			this.pushingSliderWithFight();

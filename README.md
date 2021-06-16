@@ -7,12 +7,12 @@ There is everything that your heart desires!
 
 Connect common CSS:
 ```xml
-<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/css/libralyOfGoodieJS.css">
+<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/css/libraryOfGoodieJS.css">
 ```
 
 Connect all library:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/libralyOfGoodieJS.js"></script>
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/libraryOfGoodieJS.js"></script>
 ```
 
 ## Sliders

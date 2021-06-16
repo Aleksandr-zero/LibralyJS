@@ -21,11 +21,12 @@ export class SliderBeforeAfter {
 
 		this._pushingSliderSwitch = () => { this.pushingSliderSwitch(); };
 
-		this.addOptions();
-	}
+		this.goingOutBoundsSlider = () => {
+			/* Выход за границы слайдера мышкой. */
 
-	addOptions() {
-
+			this.swipeEnd();
+			this.sliderSwitch.removeEventListener("mouseout", this.goingOutBoundsSlider);
+		};
 	}
 
 
@@ -61,6 +62,7 @@ export class SliderBeforeAfter {
 
 		this.sliderSwitch.addEventListener("mousemove", this._pushingSliderSwitch);
 		this.sliderSwitch.addEventListener("touchmove", this._pushingSliderSwitch, { passive: true });
+		this.sliderSwitch.addEventListener("mouseout", this.goingOutBoundsSlider);
 	}
 
 	swipeEnd() {

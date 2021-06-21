@@ -4,6 +4,7 @@ import { SliderEndLess } from "./@LibraryOfGoodieJS/sliders/sliderEndLess.js";
 import { SliderSelfScrolling } from "./@LibraryOfGoodieJS/sliders/sliderSelfScrolling.js";
 import { SliderWithAutomaticAdjustment } from "./@LibraryOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js";
 import { SliderBeforeAfter } from "./@LibraryOfGoodieJS/sliders/sliderBeforeAfter.js";
+import { SliderSplit } from "./@LibraryOfGoodieJS/sliders/sliderSplit.js";
 
 import { PopupDisposable } from "./@LibraryOfGoodieJS/popups/popupDisposable.js";
 import { PopupMuliple } from "./@LibraryOfGoodieJS/popups/popupMultiple.js";
@@ -75,6 +76,14 @@ const blockSliderBeforeAfter = document.querySelector(".slider-before-after");
 if (blockSliderBeforeAfter) {
 	const newSliderBeforeAfter = new SliderBeforeAfter(blockSliderBeforeAfter);
 	newSliderBeforeAfter.run();
+};
+
+
+const blocksSliderSplit = document.querySelector(".slider-split");
+
+if (blocksSliderSplit) {
+	const newSliderSplit = new SliderSplit(blocksSliderSplit, {});
+	newSliderSplit.run();
 };
 
 

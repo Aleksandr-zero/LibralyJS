@@ -10,6 +10,7 @@ const paths = {
 		slider_4: "./src/js/@LibraryOfGoodieJS/sliders/sliderSelfScrolling.js",
 		slider_5: "./src/js/@LibraryOfGoodieJS/sliders/sliderWithAutomaticAdjustment.js",
 		slider_6: "./src/js/@LibraryOfGoodieJS/sliders/sliderBeforeAfter.js",
+		slider_7: "./src/js/@LibraryOfGoodieJS/sliders/sliderSplit.js",
 		popup_1: "./src/js/@LibraryOfGoodieJS/popups/popupDisposable.js",
 		popup_2: "./src/js/@LibraryOfGoodieJS/popups/popupMultiple.js",
 	},
@@ -88,6 +89,15 @@ export default [
 	    output: [
 	    	{
 	    		file: `${paths.build.js_sliders}/sliderBeforeAfter.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
+	    input: paths.libraly.slider_7,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_sliders}/sliderSplit.js`,
 	    		format: 'es'
 	    	}
 	    ],

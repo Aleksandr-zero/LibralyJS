@@ -285,6 +285,38 @@ const newSliderBeforeAfter = new SliderBeforeAfter(blockSliderBeforeAfter);
 newSliderBeforeAfter.run();
 ```
 
+### Slider split
+
+Connect:
+```xml
+<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
+```
+
+```xml
+<!-- Slider main container -->
+<div class="slider-split">
+  <div class="slider-list">
+    <!-- Your slides -->
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <!-- Your slides -->
+  </div>
+  <div class="slider-split-back-btns">
+    <button type="button" class="slider-split-btn split-btn-active">Btn slider 1</button>
+    <button type="button" class="slider-split-btn">Btn slider 2</button>
+    <button type="button" class="slider-split-btn">Btn slider 3</button>
+  </div>
+</div>
+```
+
+```js
+const blockSliderSplit = document.querySelector(".slider-split");
+
+const newSliderSplit = new SliderSplit(blockSliderSplit);
+newSliderSplit.run();
+```
+
 ## Pop up
 
 ### Disposable popup

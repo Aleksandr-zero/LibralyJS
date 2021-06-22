@@ -5,4 +5,11 @@
 .idea
 *.sublime*
 
+dist/
+
+src/doc/
+src/scss/development/
+src/index.html
+src/js/app.js
+
 .size-snapshot.json

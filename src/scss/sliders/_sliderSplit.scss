@@ -1,8 +1,4 @@
 .slider-split {
-	width: 500px;
-	height: 250px;
-	margin: 50px auto 0;
-
 	position: relative;
 
 	.slider-list {
@@ -18,23 +14,7 @@
 		width: 100%;
 		height: 100%;
 
-		font-size: 50px;
-
 		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		&:first-child {
-			background-color: $primary-color-2;
-		}
-
-		&:nth-child(2) {
-			background-color: $primary-color-4;
-		}
-
-		&:last-child {
-			background-color: $primary-color-3;
-		}
 	}
 
 	&-back-btns {
@@ -58,7 +38,7 @@
 
 		width: 100px;
 		height: 10px;
-		background-color: $white-color;
+		background-color: #ffffff;
 		opacity: 0.45;
 
 		transition: opacity $animate;

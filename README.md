@@ -297,7 +297,7 @@ Connect:
 <div class="slider-split">
   <div class="slider-list">
     <!-- Your slides -->
-    <div class="slide">1</div>
+    <div class="slide slide-split-active">1</div>
     <div class="slide">2</div>
     <div class="slide">3</div>
     <!-- Your slides -->

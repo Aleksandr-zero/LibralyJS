@@ -3,11 +3,10 @@ const { src, dest, series, watch, parallel } = require('gulp');
 const removeCommentsCss = require('gulp-strip-css-comments');
 const autoprefixer      = require('gulp-autoprefixer');
 const sass              = require('gulp-sass');
-const cleanCSS          = require('gulp-clean-css');
 const include           = require('gulp-file-include');
+const cleanCSS          = require('gulp-clean-css');
 const del               = require('del');
 const concat            = require('gulp-concat');
-const htmlmin           = require("gulp-htmlmin");
 const sync              = require('browser-sync').create();
 const babel             = require('gulp-babel');
 const uglify            = require('gulp-uglify');
@@ -15,54 +14,22 @@ const replace           = require("gulp-replace");
 
 
 const htmlDev = () => {
-    return src('src/**.html')
+    return src('src/index.html')
         .pipe(include({
             prefix: '@@'
         }))
-        .pipe(dest('app'));
-};
-
-const htmlBuild =() => {
-    return src(['src/**.html'])
-        .pipe(include({
-            prefix: '@@'
-        }))
-        .pipe(replace(/type="module"/g, ""))
-        .pipe(htmlmin({
-            ignoreCustomFragments: [/<</],
-            collapseWhitespace: true,
-            collapseInlineTagWhitespace: true,
-            collapseBooleanAttributes: true,
-            decodeEntities: true,
-            removeComments: true,
-            continueOnParseError: true,
-            removeEmptyAttributes: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true
-        }))
-        .pipe(dest('app'));
-}
-
-const image = () => {
-    return src("src/img/**/*")
-        .pipe(dest("app/img"))
-}
-
-const fonts = () => {
-    return src("src/fonts/**/*")
-        .pipe(dest("app/fonts"));
+        .pipe(dest('dist'));
 };
 
 const doc = () => {
     return src("src/doc/**/*")
-        .pipe(dest("app/doc"))
+        .pipe(dest("dist/doc"))
 }
 
 
 const scriptsDev = () => {
-    return src("./src/js/**/**/*")
-        .pipe(dest("app/js"))
+    return src("./src/js/**/*.js")
+        .pipe(dest("dist/js"))
 };
 
 
@@ -77,30 +44,17 @@ const scriptsOptimization = () => {
 
 
 const scssDev = () => {
-   return src('src/scss/style.scss')
+   return src('src/scss/development/style.scss')
        .pipe(sass({
             outputStyle:'expanded'
         }))
        .pipe(concat('css/style.css'))
-       .pipe(dest('app'));
+       .pipe(dest('dist'));
 };
 
-const scssBuild = () => {
-   return src('./src/scss/style.scss')
-        .pipe(sass({
-            outputStyle:'compressed'
-        }))
-        .pipe(removeCommentsCss())
-        .pipe(autoprefixer())
-        .pipe(concat('css/style.css'))
-        .pipe(cleanCSS({
-            level: 2
-        }))
-        .pipe(dest('app'));
-};
 
 const scssBuildScripts = () => {
-   return src('./src/scss/@LibraryOfGoodieJS/libraryOfGoodieJS.scss')
+   return src('./src/scss/libraryOfGoodieJS.scss')
         .pipe(sass({
             outputStyle:'compressed'
         }))
@@ -115,21 +69,20 @@ const scssBuildScripts = () => {
 
 
 const clear = () => {
-    return del(['app']);
+    return del(['dist']);
 };
 
 
 const serve = () => {
     sync.init({
-        server: './app/'
+        server: './dist/'
     });
 
-    watch('src/**/**.html',             series(htmlDev)).on('change', sync.reload);
-    watch("src/js/**/**.js",            series(scriptsDev)).on('change', sync.reload);
-    watch('src/scss/**/**.scss',        series(scssDev)).on('change', sync.reload);
+    watch('src/**/*.html',             series(htmlDev)).on('change', sync.reload);
+    watch("src/js/**/*.js",            series(scriptsDev)).on('change', sync.reload);
+    watch('src/scss/**/*.scss',        series(scssDev)).on('change', sync.reload);
 };
 
 
-exports.build = series(clear, parallel(scssBuild, htmlBuild, image, fonts, doc));
-exports.serve = series(clear, scssDev, htmlDev, scriptsDev, image, fonts, doc, serve);
+exports.serve = series(clear, scssDev, htmlDev, scriptsDev, doc, serve);
 exports.scriptsBuild = series(parallel(scriptsOptimization, scssBuildScripts));

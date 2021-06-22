@@ -1,14 +1,11 @@
 .popup-disposable {
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
 
     &.popup-disposable-active {
 
     	.popup-disposable__container {
     		opacity: 1;
     		visibility: visible;
-    		background-color: rgba($black-color, 0.7);
+    		background-color: rgba(#000000, 0.7);
     	}
     }
 

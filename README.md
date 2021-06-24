@@ -1,4 +1,4 @@
-# [Library JS](https://aleksandr-zero.github.io/LibraryJS/app/)
+# Library JS
 
 Library of goodies for your site ;)</br>
 There is everything that your heart desires!

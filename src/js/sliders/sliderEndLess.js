@@ -21,13 +21,31 @@ export class SliderEndLess extends Slider {
 		this.numberSlides = this.slides.length;
 		this.widthSlide = this.slides[0].offsetWidth;
 
+        this.positionPressedX;
+        this.positionPressedY;
+		this.positionFingerPressSliderX;
+		this.positionFingerPressSliderY;
+        this.positionX_FingetCurrentMoment_OnSlider;
+        this.positionY_FingetCurrentMoment_OnSlider;
+
+		this.allowSwipe = true;
+		this.isScrollingSlider = false;
+
 		this.intervals = [];
 		this.timeouts = [];
 
-		this.sliderBtnPushLast = this.slider.querySelector(".btn-slider-push-last");
-		this.sliderBtnPushNext = this.slider.querySelector(".btn-slider-push-next");
+		this._swipeStart = () => { this.swipeStart(); };
+		this._swipeAction = () => { this.swipeAction(); };
+		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.addOptions();
+
+        this.goingOutBoundsSlider = () => {
+            /* Выход за границы слайдера мышкой. */
+
+            this.swipeEnd();
+            this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+        };
 	}
 
 	addOptions() {
@@ -49,18 +67,38 @@ export class SliderEndLess extends Slider {
 		};
 	}
 
-	addEventClick_BtnsSliderPush() {
-		/* Добавление событий на кнопки передвижения слайдера.  */
 
-		this.sliderBtnPushLast.addEventListener("click", () => { this.pressedBtnPushSlider(); });
-		this.sliderBtnPushNext.addEventListener("click", () => { this.pressedBtnPushSlider(); });
+	// Навешивание событий.
+	addEventsSliderTrack() {
+        this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+        this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
+
+        this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+        this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+
+        this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
+        this.slider.classList.add("slider-active");
 	}
+
+    removeEventsSliderTrack() {
+        /* Удаляет события у блока - sliderTrack и у самого слайдер  */
+
+        this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
+        this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
+
+        this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
+        this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+        this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
+
+        this.slider.classList.remove("slider-active");
+        this.allowSwipe = true;
+    }
 
 
 	pushingSlider() {
 		/* Продвигет слайдер.  */
 
-		const direction = event.currentTarget.dataset.direction;
+		const direction = (this.positionSliderTrack > this.widthSlide) ? "next" : "last";
 
 		const positionSliderTrack = (direction === "next") ? -this.widthSlide * 2 : 0;
 		this.sliderTrack.style.transform = `translate3d(${positionSliderTrack}px, 0px, 0px)`;
@@ -84,20 +122,20 @@ export class SliderEndLess extends Slider {
 		};
 	}
 
-	pressedBtnPushSlider() {
-		/* Передвигает слайдер при клике на кнопку.  */
+	startPushSliderEndLess() {
+		this.allowSwipe = false;
 
 		this.clearnsSetIntervals();
-		this.blocking_unlockingBtnsSliders("none");
 
 		this.pushingSlider();
 
 		setTimeout(() => {
-			this.blocking_unlockingBtnsSliders("auto");
 
 			if (!this.freezeSliderMouseHover) {
 				this.createSetInterval_For_Slider();
 			};
+
+			this.allowSwipe = true;
 
 		}, this.speed * 1.5);
 	}
@@ -166,13 +204,6 @@ export class SliderEndLess extends Slider {
 	addCssSliderTrack() {
 		/* Добавляет анимацю для продвижение слайдера.  */
 		this.sliderTrack.style.transition = `transform 0.${this.speed * 1.5}s`;
-	}
-
-	blocking_unlockingBtnsSliders(pointer) {
-		/* Блокирует и производит разблокировку кнопок продвижения слайдера.  */
-
-		this.sliderBtnPushLast.style.pointerEvents = `${pointer}`;
-		this.sliderBtnPushNext.style.pointerEvents = `${pointer}`;
 	}
 
 	nullifiesCssSliderTrack() {
@@ -285,13 +316,13 @@ export class SliderEndLess extends Slider {
 		this.timeInterval = setInterval(() => {
 			this.sliderTrack.style.transform = `translate3d(-${this.widthSlide * 2}px, 0px, 0px)`;
 			this.addCssSliderTrack();
-			this.blocking_unlockingBtnsSliders("none");
+			this.allowSwipe = false;
 
 			if (this.movesSlider_If_OnlyTwoSlides()) return;
 
 			setTimeout(() => {
 				this.movesFirstSlide_TheEnd();
-				this.blocking_unlockingBtnsSliders("auto");
+				this.allowSwipe = true;
 			}, this.speed * 1.5);
 
 		}, this.timerAdvance[1]);
@@ -300,9 +331,65 @@ export class SliderEndLess extends Slider {
 	}
 
 
+	// Функционал слайдера.
+    pushingSwipeSlider() {
+        this.singleSwipe = this.positionSliderTrack;
+
+    	this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
+
+        if (Math.abs(this.singleSwipe) >= 5) {
+            this.isScrollingSlider = true;
+        };
+    }
+
+	swipeStart() {
+        if (!this.allowSwipe) {
+            return;
+        };
+
+		const evt = super.getEvent();
+
+        super.calculatesTouchCoordinates_SwipeStart(
+            this.evt = evt
+        );
+
+		this.clearnsSetIntervals();
+
+        this.addEventsSliderTrack();
+	}
+
+	swipeAction() {
+    	const evt = super.getEvent();
+
+        super.checkSliderCanBeMoved(
+            this.evt = evt
+        );
+
+        if (!this.allowSwipe) {
+            return
+        };
+
+        this.positionSliderTrack = this.positionPressedX - evt.clientX + this.widthSlide;
+
+        if (event.type === "touchmove") {
+            this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
+            this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
+            super.checksOutOfBounds();
+        };
+
+		this.pushingSwipeSlider();
+	}
+
+	swipeEnd() {
+		this.isScrollingSlider = false;
+		this.removeEventsSliderTrack();
+
+		this.startPushSliderEndLess();
+	}
+
+
 	clearnsSetIntervals() {
 		/* Чистит все созданные setInterval. */
-
 		this.intervals.forEach((interval) => {
 			window.clearInterval(interval);
 		});
@@ -310,7 +397,6 @@ export class SliderEndLess extends Slider {
 
 	clearnsSetTimeouts() {
 		/* Чистит все созданные setInterval. */
-
 		this.timeouts.forEach((timeout) => {
 			window.clearInterval(timeout);
 		});
@@ -319,7 +405,9 @@ export class SliderEndLess extends Slider {
 
 	run() {
 		this.addLastSlideStart();
-		this.addEventClick_BtnsSliderPush();
+
+		this.sliderTrack.addEventListener("touchstart", this._swipeStart);
+		this.sliderTrack.addEventListener("mousedown", this._swipeStart, { passive: true });
 
 		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 	}

@@ -124,7 +124,8 @@ export class SliderWithFight extends Slider {
 
     	this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
-        if (Math.abs(this.singleSwipe) >= 5) {
+        if (Math.abs(this.singleSwipe >= 5) && !this.isScrollingSlider) {
+            console.log(true);
             this.isScrollingSlider = true;
         };
     }
@@ -161,6 +162,7 @@ export class SliderWithFight extends Slider {
         if (event.type === "touchmove") {
             this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
             this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
+
             super.checksOutOfBounds();
         };
 
@@ -169,7 +171,8 @@ export class SliderWithFight extends Slider {
 
 	swipeEnd() {
 		this.removeEventsSliderTrack();
-        this.isScrollingSlider = false;
+         this.isScrollingSlider = false;
+        this.allowSwipe = true;
 
 		if ((Math.abs(this.singleSwipe) <= this.percentForSuccessfulScrolling)) {
 			this.returnsSliderBack();

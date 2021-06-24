@@ -25,6 +25,14 @@ export default class Slider {
 		return (event.type.search('touch') != -1) ? event.touches[0] : event;
 	}
 
+	getNavigationSlider() {
+
+	}
+
+	getPaginationSlider() {
+		return (this.slider.querySelector(".slider-pagination")) ? true : false;
+	}
+
 	measuresMaximumSwipeOfSlider() {
 		/* Измеряет максимальную длину прокрутки слайдера.  */
 
@@ -64,11 +72,10 @@ export default class Slider {
 			) {
 
 			this.swipeEnd();
-	};
-}
+		};
+	}
 
-
-calculatesTouchCoordinates_SwipeStart(evt) {
+	calculatesTouchCoordinates_SwipeStart(evt) {
 		/**
 		Вычисляет координаты при первом касании слайдера.
 		* @param evt -> fun "getEvent"

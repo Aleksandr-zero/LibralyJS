@@ -1,9 +1,9 @@
 export class Navigation {
     /**
-	Создаёт пагинацию для слайдера.
+	Создаёт навигацию для слайдера.
     */
 
-	constructor() {
+    swipeAction_Btn() {
 
-	}
+    }
 };

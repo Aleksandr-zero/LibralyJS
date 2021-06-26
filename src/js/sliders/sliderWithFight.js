@@ -68,7 +68,6 @@ export class SliderWithFight extends Slider {
         this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
 
         this.slider.classList.remove("slider-active");
-        this.allowSwipe = true;
     }
 
     addEventsSliderTrack() {
@@ -131,9 +130,7 @@ export class SliderWithFight extends Slider {
     }
 
 	swipeStart() {
-        if (!this.allowSwipe) {
-            return;
-        };
+        this.allowSwipe = true;
 
 		const evt = super.getEvent();
 
@@ -171,7 +168,7 @@ export class SliderWithFight extends Slider {
 
 	swipeEnd() {
 		this.removeEventsSliderTrack();
-         this.isScrollingSlider = false;
+        this.isScrollingSlider = false;
         this.allowSwipe = true;
 
 		if ((Math.abs(this.singleSwipe) <= this.percentForSuccessfulScrolling)) {

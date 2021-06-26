@@ -91,7 +91,6 @@ export class SliderEndLess extends Slider {
         this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
 
         this.slider.classList.remove("slider-active");
-        this.allowSwipe = true;
     }
 
 
@@ -343,9 +342,7 @@ export class SliderEndLess extends Slider {
     }
 
 	swipeStart() {
-        if (!this.allowSwipe) {
-            return;
-        };
+        this.allowSwipe = true;
 
 		const evt = super.getEvent();
 

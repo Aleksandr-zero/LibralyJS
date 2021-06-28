@@ -19,6 +19,21 @@ Connect all library:
 
 ### Components
 
+#### Navigation
+
+Adding navigation for the slider
+
+```xml
+<div class="slider-navigation">
+  <div class="back-btn-slider-push back-btn-slider-push-left">
+    <button data-direction="last" type="button" class="btn-slider-push btn-slider-push-last">Button</button>
+  </div>
+  <div class="back-btn-slider-push back-btn-slider-push-right">
+    <button data-direction="next" type="button" class="btn-slider-push btn-slider-push-next">Button</button>
+  </div>
+</div>
+```
+
 #### Pagination
 
 Adding pagination for the slider

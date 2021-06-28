@@ -8,92 +8,92 @@ export class SliderEndLess extends Slider {
     * @param options -> custom settings ( type -> Object )
     */
 
-	constructor(slider, options) {
-		super();
+    constructor(slider, options) {
+    	super();
 
-		this.slider = slider;
-		this.options = options;
+    	this.slider = slider;
+    	this.options = options;
 
-		this.sliderTrack = this.slider.querySelector(".slider-track");
-		this.positionSliderTrack = 0;
-		this.currentSlide = 0;
+    	this.sliderTrack = this.slider.querySelector(".slider-track");
+    	this.positionSliderTrack = 0;
+    	this.currentSlide = 0;
 
-		this.slides = this.sliderTrack.children;
-		this.numberSlides = this.slides.length;
-		this.widthSlide = this.slides[0].offsetWidth;
+    	this.slides = this.sliderTrack.children;
+    	this.numberSlides = this.slides.length;
+    	this.widthSlide = this.slides[0].offsetWidth;
 
-        this.positionPressedX;
-        this.positionPressedY;
-		this.positionFingerPressSliderX;
-		this.positionFingerPressSliderY;
-        this.positionX_FingetCurrentMoment_OnSlider;
-        this.positionY_FingetCurrentMoment_OnSlider;
+    	this.positionPressedX;
+    	this.positionPressedY;
+    	this.positionFingerPressSliderX;
+    	this.positionFingerPressSliderY;
+    	this.positionX_FingetCurrentMoment_OnSlider;
+    	this.positionY_FingetCurrentMoment_OnSlider;
 
-		this.allowSwipe = true;
-		this.isScrollingSlider = false;
+    	this.allowSwipe = true;
+    	this.isScrollingSlider = false;
 
-		this.intervals = [];
-		this.timeouts = [];
+    	this.intervals = [];
+    	this.timeouts = [];
 
-		this._swipeStart = () => { this.swipeStart(); };
-		this._swipeAction = () => { this.swipeAction(); };
-		this._swipeEnd = () => { this.swipeEnd(); };
+    	this._swipeStart = () => { this.swipeStart(); };
+    	this._swipeAction = () => { this.swipeAction(); };
+    	this._swipeEnd = () => { this.swipeEnd(); };
 
-		this.addOptions();
-		super.checkIsPaginationSLider();
+    	this.addOptions();
+    	super.checkIsPaginationSlider();
 
-        this.goingOutBoundsSlider = () => {
-            /* Выход за границы слайдера мышкой. */
+    	this.goingOutBoundsSlider = () => {
+    		/* Выход за границы слайдера мышкой. */
 
-            this.swipeEnd();
-            this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-        };
-	}
+    		this.swipeEnd();
+    		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+    	};
+    }
 
-	addOptions() {
-		/* Добавляет пользовательские настройки для слайдера.  */
+    addOptions() {
+    	/* Добавляет пользовательские настройки для слайдера.  */
 
-		this.speed = (this.options && this.options.speed) ? this.options.speed : 200;
-		this.timerAdvance = (this.options && this.options.timerAdvance) ?
-									[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
-		this.freezeSliderMouseHover = (this.options.freezeSliderMouseHover) ? this.options.freezeSliderMouseHover : false;
-		this.freezeSliderOnLossFocus = (this.options.freezeSliderOnLossFocus) ? this.options.freezeSliderOnLossFocus : false;
+    	this.speed = (this.options && this.options.speed) ? this.options.speed : 200;
+    	this.timerAdvance = (this.options && this.options.timerAdvance) ?
+    	[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
+    	this.freezeSliderMouseHover = (this.options.freezeSliderMouseHover) ? this.options.freezeSliderMouseHover : false;
+    	this.freezeSliderOnLossFocus = (this.options.freezeSliderOnLossFocus) ? this.options.freezeSliderOnLossFocus : false;
 
-		if (this.options && this.timerAdvance[0]) {
-			this.addSetInterval_For_Slider();
-			this.checks_If_UserOnSite();
+    	if (this.options && this.timerAdvance[0]) {
+    		this.addSetInterval_For_Slider();
+    		this.checks_If_UserOnSite();
 
-			if (this.freezeSliderMouseHover) {
-				this.addEventMouse_TouchMove_Slider();
-			};
-		};
-	}
+    		if (this.freezeSliderMouseHover) {
+    			this.addEventMouse_TouchMove_Slider();
+    		};
+    	};
+    }
 
 
 	// Навешивание событий.
 	addEventsSliderTrack() {
-        this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-        this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
+		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
 
-        this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-        this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
 
-        this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-        this.slider.classList.add("slider-active");
+		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
+		this.slider.classList.add("slider-active");
 	}
 
-    removeEventsSliderTrack() {
-        /* Удаляет события у блока - sliderTrack и у самого слайдер  */
+	removeEventsSliderTrack() {
+		/* Удаляет события у блока - sliderTrack и у самого слайдер  */
 
-        this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-        this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
+		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
+		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
 
-        this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
-        this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-        this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
+		this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+		this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
 
-        this.slider.classList.remove("slider-active");
-    }
+		this.slider.classList.remove("slider-active");
+	}
 
 
 	pushingSlider() {
@@ -123,8 +123,12 @@ export class SliderEndLess extends Slider {
 			this.currentSlide = this.numberSlides - 1;
 		};
 
+		this.checkIsNavigation_Pagination();
+	}
+
+	checkIsNavigation_Pagination() {
 		if ( this.isPagination ) {
-			super.watchSwipeSliderTrack();
+			super.watchSwipeSliderTrack_Pagination();
 		};
 	}
 
@@ -341,6 +345,8 @@ export class SliderEndLess extends Slider {
 
 			if (this.movesSlider_If_OnlyTwoSlides()) return;
 
+			this.checkIsNavigation_Pagination();
+
 			setTimeout(() => {
 				this.movesFirstSlide_TheEnd();
 				this.allowSwipe = true;
@@ -348,9 +354,6 @@ export class SliderEndLess extends Slider {
 				this.currentSlide++;
 				this.checkPaginationNumbersSlides();
 
-				if ( this.isPagination ) {
-					super.watchSwipeSliderTrack();
-				};
 			}, this.speed * 1.5);
 
 		}, this.timerAdvance[1]);
@@ -360,48 +363,53 @@ export class SliderEndLess extends Slider {
 
 
 	// Функционал слайдера.
-    pushingSwipeSlider() {
-        this.singleSwipe = this.positionSliderTrack;
+	pushingSwipeSlider() {
+		this.singleSwipe = this.positionSliderTrack;
 
-    	this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
+		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
-        if (Math.abs(this.singleSwipe) >= 5) {
-            this.isScrollingSlider = true;
-        };
-    }
+		if (Math.abs(this.singleSwipe) >= 5) {
+			this.isScrollingSlider = true;
+		};
+	}
 
 	swipeStart() {
-        this.allowSwipe = true;
+		if ( !this.allowSwipe ) {
+			setTimeout(() => {
+				this.allowSwipe = true;
+			});
+			return;
+		};
 
 		const evt = super.getEvent();
 
-        super.calculatesTouchCoordinates_SwipeStart(
-            this.evt = evt
-        );
+		super.calculatesTouchCoordinates_SwipeStart(
+			this.evt = evt
+			);
 
 		this.clearnsSetIntervals();
 
-        this.addEventsSliderTrack();
+		this.addEventsSliderTrack();
 	}
 
 	swipeAction() {
-    	const evt = super.getEvent();
+		const evt = super.getEvent();
 
-        super.checkSliderCanBeMoved(
-            this.evt = evt
-        );
+		super.checkSliderCanBeMoved(
+			this.evt = evt
+			);
 
-        if (!this.allowSwipe) {
-            return
-        };
+		if (!this.allowSwipe) {
+			return
+		};
 
-        this.positionSliderTrack = this.positionPressedX - evt.clientX + this.widthSlide;
+		this.positionSliderTrack = this.positionPressedX - evt.clientX + this.widthSlide;
 
-        if (event.type === "touchmove") {
-            this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
-            this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
-            super.checksOutOfBounds();
-        };
+		if (event.type === "touchmove") {
+			this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
+			this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
+			super.checksOutOfBounds();
+		};
 
 		this.pushingSwipeSlider();
 	}

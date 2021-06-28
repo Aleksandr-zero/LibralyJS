@@ -1,5 +1,6 @@
 export default class Pagination {
     /**
+    * @param slider -> block "slider" ( type -> HTMLElement )
 	Создаёт пагинацию для слайдера.
 	*/
 

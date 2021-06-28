@@ -36,7 +36,8 @@ export class SliderWithFight extends Slider {
 		this.isScrollingSlider = false;
 
 		this.addOptions();
-		super.checkIsPaginationSLider();
+		super.checkIsPaginationSlider();
+		this.addNavigation();
 
 		this._swipeStart = () =>  { this.swipeStart(); };
 		this._swipeAction = () => { this.swipeAction(); };
@@ -83,6 +84,12 @@ export class SliderWithFight extends Slider {
 		this.slider.classList.add("slider-active");
 	}
 
+	checkIsNavigation_Pagination() {
+		if ( this.isPagination ) {
+			super.watchSwipeSliderTrack_Pagination();
+		};
+	}
+
 	addTransitionSliderTrack(duration) {
 		this.sliderTrack.style.transition = `transform 0.${duration}s ease`;
 		this.positionFinal = this.currentSlide * this.sliderWidth;
@@ -100,9 +107,9 @@ export class SliderWithFight extends Slider {
 
 	returnsSliderBack() {
 		/* Возвращает слайдер на место если не проскролил нужно количество.  */
-
 		this.addTransitionSliderTrack(500);
 	}
+
 
 	checksIfSliderNeedsPromoted() {
 		/* Проверяет надо ли продвигать слайдер.  */
@@ -117,9 +124,7 @@ export class SliderWithFight extends Slider {
 			this.returnsSliderBack();
 		};
 
-		if ( this.isPagination ) {
-			super.watchSwipeSliderTrack();
-		};
+		this.checkIsNavigation_Pagination();
 	}
 
 
@@ -135,7 +140,12 @@ export class SliderWithFight extends Slider {
 	}
 
 	swipeStart() {
-		this.allowSwipe = true;
+		if ( !this.allowSwipe ) {
+			setTimeout(() => {
+				this.allowSwipe = true;
+			});
+			return;
+		};
 
 		const evt = super.getEvent();
 
@@ -182,6 +192,15 @@ export class SliderWithFight extends Slider {
 		};
 
 		this.checksIfSliderNeedsPromoted();
+	}
+
+
+	addNavigation() {
+		const navigation = this.slider.querySelector(".slider-navigation");
+
+		if ( navigation ) {
+			super.addNavigation();
+		};
 	}
 
 

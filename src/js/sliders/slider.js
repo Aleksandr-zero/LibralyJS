@@ -1,4 +1,4 @@
-import { Navigation } from "./components/navigation.js";
+import Navigation from "./components/navigation.js";
 import Pagination from "./components/pagination.js";
 
 
@@ -21,6 +21,10 @@ export default class Slider {
 	* @property isScrollingSlider -> type( boolean )
 	*/
 
+	constructor() {
+
+	}
+
 	getEvent() {
 		return (event.type.search('touch') != -1) ? event.touches[0] : event;
 	}
@@ -40,17 +44,17 @@ export default class Slider {
 		return this.slider.querySelector(".slider-pagination");
 	}
 
-	checkIsPaginationSLider() {
+	checkIsPaginationSlider() {
 		/* Проверяет есть ли у слайдера пагинация.  */
 
-		const pagination = this.getNavigationSlider();
+		const pagination = this.getPaginationSlider();
 
 		if ( pagination ) {
 			this.addPagination();
 		};
 	}
 
-	watchSwipeSliderTrack() {
+	watchSwipeSliderTrack_Pagination() {
 		this.newPagination.changeBtnPagination(this.currentSlide)
 	}
 
@@ -60,8 +64,39 @@ export default class Slider {
 	}
 
 
-	getNavigationSlider() {
-		return (this.slider.querySelector(".slider-pagination")) ? true : false;
+	addNavigation() {
+		this.isNavigation = true;
+		this.newNavigation = new Navigation(this.slider);
+
+        const btnPrev = this.slider.querySelector(".btn-slider-push-last");
+        const btnNext = this.slider.querySelector(".btn-slider-push-next");
+
+        btnPrev.addEventListener("click", () => {this.pressedBtnPushSlider(); });
+        btnNext.addEventListener("click", () => { this.pressedBtnPushSlider(); });
+	}
+
+	pressedBtnPushSlider() {
+		if ( !this.allowSwipe ) {
+			return;
+		};
+
+		const direction = event.currentTarget.dataset.direction;
+
+		const dataset = this.newNavigation.pushingSliderTrack(direction, this.currentSlide);
+
+		if ( dataset ) {
+			this.currentSlide = dataset.current_slide;
+			this.positionFinal = dataset.position;
+			this.positionSliderTrack = dataset.position;
+
+			this.watchSwipeSliderTrack_Pagination();
+		};
+
+		this.allowSwipe = false;
+
+		setTimeout(() => {
+			this.allowSwipe = true;
+		}, 500);
 	}
 
 
@@ -109,10 +144,5 @@ export default class Slider {
 		this.positionPressedY = evt.clientY;
 		this.positionFingerPressSliderX = this.positionPressedX - this.slider.getBoundingClientRect().x;
 		this.positionFingerPressSliderY = this.positionPressedY - this.slider.getBoundingClientRect().y;
-	}
-
-
-	addNavigation() {
-
 	}
 };

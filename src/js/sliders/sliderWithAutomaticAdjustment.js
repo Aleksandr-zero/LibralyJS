@@ -47,7 +47,8 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.addOptions();
-		super.checkIsPaginationSLider();
+		this.addNavigation();
+		super.checkIsPaginationSlider();
 		super.measuresMaximumSwipeOfSlider();
 
 		this.goingOutBoundsSlider = () => {
@@ -88,6 +89,12 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.sliderTrack.classList.add("slider-active");
 	}
 
+	checkIsNavigation_Pagination() {
+		if ( this.isPagination ) {
+			super.watchSwipeSliderTrack_Pagination();
+		};
+	}
+
 	setsTransition_For_PushingWithFight() {
 		/* Устанавливает плавную прокрутку для передвижения слайдера с боем.  */
 
@@ -120,9 +127,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
     		this.currentSlide--;
     	};
 
-		if ( this.isPagination ) {
-			super.watchSwipeSliderTrack();
-		};
+		this.checkIsNavigation_Pagination();
     }
 
     returnsSliderBack() {
@@ -268,6 +273,15 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		};
 
 		this.positionFinal = this.positionSliderTrack;
+	}
+
+
+	addNavigation() {
+		const navigation = this.slider.querySelector(".slider-navigation");
+
+		if ( navigation ) {
+			super.addNavigation();
+		};
 	}
 
 

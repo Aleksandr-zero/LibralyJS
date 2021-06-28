@@ -1,5 +1,5 @@
 import { Navigation } from "./components/navigation.js";
-import { Pagination } from "./components/pagination.js";
+import Pagination from "./components/pagination.js";
 
 
 export default class Slider {
@@ -25,14 +25,6 @@ export default class Slider {
 		return (event.type.search('touch') != -1) ? event.touches[0] : event;
 	}
 
-	getNavigationSlider() {
-
-	}
-
-	getPaginationSlider() {
-		return (this.slider.querySelector(".slider-pagination")) ? true : false;
-	}
-
 	measuresMaximumSwipeOfSlider() {
 		/* Измеряет максимальную длину прокрутки слайдера.  */
 
@@ -41,6 +33,35 @@ export default class Slider {
 		});
 
 		this.maximumSwipingAtSlider -= this.sliderWidth;
+	}
+
+
+	getPaginationSlider() {
+		return this.slider.querySelector(".slider-pagination");
+	}
+
+	checkIsPaginationSLider() {
+		/* Проверяет есть ли у слайдера пагинация.  */
+
+		const pagination = this.getNavigationSlider();
+
+		if ( pagination ) {
+			this.addPagination();
+		};
+	}
+
+	watchSwipeSliderTrack() {
+		this.newPagination.changeBtnPagination(this.currentSlide)
+	}
+
+	addPagination() {
+		this.isPagination = true;
+		this.newPagination = new Pagination(this.slider);
+	}
+
+
+	getNavigationSlider() {
+		return (this.slider.querySelector(".slider-pagination")) ? true : false;
 	}
 
 
@@ -90,10 +111,6 @@ export default class Slider {
 		this.positionFingerPressSliderY = this.positionPressedY - this.slider.getBoundingClientRect().y;
 	}
 
-
-	addPagination() {
-
-	}
 
 	addNavigation() {
 

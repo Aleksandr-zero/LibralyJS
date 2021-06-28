@@ -17,6 +17,39 @@ Connect all library:
 
 ## Sliders
 
+### Components
+
+#### Pagination
+
+Adding pagination for the slider
+
+```xml
+<!-- Your slider -->
+<div class="slider-with-fight">
+  <div class="slider-list">
+    <div class="slider-track">
+      <!-- Your slides -->
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+      <!-- Your slides -->
+    </div>
+  </div>
+  <!-- Pagination -->
+  <div class="slider-pagination">
+    <!-- There are as many buttons as there are slides -->
+    <button type="button" class="pagination-btn">Button 1</button>
+    <button type="button" class="pagination-btn">Button 2</button>
+    <button type="button" class="pagination-btn">Button 3</button>
+    <button type="button" class="pagination-btn">Button 4</button>
+    <button type="button" class="pagination-btn">Button 5</button>
+  </div>
+  <!-- Pagination -->
+</div>
+```
+
 ### Slider without fight
 
 Connect:
@@ -110,9 +143,6 @@ Connect:
 ```xml
 <!-- Slider main container -->
 <div class="slider-endless">
-  <div class="back-btn-slider-push back-btn-slider-push-left">
-    <a data-direction="last" role="button" class="btn-slider-push btn-slider-push-last">Button</a>
-  </div>
   <div class="slider-list">
     <div class="slider-track">
       <!-- Your slides -->
@@ -123,9 +153,6 @@ Connect:
       <div class="slide">5</div>
       <!-- Your slides -->
     </div>
-  </div>
-  <div class="back-btn-slider-push back-btn-slider-push-right">
-    <a data-direction="next" role="button" class="btn-slider-push-next">Button</a>
   </div>
 </div>
 ```

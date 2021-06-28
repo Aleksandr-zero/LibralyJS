@@ -16,6 +16,7 @@ export class SliderEndLess extends Slider {
 
 		this.sliderTrack = this.slider.querySelector(".slider-track");
 		this.positionSliderTrack = 0;
+		this.currentSlide = 0;
 
 		this.slides = this.sliderTrack.children;
 		this.numberSlides = this.slides.length;
@@ -39,6 +40,7 @@ export class SliderEndLess extends Slider {
 		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.addOptions();
+		super.checkIsPaginationSLider();
 
         this.goingOutBoundsSlider = () => {
             /* Выход за границы слайдера мышкой. */
@@ -107,7 +109,27 @@ export class SliderEndLess extends Slider {
 
 		setTimeout(() => {
 			(direction === "next") ? this.movesFirstSlide_TheEnd() : this.movesLastSlide_Start();
+			this.changeCurrentSlide(direction);
+			this.checkPaginationNumbersSlides();
 		}, this.speed * 1.5);
+	}
+
+	checkPaginationNumbersSlides() {
+		/* Проверяет: если "this.currentSlide" будет превышать количество всех слайдов.  */
+
+		if ( this.currentSlide === this.numberSlides ) {
+			this.currentSlide = 0;
+		} else if ( this.currentSlide === -1 ) {
+			this.currentSlide = this.numberSlides - 1;
+		};
+
+		if ( this.isPagination ) {
+			super.watchSwipeSliderTrack();
+		};
+	}
+
+	changeCurrentSlide(direction) {
+		this.currentSlide -= (direction === "next") ? -1 : 1;
 	}
 
 	movesSlider_If_OnlyTwoSlides() {
@@ -322,6 +344,13 @@ export class SliderEndLess extends Slider {
 			setTimeout(() => {
 				this.movesFirstSlide_TheEnd();
 				this.allowSwipe = true;
+
+				this.currentSlide++;
+				this.checkPaginationNumbersSlides();
+
+				if ( this.isPagination ) {
+					super.watchSwipeSliderTrack();
+				};
 			}, this.speed * 1.5);
 
 		}, this.timerAdvance[1]);

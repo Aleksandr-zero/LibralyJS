@@ -47,7 +47,8 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.addOptions();
-		this.measuresMaximumSwipeOfSlider();
+		super.checkIsPaginationSLider();
+		super.measuresMaximumSwipeOfSlider();
 
 		this.goingOutBoundsSlider = () => {
 			/* Выход за границы слайдера мышкой. */
@@ -118,6 +119,10 @@ export class SliderWithAutomaticAdjustment extends Slider {
     	} else if ( this.directionSliderTrack === "left" && this.currentSlide !== 0 ) {
     		this.currentSlide--;
     	};
+
+		if ( this.isPagination ) {
+			super.watchSwipeSliderTrack();
+		};
     }
 
     returnsSliderBack() {

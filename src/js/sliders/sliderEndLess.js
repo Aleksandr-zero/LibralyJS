@@ -55,7 +55,7 @@ export class SliderEndLess extends Slider {
 
     	this.speed = (this.options && this.options.speed) ? this.options.speed : 200;
     	this.timerAdvance = (this.options && this.options.timerAdvance) ?
-    	[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
+    						[this.options.timerAdvance[0], this.options.timerAdvance[1]] : [false];
     	this.freezeSliderMouseHover = (this.options.freezeSliderMouseHover) ? this.options.freezeSliderMouseHover : false;
     	this.freezeSliderOnLossFocus = (this.options.freezeSliderOnLossFocus) ? this.options.freezeSliderOnLossFocus : false;
 

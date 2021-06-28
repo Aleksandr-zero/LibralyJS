@@ -239,5 +239,7 @@ export class SliderWithoutFight extends Slider {
 	run() {
 		this.sliderTrack.addEventListener("touchstart", () => { this.swipeStart(); }, { passive: true });
 		this.sliderTrack.addEventListener("mousedown", () => { this.swipeStart(); });
+
+		this.sliderTrack.style.transform = `translate3d(0px, 0px, 0px)`;
 	}
 };

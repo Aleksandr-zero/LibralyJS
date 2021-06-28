@@ -207,5 +207,7 @@ export class SliderWithFight extends Slider {
 	run() {
 		this.sliderTrack.addEventListener("mousedown", this._swipeStart);
 		this.sliderTrack.addEventListener("touchstart", this._swipeStart, { passive: true });
+
+		this.sliderTrack.style.transform = `translate3d(0px, 0px, 0px)`;
 	}
 };

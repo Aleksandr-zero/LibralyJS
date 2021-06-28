@@ -4,6 +4,7 @@ import Pagination from "./components/pagination.js";
 
 export default class Slider {
 	/**
+	Является посредником между классами: Navigation и Pagination, для нового вида слайдера
 	При наследовании класса должны быть методы:
 	* @method -> swipeEnd
 	* @method -> removeEventsSliderTrack

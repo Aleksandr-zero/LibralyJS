@@ -5,6 +5,7 @@ import { SliderSelfScrolling } from "./sliders/sliderSelfScrolling.js";
 import { SliderWithAutomaticAdjustment } from "./sliders/sliderWithAutomaticAdjustment.js";
 import { SliderBeforeAfter } from "./sliders/sliderBeforeAfter.js";
 import { SliderSplit } from "./sliders/sliderSplit.js";
+import { SliderWithSections } from "./sliders/sliderWithSections.js";
 
 import { PopupDisposable } from "./popups/popupDisposable.js";
 import { PopupMuliple } from "./popups/popupMultiple.js";
@@ -17,6 +18,7 @@ new SliderSelfScrolling();
 new SliderWithAutomaticAdjustment();
 new SliderBeforeAfter();
 new SliderSplit();
+new SliderWithSections();
 
 new PopupDisposable();
 new PopupMuliple();

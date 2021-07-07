@@ -35,7 +35,7 @@ const scriptsDev = () => {
 
 const scriptsOptimization = () => {
     return src(["./LibraryOfGoodieJS/scripts/**/**.js"])
-        .pipe(replace(/export { (SliderEndLess|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight|SliderBeforeAfter|SliderSplit|PopupMuliple|PopupDisposable) };/g, ""))
+        .pipe(replace(/export { (SliderEndLess|SliderWithSections|SliderSelfScrolling|SliderWithAutomaticAdjustment|SliderWithFight|SliderWithoutFight|SliderBeforeAfter|SliderSplit|PopupMuliple|PopupDisposable) };/g, ""))
         .pipe(uglify({
             keep_fnames: true
         }))

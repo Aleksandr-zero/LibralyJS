@@ -7,12 +7,12 @@ There is everything that your heart desires!
 
 Connect common CSS:
 ```xml
-<link rel="stylesheet" href="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/css/libraryOfGoodieJS.css">
+<link rel="stylesheet" href="LibraryOfGoodieJS/css/libraryOfGoodieJS.css">
 ```
 
 Connect all library:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/libraryOfGoodieJS.js"></script>
+<script src="LibraryOfGoodieJS/scripts/libraryOfGoodieJS.js"></script>
 ```
 
 ## Sliders
@@ -24,13 +24,29 @@ Connect all library:
 Adding navigation for the slider
 
 ```xml
-<div class="slider-navigation">
-  <div class="back-btn-slider-push back-btn-slider-push-left">
-    <button data-direction="last" type="button" class="btn-slider-push btn-slider-push-last">Button</button>
+<!-- Your slider -->
+<div class="slider-with-fight">
+  <div class="slider-list">
+    <div class="slider-track">
+      <!-- Your slides -->
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+      <!-- Your slides -->
+    </div>
   </div>
-  <div class="back-btn-slider-push back-btn-slider-push-right">
-    <button data-direction="next" type="button" class="btn-slider-push btn-slider-push-next">Button</button>
+  <!-- Navigation -->
+  <div class="slider-navigation">
+    <div class="back-btn-slider-push back-btn-slider-push-left">
+      <button data-direction="last" type="button" class="btn-slider-push btn-slider-push-last">Button</button>
+    </div>
+    <div class="back-btn-slider-push back-btn-slider-push-right">
+      <button data-direction="next" type="button" class="btn-slider-push btn-slider-push-next">Button</button>
+    </div>
   </div>
+  <!-- Navigation -->
 </div>
 ```
 
@@ -69,7 +85,7 @@ Adding pagination for the slider
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
 ```
 
 ```xml
@@ -111,7 +127,7 @@ new SliderWithoutFight(blockSliderWithoutFight, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
 ```
 
 ```xml
@@ -152,7 +168,7 @@ new SliderWithFight(blockSliderWithFight, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
 ```
 
 ```xml
@@ -181,7 +197,7 @@ newSliderEndless.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `speed`						 | Slider scrolling speed.     | `200`	 |
+| `speed`						 | Slider scrolling speed. **Parameters**: `int(ms)`    | `200`	 |
 | `timerAdvance`		 | Automatic slider advancement by timer. **Parameters**: `[true / false, float(Msec)]`. | `[false]` |
 | `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance` must be `true`). | `false` |
 | `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance` must be `true`). | `false` |
@@ -202,7 +218,7 @@ new SliderEndLess(blockSliderEndless, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
 ```
 
 ```xml
@@ -231,7 +247,7 @@ newSliderSelfScrolling.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `duration`         | Slider duration. Parameters: `int(sec)`  | `10` |
+| `duration`         | Slider duration. **Parameters**: `int(sec)`  | `10` |
 | `temporaryFunction`| Temporary function for **transition**.   | `linear` |
 | `delay`            | Delay for **transition**.                | `0` |
 | `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `float(sec)`. | `1.5` |
@@ -251,7 +267,7 @@ new SliderSelfScrolling(blockSliderSelfScrolling, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
 ```
 
 ```xml
@@ -294,7 +310,7 @@ new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderBeforeAfter.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderBeforeAfter.js"></script>
 ```
 
 ```xml
@@ -331,7 +347,7 @@ newSliderBeforeAfter.run();
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
 ```
 
 ```xml
@@ -359,13 +375,71 @@ const newSliderSplit = new SliderSplit(blockSliderSplit);
 newSliderSplit.run();
 ```
 
+### Slider with sections
+```xml
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
+```
+
+```xml
+<!-- Slider main container -->
+<div class="slider-with-sections">
+  <div class="slider-list">
+    <div class="slider-track">
+      <!-- Your slides -->
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+      <div class="slide">6</div>
+      <!-- Your slides -->
+    </div>
+  </div>
+  <div class="slider-with-sections-navigation">
+    <div class="back-btn-slider-push back-btn-slider-push-left">
+      <button data-direction="last" type="button" class="btn-slider-push btn-slider-push-last">Button</button>
+    </div>
+    <div class="back-btn-slider-push back-btn-slider-push-right">
+      <button data-direction="next" type="button" class="btn-slider-push btn-slider-push-next">Button</button>
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockSliderWithSections = document.querySelector(".lider-with-sections", {
+  
+});
+
+const newSliderWithSections = new SliderWithSections(blockSliderWithSections, {
+  speed: 300;
+  scrollSlidesAtTime: 1,
+  visibleSlides: 3
+});
+newSliderWithSections.run();
+```
+
+| Option                         | Description     | Default   |
+|--------------------------------|-----------------|-----------|
+| `speed`                        |  Slider scrolling speed. **Parameters**: `int(ms)` | `200` |
+| `scrollSlidesAtTime`           | Scrolling slides in one go. | `1` |
+| `visibleSlides`                | number of visible slides. (**Required parameter**) | `0` |
+
+```js
+new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+  speed: 300,
+  scrollSlidesAtTime: 1,
+  visibleSlides: 3,
+});
+```
+
 ## Pop up
 
 ### Disposable popup
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
+<script src="LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
 ```
 
 
@@ -401,7 +475,7 @@ newPopupDisposable.run();
 
 Connect:
 ```xml
-<script src="https://aleksandr-zero.github.io/LibraryJS/LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
+<script src="LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
 ```
 
 ```xml

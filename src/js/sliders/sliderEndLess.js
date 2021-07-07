@@ -440,8 +440,8 @@ export class SliderEndLess extends Slider {
 	run() {
 		this.addLastSlideStart();
 
-		this.sliderTrack.addEventListener("touchstart", this._swipeStart);
-		this.sliderTrack.addEventListener("mousedown", this._swipeStart, { passive: true });
+		this.sliderTrack.addEventListener("touchstart", this._swipeStart, { passive: true });
+		this.sliderTrack.addEventListener("mousedown", this._swipeStart);
 
 		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 	}

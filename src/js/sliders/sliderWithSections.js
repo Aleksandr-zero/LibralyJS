@@ -1,7 +1,47 @@
 import Slider from "./slider.js";
 
 
-export class SliderWithSections extends Slider {
+class BreakpointControls {
+    /**
+    * @set breakpoints -> Передвёт обьект с брекпоинтами ( type <Object> )
+	Класс для управления брейкпоинтами для класса <SliderWithSections>.
+    */
+
+    set breakpoints(value) {
+    	this.breakpointsObj = value;
+    	this.createBreakpoint();
+    }
+
+    addEventResizeWindow(width, data) {
+    	/* Создаёт для каждого брейкпоинта отдельный обработчик.  */
+
+    	window.addEventListener("resize", () => {
+    		if ( window.innerWidth <= width && !this.applicationBreakpoints.width ) {
+    			this.applicationBreakpoints.width = true;
+    			SliderWithSections.prototype.newDataBreakpoints = data;
+    		};
+    	});
+    }
+
+    createBreakpoint() {
+    	this.applicationBreakpoints = {};
+
+		const keys = Object.keys(this.breakpointsObj);
+		keys.forEach((key) => {
+			this.applicationBreakpoints[key] = false;
+		});
+
+		Object.entries(this.breakpointsObj).forEach((breakpoint) => {
+			const width = breakpoint[0];
+			const data = breakpoint[1];
+
+			this.addEventResizeWindow(width, data);
+		});
+    }
+};
+
+
+export class SliderWithSections {
     /**
 	* @param slider - block "slider-with-sections" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
@@ -9,8 +49,6 @@ export class SliderWithSections extends Slider {
     */
 
 	constructor(slider, options) {
-		super();
-
 		this.slider = slider;
 		this.options = options;
 
@@ -24,19 +62,43 @@ export class SliderWithSections extends Slider {
 		this.positionSliderTrack = 0;
 		this.slides = this.slider.querySelectorAll(".slide");
 
-		this.addOptions();
+		this._aaa = undefined;
 
-		this.lastVisibleSlide = this.visibleSlides;
+		this.addOptions();
+		this.createBreakpoints();
 	}
 
 	addOptions() {
-		this.scrollSlidesAtTime = (this.options.scrollSlidesAtTime) ? this.options.scrollSlidesAtTime : 1;
-		this.visibleSlides = this.options.visibleSlides;
-		this.speed = (this.options.speed) ? this.options.speed : 250;
+		this.constructor.prototype.scrollSlidesAtTime = (this.options.scrollSlidesAtTime) ? this.options.scrollSlidesAtTime : 1;
+		this.constructor.prototype.slidesPerView = this.options.slidesPerView;
+		this.constructor.prototype.lastVisibleSlide = this.slidesPerView;
 
-		if ( !this.visibleSlides ) {
-			throw "You did not specify a parameter <visibleSlides>"
+		this.speed = (this.options.speed) ? this.options.speed : 250;
+		this.breakpoints = (this.options.breakpoints) ? this.options.breakpoints : {};
+
+
+		if ( !this.constructor.prototype.slidesPerView ) {
+			throw "You did not specify a parameter <slidesPerView>"
 		};
+	}
+
+	changeOptionsValue(value) {
+		let d = this.changeOptionsValue.d || (
+			this.changeOptionsValue.d = {
+				enumerable: false,
+				writable: false,
+				configurable: false,
+				value: null
+			}
+			);
+		d.value = value;
+		return d;
+	}
+
+	set newDataBreakpoints(newData) {
+		this.constructor.prototype.slidesPerView = (newData.slidesPerView) ? newData.slidesPerView : this.slidesPerView;
+		this.constructor.prototype.scrollSlidesAtTime = (newData.scrollSlidesAtTime) ? newData.scrollSlidesAtTime : this.options.scrollSlidesAtTime;
+		this.constructor.prototype.lastVisibleSlide = (newData.slidesPerView) ? newData.slidesPerView : this.slidesPerView;
 	}
 
 
@@ -50,9 +112,33 @@ export class SliderWithSections extends Slider {
 			newPosition += this.slides[slide].offsetWidth + parseFloat(getComputedStyle(this.slides[slide]).marginRight);
 		};
 
-		return newPosition - ( this.slider.offsetWidth + parseFloat(getComputedStyle(this.slides[0]).marginRight));
+		newPosition = (this.constructor.prototype.lastVisibleSlide !== this.slides.length) ?
+					   newPosition - ( this.slider.offsetWidth + parseFloat(getComputedStyle(this.slides[0]).marginRight)) :
+					   newPosition - this.slider.offsetWidth;
+		return newPosition;
 	}
 
+	checksIfLimitIsExceeded() {
+		if ( this.constructor.prototype.lastVisibleSlide > this.slides.length ) {
+			this.constructor.prototype.lastVisibleSlide = this.slides.length;
+		} else if ( this.constructor.prototype.lastVisibleSlide < this.constructor.prototype.slidesPerView ) {
+			this.constructor.prototype.lastVisibleSlide = this.constructor.prototype.slidesPerView;
+		};
+	}
+
+
+	// Создание брейкпоинтов
+	getBreakpoints() {
+		return Object.entries(this.breakpoints).length === 0 && this.breakpoints.constructor === Object ? false : true;
+	}
+
+	createBreakpoints() {
+		if ( !this.getBreakpoints() ) {
+			return;
+		};
+
+		BreakpointControls.prototype.breakpoints = this.breakpoints;
+	}
 
 	// Добавление событий
 	addEventClickBtnPushSlider() {
@@ -60,19 +146,23 @@ export class SliderWithSections extends Slider {
 		this.btnNext.addEventListener("click", () => { this.pushSliderOnClickBtn(); });
 	}
 
+	// Функционал передвижения
 	pushSliderOnClickBtn() {
 		/* Передвигает слайдер при клике на кнопку.  */
-
+		// console.log(this.constructor.prototype.slidesPerView);
 		const direction = event.currentTarget.dataset.direction;
 
-		if ( ( this.lastVisibleSlide === this.visibleSlides && direction === "last") || !this.allowSwipe ) {
+		if ( ( this.constructor.prototype.lastVisibleSlide === this.constructor.prototype.slidesPerView && direction === "last") || !this.allowSwipe ) {
 			return;
 		};
 
-		this.lastVisibleSlide += (direction === "next") ? this.scrollSlidesAtTime : -this.scrollSlidesAtTime
+		this.constructor.prototype.lastVisibleSlide += (direction === "next") ?
+			this.constructor.prototype.scrollSlidesAtTime :
+			-this.constructor.prototype.scrollSlidesAtTime
 
-		const newPosition = this.getNewPositionSliderTrack(this.lastVisibleSlide);
+		this.checksIfLimitIsExceeded();
 
+		const newPosition = this.getNewPositionSliderTrack(this.constructor.prototype.lastVisibleSlide);
 		this.addTransitionSliderTrack(newPosition);
 	}
 

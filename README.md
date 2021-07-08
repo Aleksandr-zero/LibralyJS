@@ -3,6 +3,9 @@
 Library of goodies for your site ;)</br>
 There is everything that your heart desires!
 
+Actually, here are some interesting solutions when I came across<br>
+website development. I also added my own improvements and changes to these solutions.
+
 ## Getting started
 
 Connect common CSS:
@@ -25,18 +28,8 @@ Adding navigation for the slider
 
 ```xml
 <!-- Your slider -->
-<div class="slider-with-fight">
-  <div class="slider-list">
-    <div class="slider-track">
-      <!-- Your slides -->
-      <div class="slide">1</div>
-      <div class="slide">2</div>
-      <div class="slide">3</div>
-      <div class="slide">4</div>
-      <div class="slide">5</div>
-      <!-- Your slides -->
-    </div>
-  </div>
+<div class="slider class">
+  ...
   <!-- Navigation -->
   <div class="slider-navigation">
     <div class="back-btn-slider-push back-btn-slider-push-left">
@@ -56,18 +49,8 @@ Adding pagination for the slider
 
 ```xml
 <!-- Your slider -->
-<div class="slider-with-fight">
-  <div class="slider-list">
-    <div class="slider-track">
-      <!-- Your slides -->
-      <div class="slide">1</div>
-      <div class="slide">2</div>
-      <div class="slide">3</div>
-      <div class="slide">4</div>
-      <div class="slide">5</div>
-      <!-- Your slides -->
-    </div>
-  </div>
+<div class="slider class">
+  ...
   <!-- Pagination -->
   <div class="slider-pagination">
     <!-- There are as many buttons as there are slides -->
@@ -118,7 +101,7 @@ newSliderWithoutFight.run();
 | `scrollAfterAbruptStop`        | Auto scroll after abrupt stop. |  `true`  |
 
 ```js
-new SliderWithoutFight(blockSliderWithoutFight, {
+new SliderWithoutFight(..., {
   scrollAfterAbruptStop: false
 });
 ```
@@ -159,7 +142,7 @@ newSliderWithoutFight.run();
 | `percentageForSuccessfulScrolling` | The percentage of slider scrolling to advance.| `35` |
 
 ```js
-new SliderWithFight(blockSliderWithFight, {
+new SliderWithFight(..., {
   percentageForSuccessfulScrolling: 50
 });
 ```
@@ -197,13 +180,13 @@ newSliderEndless.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `speed`						 | Slider scrolling speed. **Parameters**: `int(ms)`    | `200`	 |
+| `speed`						 | Slider scrolling speed. **Parameters**: `<int>(ms)`    | `200`	 |
 | `timerAdvance`		 | Automatic slider advancement by timer. **Parameters**: `[true / false, float(Msec)]`. | `[false]` |
 | `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance` must be `true`). | `false` |
 | `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance` must be `true`). | `false` |
 
 ```js
-new SliderEndLess(blockSliderEndless, {
+new SliderEndLess(..., {
   speed: 250,
   timerAdvance: [
     true,
@@ -247,14 +230,14 @@ newSliderSelfScrolling.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `duration`         | Slider duration. **Parameters**: `int(sec)`  | `10` |
-| `temporaryFunction`| Temporary function for **transition**.   | `linear` |
-| `delay`            | Delay for **transition**.                | `0` |
-| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `float(sec)`. | `1.5` |
+| `duration`         | Slider duration. **Parameters**: `<int>(sec)`  | `10` |
+| `temporaryFunction`| Temporary function for *style* **transition**.   | `linear` |
+| `delay`            | Delay for *style* **transition**.                | `0` |
+| `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `<float>(sec)`. | `1.5` |
 | `repeatSlider`     | Repeating the scrolling of the slider after it has finished. | `false` |
 
 ```js
-new SliderSelfScrolling(blockSliderSelfScrolling, {
+new SliderSelfScrolling(..., {
   duration: 12000,
   temporaryFunction: "linear",
   delay: 2,
@@ -298,10 +281,10 @@ newSliderWithAutomaticAdjustment.run();
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
-| `speed`            | Slider scrolling speed.     | `200`   |
+| `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)` | `200`   |
 
 ```js
-new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+new SliderWithAutomaticAdjustment(..., {
   speed: 250
 });
 ```
@@ -376,6 +359,9 @@ newSliderSplit.run();
 ```
 
 ### Slider with sections
+
+*Component `Navigation` is not typical for this slider*
+
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
 ```
@@ -407,29 +393,51 @@ newSliderSplit.run();
 ```
 
 ```js
-const blockSliderWithSections = document.querySelector(".lider-with-sections", {
-  
-});
+const blockSliderWithSections = document.querySelector(".slider-with-sections");
 
 const newSliderWithSections = new SliderWithSections(blockSliderWithSections, {
-  speed: 300;
-  scrollSlidesAtTime: 1,
-  visibleSlides: 3
+  speed: 350,
+  scrollSlidesAtTime: 2,
+  visibleSlides: 3,
+  breakpoints: {
+    900: {
+      slidesPerView: 2,
+      scrollSlidesAtTime: 1
+    },
+    560: {
+      slidesPerView: 1,
+      scrollSlidesAtTime: 1
+    },
+  }
 });
 newSliderWithSections.run();
 ```
 
 | Option                         | Description     | Default   |
 |--------------------------------|-----------------|-----------|
-| `speed`                        |  Slider scrolling speed. **Parameters**: `int(ms)` | `200` |
+| `speed`                        | Slider scrolling speed. **Parameters**: `<int>(ms)`. | `200` |
 | `scrollSlidesAtTime`           | Scrolling slides in one go. | `1` |
-| `visibleSlides`                | number of visible slides. (**Required parameter**) | `0` |
+| `slidesPerView`                | Number of visible slides. (**Required parameter**). | *`absent`* |
+| `breakpoints`                  | Object for slider control when changing the screen width. | `{}` |
+| `breakpoints.<int>`            | Specifies at what width to change the slider settings. | *`absent`* |
+| `breakpoints.slidesPerView`    | Number of visible slides. (**Required parameter**). | `slidesPerView (default)` |
+| `breakpoints.scrollSlidesAtTime`| Scrolling slides in one go. (**Optional parameter**). | *`absent`* |
 
 ```js
-new SliderWithAutomaticAdjustment(blockSliderAutomaticAdjustment, {
+new SliderWithAutomaticAdjustment(..., {
   speed: 300,
   scrollSlidesAtTime: 1,
-  visibleSlides: 3,
+  slidesPerView: 3,
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+      scrollSlidesAtTime: 1
+    },
+    560: {
+      slidesPerView: 1,
+      scrollSlidesAtTime: 1
+    },
+  }
 });
 ```
 

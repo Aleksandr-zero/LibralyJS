@@ -360,7 +360,8 @@ newSliderSplit.run();
 
 ### Slider with sections
 
-*Component `Navigation` is not typical for this slider*
+*Component `Navigation` is not typical for this slider.*<br>
+*Since it contains its own built-in.*
 
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
@@ -420,23 +421,23 @@ newSliderWithSections.run();
 | `slidesPerView`                | Number of visible slides. (**Required parameter**). | *`absent`* |
 | `breakpoints`                  | Object for slider control when changing the screen width. | `{}` |
 | `breakpoints.<int>`            | Specifies at what width to change the slider settings. | *`absent`* |
-| `breakpoints.slidesPerView`    | Number of visible slides. (**Required parameter**). | `slidesPerView (default)` |
-| `breakpoints.scrollSlidesAtTime`| Scrolling slides in one go. (**Optional parameter**). | *`absent`* |
+| `breakpoints.slidesPerView`    | Number of visible slides. (**Required parameter**). | *`absent`* |
+| `breakpoints.scrollSlidesAtTime`| Scrolling slides in one go. (**Optional parameter**). | `scrollSlidesAtTime (default)` |
 
 ```js
 new SliderWithAutomaticAdjustment(..., {
   speed: 300,
-  scrollSlidesAtTime: 1,
+  scrollSlidesAtTime: 3,
   slidesPerView: 3,
   breakpoints: {
     768: {
       slidesPerView: 2,
-      scrollSlidesAtTime: 1
+      scrollSlidesAtTime: 2
     },
     560: {
       slidesPerView: 1,
       scrollSlidesAtTime: 1
-    },
+    }
   }
 });
 ```

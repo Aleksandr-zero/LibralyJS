@@ -22,10 +22,6 @@ export default class Slider {
 	* @property isScrollingSlider -> type( boolean )
 	*/
 
-	constructor() {
-
-	}
-
 	getEvent() {
 		return (event.type.search('touch') != -1) ? event.touches[0] : event;
 	}

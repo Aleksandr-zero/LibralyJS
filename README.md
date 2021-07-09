@@ -354,9 +354,26 @@ Connect:
 ```js
 const blockSliderSplit = document.querySelector(".slider-split");
 
-const newSliderSplit = new SliderSplit(blockSliderSplit);
+const newSliderSplit = new SliderSplit(blockSliderSplit, {
+  sliderActivationNnHover: true,
+  changeSlidesByButtons: false
+});
 newSliderSplit.run();
 ```
+
+| Option                         | Description     | Default   |
+|--------------------------------|-----------------|-----------|
+| `sliderActivationOnHover`      | When you hover over the slide area, it is activated. | `false` |
+| `changeSlidesByButtons` | Change buttons only by button clicks. **Parameter `sliderActivationOnHover` is ignored.** | `true` |
+
+```js
+new SliderSplit(..., {
+  sliderActivationOnHover: true,
+  changeSlidesByButtons: false
+});
+```
+
+
 
 ### Slider with sections
 

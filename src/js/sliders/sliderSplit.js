@@ -21,7 +21,21 @@ export class SliderSplit {
 
 		this._mouseMovement_On_Slider = () => { this.mouseMovement_On_Slider(); };
 
+		this.addOptions();
+
 		this.setsZIndex_For_Slides();
+	}
+
+	addOptions() {
+		this.sliderActivationOnHover = (this.options.sliderActivationOnHover) ?
+			this.options.sliderActivationOnHover : false;
+
+		if ( !this.changeSlidesByButtons && this.options.changeSlidesByButtons ) {
+			this.changeSlidesByButtons = true;
+			this.sliderActivationOnHover = false;
+		} else {
+			this.changeSlidesByButtons = false;
+		};
 	}
 
 
@@ -81,8 +95,25 @@ export class SliderSplit {
 		);
 	}
 
+	addEventClickBtns() {
+		this.sliderBtns.forEach((btn) => {
+			btn.addEventListener("click", () => { this.changeSlides(); });
+		});
+	}
+
+	changeSlides() {
+		this.currentSlide = this.sliderBtns_Arr.indexOf(event.currentTarget);
+		this.setsActiveBtn();
+		this.setsActiveSlide();
+	}
+
 
 	run() {
-		this.slider.addEventListener("mousemove", this._mouseMovement_On_Slider);
+		if ( this.sliderActivationOnHover ) {
+			this.slider.addEventListener("mousemove", this._mouseMovement_On_Slider);
+		} else if ( this.changeSlidesByButtons ) {
+			this.sliderBtns_Arr = Array.from(this.sliderBtns);
+			this.addEventClickBtns();
+		};
 	}
 };

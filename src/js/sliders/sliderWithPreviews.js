@@ -71,6 +71,15 @@ export class SliderWithPreviews extends Slider {
 		};
 	}
 
+	// Вспомогательные методы
+	checkDataForMovement() {
+		if ( this.currentSlide < 0 ) {
+			this.currentSlide = 0;
+		} else if ( this.currentSlide > this.slides.length - 1 ) {
+			this.currentSlide = this.slides.length - 1;
+		};
+	}
+
 	addNavigation() {
 		const navigation = this.slider.querySelector(".slider-navigation");
 
@@ -79,20 +88,25 @@ export class SliderWithPreviews extends Slider {
 		};
 	}
 
-	// Навешивание событий.
+	// Навешивание событий
 	addEvent_SliderPreviews() {
 		/* Добавляет прослушку на слайдер с првьюхами.  */
 
 		this.slidesPreviewsArr = Array.prototype.slice.call(this.slidesPreviews);
 
 		this.sliderTrackPreviews.addEventListener("click", () => {
+			if ( !this.allowSwipe ) {
+				return;
+			};
+
 			if ( event.target.classList.contains("slide-preview") ) {
 				const pressedSlidePreview = this.slidesPreviewsArr.indexOf(event.target) + 1;
 
-				// this.lastVisibleSlidePreviews = pressedSlidePreview;
-				// this.currentSlidePreview = pressedSlidePreview - 1;
+				this.lastVisibleSlidePreviews = pressedSlidePreview;
+				this.currentSlidePreview = pressedSlidePreview - 1;
+				this.currentSlide = pressedSlidePreview;
 
-				this.pushingSliderPreviews();
+				this.addTransitionSliderTrack();
 			};
 		});
 	}
@@ -173,12 +187,7 @@ export class SliderWithPreviews extends Slider {
 	addTransitionSliderTrack() {
 		this.currentSlide += ( this.singleSwipe > 0 ) ? 1 : -1;
 
-		if ( this.currentSlide < 0 ) {
-			this.currentSlide = 0;
-		} else if ( this.currentSlide > this.slides.length - 1 ) {
-			this.currentSlide = this.slides.length - 1;
-		};
-
+		this.checkDataForMovement();
 		this.changeDataForSLiderPreviews();
 
 		this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;

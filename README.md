@@ -478,6 +478,8 @@ new SliderWithSections(..., {
 
 ### Slider with previews
 
+*Component `Navigation` is not typical for this slider.*
+
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithPreviews.js"></script>
 ```

@@ -94,7 +94,7 @@ export default class Slider {
 
 	addNavigation() {
 		this.isNavigation = true;
-		this.newNavigation = new Navigation(this.slider);
+		this.newNavigation = new Navigation(this.slider, this.speed);
 
         const btnPrev = this.slider.querySelector(".btn-slider-push-last");
         const btnNext = this.slider.querySelector(".btn-slider-push-next");
@@ -116,6 +116,11 @@ export default class Slider {
 			this.currentSlide = dataset.current_slide;
 			this.positionFinal = dataset.position;
 			this.positionSliderTrack = dataset.position;
+
+			if ( this.className == "SliderWithPreviews" ) {
+				this.changeDataForSLiderPreviews();
+				this.pushingSliderPreviews();
+			};
 
 			if ( this.isPagination ) {
 				this.watchSwipeSliderTrack_Pagination();

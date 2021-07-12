@@ -22,6 +22,7 @@ const REGEX_FOR_REPLACE = new RegExp(`
             SliderWithoutFight|
             SliderBeforeAfter|
             SliderSplit|
+            SliderWithPreviews|
             SliderWithSections|
             PopupMuliple|
             PopupDisposable)};`.replace(/\n|\t+|\s+/g, ""), "g");

@@ -156,7 +156,7 @@ new SliderWithFight(..., {
 
 ### Endless slider
 
-*Component `Pagination` is not typical for this slider.*
+*Component `Navigation` is not typical for this slider.*
 
 Connect:
 ```xml
@@ -514,7 +514,9 @@ new SliderWithSections(..., {
 const blockSliderWithPreviews = document.querySelector(".slider-with-previews");
 
 const newSliderWithPreviews = new SliderWithPreviews(blockSliderWithPreviews, {
-  speed: 300
+  speed: 300,
+  movementClickingOnPreview: true,
+  slidesPreviewPerView: 3
 });
 newSliderWithPreviews.run();
 ```
@@ -522,10 +524,14 @@ newSliderWithPreviews.run();
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
 | `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)` | `200`   |
+| `movementClickingOnPreview` | When you click on the preview, they will move to this slide. | `false` |
+| `slidesPreviewPerView` | Visible slides on the preview. (**Required parameter**). (*`Recommendation`*): The most appropriate value is *`3`*! | *`absent`* |
 
 ```js
 new SliderWithPreviews(..., {
-  speed: 250
+  speed: 300,
+  movementClickingOnPreview: true,
+  slidesPreviewPerView: 3
 });
 ```
 

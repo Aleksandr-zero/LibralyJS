@@ -4,9 +4,11 @@ export default class Navigation {
 	Создаёт навигацию для слайдера.
 	*/
 
-	constructor(slider) {
+	constructor(slider, speed) {
 		this.slider = slider;
 		this.sliderTrack = this.slider.querySelector(".slider-track");
+
+		this.speed = speed;
 
 		this.slides = this.slider.querySelectorAll(".slide");
 
@@ -38,8 +40,8 @@ export default class Navigation {
 		return newPosition;
 	}
 
-	addTransitionSliderTrack(duration, newPosition) {
-		this.sliderTrack.style.transition = `transform 0.${duration}s ease`;
+	addTransitionSliderTrack(newPosition) {
+		this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;
 
 		setTimeout(() => {
 			this.sliderTrack.style.transform = `translate3d(${-newPosition}px, 0px, 0px)`;
@@ -47,7 +49,7 @@ export default class Navigation {
 
 		setTimeout(() => {
 			this.sliderTrack.style.transition = `transform 0s ease`;
-		}, duration);
+		},  this.speed);
 	}
 
 	checkNewPosition(newPosition) {
@@ -73,7 +75,7 @@ export default class Navigation {
 		const widthCurrentSlide = Math.round(this.slides[currentSlide].getBoundingClientRect().width);
 		const positionSliderTrack = Math.abs(getComputedStyle(this.sliderTrack).transform.split(",")[4]);
 
-		this.addTransitionSliderTrack(500, newPosition);
+		this.addTransitionSliderTrack(newPosition);
 
 		return {
 			"position": newPosition,

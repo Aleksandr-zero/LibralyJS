@@ -19,6 +19,7 @@ const paths = {
 		slider_6: "./src/js/sliders/sliderBeforeAfter.js",
 		slider_7: "./src/js/sliders/sliderSplit.js",
 		slider_8: "./src/js/sliders/sliderWithSections.js",
+		slider_9: "./src/js/sliders/sliderWithPreviews.js",
 		popup_1: "./src/js/popups/popupDisposable.js",
 		popup_2: "./src/js/popups/popupMultiple.js",
 	},
@@ -115,6 +116,15 @@ export default [
 	    output: [
 	    	{
 	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_8)}.js`,
+	    		format: 'es'
+	    	}
+	    ],
+	    plugins: getPlugins(),
+	},{
+	    input: paths.library.slider_9,
+	    output: [
+	    	{
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_9)}.js`,
 	    		format: 'es'
 	    	}
 	    ],

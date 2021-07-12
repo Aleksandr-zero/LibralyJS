@@ -1,5 +1,5 @@
 import Slider from "./slider.js";
-import Pagination from "./components/pagination.js";
+import HandlerFight from "./handlers/handlerFight.js";
 
 
 export class SliderWithFight extends Slider {
@@ -20,10 +20,11 @@ export class SliderWithFight extends Slider {
 		this.sliderTrack = this.slider.querySelector(".slider-track");
 
 		this.currentSlide = 0;
-		this.numberSlides = this.sliderTrack.querySelectorAll(".slide");
+		this.numberSlides = this.sliderTrack.querySelectorAll(".slide").length;
 
-		this.positionSlider = 0;
+		this.positionSliderTrack = 0;
 		this.positionFinal = 0;
+		this.singleSwipe = 0;
 
 		this.positionPressedX;
 		this.positionPressedY;
@@ -37,13 +38,18 @@ export class SliderWithFight extends Slider {
 
 		this.addOptions();
 		super.checkIsPaginationSlider();
-		this.addNavigation();
+		super.checkNavigation();
 
 		this._swipeStart = () =>  { this.swipeStart(); };
 		this._swipeAction = () => { this.swipeAction(); };
 		this._swipeEnd = () => 	  { this.swipeEnd(); };
 
 		this.percentForSuccessfulScrolling = Math.round((this.sliderWidth / 100) * this.percentageForSuccessfulScrolling);
+
+		this.newHandlerFight = new HandlerFight(
+			this.slider,
+			this.sliderTrack
+		);
 
 		this.goingOutBoundsSlider = () => {
 			/* Выход за границы слайдера мышкой. */
@@ -54,75 +60,37 @@ export class SliderWithFight extends Slider {
 	}
 
 	addOptions() {
+		this.speed = (this.options.speed) ? this.options.speed : 200;
 		this.percentageForSuccessfulScrolling = (this.options.percentageForSuccessfulScrolling) ?
 												 this.options.percentageForSuccessfulScrolling : 35;
 	}
 
 
 	// Вспомогательные методы.
-	removeEventsSliderTrack() {
-		/* Удаляет события у блока - sliderTrack и у самого слайдер  */
-
-		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
-
-		this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-		this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
-
-		this.slider.classList.remove("slider-active");
-	}
-
-	addEventsSliderTrack() {
-		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-
-		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-		this.slider.classList.add("slider-active");
-	}
-
 	checkIsNavigation_Pagination() {
 		if ( this.isPagination ) {
 			super.watchSwipeSliderTrack_Pagination();
 		};
 	}
 
-	addTransitionSliderTrack(duration) {
-		this.sliderTrack.style.transition = `transform 0.${duration}s ease`;
-		this.positionFinal = this.currentSlide * this.sliderWidth;
-		this.allowSwipe = false;
-
-		setTimeout(() => {
-			this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
-		}, 0)
-
-		setTimeout(() => {
-			this.sliderTrack.style.transition = "none";
-			this.allowSwipe = true;
-		}, duration)
-	}
-
-	returnsSliderBack() {
-		/* Возвращает слайдер на место если не проскролил нужно количество.  */
-		this.addTransitionSliderTrack(500);
-	}
-
 
 	checksIfSliderNeedsPromoted() {
 		/* Проверяет надо ли продвигать слайдер.  */
 
-		if (this.singleSwipe >= this.percentForSuccessfulScrolling && this.currentSlide !== this.numberSlides.length - 1) {
-			this.currentSlide++;
-			this.addTransitionSliderTrack(500);
-		} else if (this.singleSwipe <= this.percentForSuccessfulScrolling && this.currentSlide !== 0) {
-			this.currentSlide--;
-			this.addTransitionSliderTrack(500);
-		} else {
-			this.returnsSliderBack();
+		this.currentSlide += (this.singleSwipe >= this.percentForSuccessfulScrolling && this.currentSlide !== this.numberSlides.length - 1) ?
+			1 : -1;
+
+		if ( this.currentSlide < 0 ) {
+			this.currentSlide = 0;
+		} else if ( this.currentSlide > this.numberSlides - 1 ) {
+			this.currentSlide = this.numberSlides - 1;
 		};
+
+		const newPositionFinal = this.newHandlerFight.addTransitionSliderTrack(
+			this.currentSlide,
+			this.speed
+		);
+		this.positionFinal = newPositionFinal;
 
 		this.checkIsNavigation_Pagination();
 	}
@@ -134,7 +102,7 @@ export class SliderWithFight extends Slider {
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
-		if (Math.abs(this.singleSwipe >= 5) && !this.isScrollingSlider) {
+		if (Math.abs(this.singleSwipe) >= 5) {
 			this.isScrollingSlider = true;
 		};
 	}
@@ -149,21 +117,16 @@ export class SliderWithFight extends Slider {
 
 		const evt = super.getEvent();
 
-		super.calculatesTouchCoordinates_SwipeStart(
-			this.evt = evt
-		);
-
 		this.sliderTrack.style.transform = `translate3d(-${this.positionFinal}px, 0px, 0px)`;
 
-		this.addEventsSliderTrack();
+		super.calculatesTouchCoordinates_SwipeStart(evt);
+		super.addEventsSliderTrack();
 	}
 
 	swipeAction() {
 		const evt = super.getEvent();
 
-		super.checkSliderCanBeMoved(
-			this.evt = evt
-		);
+		super.checkSliderCanBeMoved(evt);
 
 		if (!this.allowSwipe) {
 			return
@@ -182,25 +145,17 @@ export class SliderWithFight extends Slider {
 	}
 
 	swipeEnd() {
-		this.removeEventsSliderTrack();
+		super.removeEventsSliderTrack();
 		this.isScrollingSlider = false;
 		this.allowSwipe = true;
 
 		if ((Math.abs(this.singleSwipe) <= this.percentForSuccessfulScrolling)) {
-			this.returnsSliderBack();
+			this.newHandlerFight.returnsSliderBack(this.currentSlide, this.speed);
 			return;
 		};
 
 		this.checksIfSliderNeedsPromoted();
-	}
-
-
-	addNavigation() {
-		const navigation = this.slider.querySelector(".slider-navigation");
-
-		if ( navigation ) {
-			super.addNavigation();
-		};
+		this.singleSwipe = 0;
 	}
 
 

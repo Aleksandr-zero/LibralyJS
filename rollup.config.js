@@ -1,6 +1,13 @@
 import babel from '@rollup/plugin-babel';
 
 
+const getNameScript = (file) => {
+	const fileSplit = file.split("/");
+	const nameScript = fileSplit[fileSplit.length - 1].split(".")[0];
+
+	return nameScript;
+};
+
 const paths = {
 	library: {
 		slider_all: "./src/js/libraryOfGoodieJS.js",
@@ -44,7 +51,7 @@ export default [
 	    input: paths.library.slider_1,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderWithoutFight.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_1)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -53,7 +60,7 @@ export default [
 	    input: paths.library.slider_2,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderWithFight.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_2)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -62,7 +69,7 @@ export default [
 	    input: paths.library.slider_3,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderEndLess.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_3)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -71,7 +78,7 @@ export default [
 	    input: paths.library.slider_4,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderSelfScrolling.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_4)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -80,7 +87,7 @@ export default [
 	    input: paths.library.slider_5,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderWithAutomaticAdjustment.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_5)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -89,7 +96,7 @@ export default [
 	    input: paths.library.slider_6,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderBeforeAfter.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_6)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -98,7 +105,7 @@ export default [
 	    input: paths.library.slider_7,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderSplit.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_7)}.js`,
 	    		format: 'es'
 	    	}
 	    ],
@@ -107,7 +114,7 @@ export default [
 	    input: paths.library.slider_8,
 	    output: [
 	    	{
-	    		file: `${paths.build.js_sliders}/sliderWithSections.js`,
+	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_8)}.js`,
 	    		format: 'es'
 	    	}
 	    ],

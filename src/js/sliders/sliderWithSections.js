@@ -12,14 +12,12 @@ export class SliderWithSections {
 		this.slider = slider;
 		this.options = options;
 
-		if ( this.slider ) {
-			this.sliderTrack = this.slider.querySelector(".slider-track");
+		this.sliderTrack = this.slider.querySelector(".slider-track");
 
-			this.btnPrev = this.slider.querySelector(".btn-slider-push-last");
-			this.btnNext = this.slider.querySelector(".btn-slider-push-next");
+		this.btnPrev = this.slider.querySelector(".btn-slider-push-last");
+		this.btnNext = this.slider.querySelector(".btn-slider-push-next");
 
-			this.slides = this.slider.querySelectorAll(".slide");
-		}
+		this.slides = this.slider.querySelectorAll(".slide");
 
 		this.allowSwipe = true;
 

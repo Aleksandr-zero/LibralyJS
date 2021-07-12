@@ -54,28 +54,6 @@ export class SliderWithoutFight extends Slider {
 
 
 	// Вспомогательные методы.
-	removeEventsSliderTrack() {
-		this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-
-		this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
-
-		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-		this.slider.classList.remove("slider-active");
-	}
-
-	addEventsSliderTrack() {
-		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-		this.slider.classList.add("slider-active");
-	};
-
 	checksOutOfBounds() {
 		/* Если палец будет заходить за границы слайдера то запрещаем его двигать.  */
 
@@ -169,24 +147,19 @@ export class SliderWithoutFight extends Slider {
 		this.time_1 = performance.now();
 
 		const evt = super.getEvent();
-
-        super.calculatesTouchCoordinates_SwipeStart(
-            this.evt = evt
-        )
+        super.calculatesTouchCoordinates_SwipeStart(evt)
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 		this.sliderTrack.style.transition = `none`;
 
-		this.addEventsSliderTrack();
+		super.addEventsSliderTrack();
 	}
 
 	swipeAction() {
 		const evt = super.getEvent();
 		this.directionSliderTrack = (this.positionPressedX < evt.clientX) ? "right" : "left";
 
-		super.checkSliderCanBeMoved(
-			this.evt = evt
-		);
+		super.checkSliderCanBeMoved(evt);
 
 		if (!this.allowSwipe) {
 			return
@@ -232,7 +205,7 @@ export class SliderWithoutFight extends Slider {
 			this.measuresSpeedTrafficSliderTrack();
 		};
 
-		this.removeEventsSliderTrack();
+		super.removeEventsSliderTrack();
 	}
 
 

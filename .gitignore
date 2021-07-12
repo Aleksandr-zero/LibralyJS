@@ -6,6 +6,7 @@
 *.sublime*
 
 dist/
+doc/
 
 src/doc/
 src/scss/development/

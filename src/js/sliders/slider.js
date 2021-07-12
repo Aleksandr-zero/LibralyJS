@@ -20,6 +20,10 @@ export default class Slider {
 	* @property positionY_FingetCurrentMoment_OnSlider -> type( int )
 	* @property allowSwipe -> type( boolean )
 	* @property isScrollingSlider -> type( boolean )
+	*
+	* @property _swipeStart = () => { this.swipeStart(); };
+    * @property _swipeAction = () => { this.swipeAction(); };
+    * @property _swipeEnd = () => { this.swipeEnd(); };
 	*/
 
 	getEvent() {
@@ -37,6 +41,33 @@ export default class Slider {
 	}
 
 
+	// Навешивание событий
+	removeEventsSliderTrack() {
+		/* Удаляет события у блока - sliderTrack и у самого слайдер  */
+
+		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
+		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
+
+		this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
+		this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
+
+		this.slider.classList.remove("slider-active");
+	}
+
+	addEventsSliderTrack() {
+		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
+		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
+
+		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
+		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
+
+		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
+		this.slider.classList.add("slider-active");
+	}
+
+
+	// Вспомогательные методы.
 	getPaginationSlider() {
 		return this.slider.querySelector(".slider-pagination");
 	}
@@ -86,7 +117,9 @@ export default class Slider {
 			this.positionFinal = dataset.position;
 			this.positionSliderTrack = dataset.position;
 
-			this.watchSwipeSliderTrack_Pagination();
+			if ( this.isPagination ) {
+				this.watchSwipeSliderTrack_Pagination();
+			};
 		};
 
 		this.allowSwipe = false;
@@ -135,11 +168,20 @@ export default class Slider {
 		* @slider -> SliderWithFight
 		* @slider -> SliderWithoutFight
 		* @slider -> SliderWithAutomaticAdjustment
+		* @slider -> SliderWithPreviews
 		*/
 
 		this.positionPressedX = evt.clientX;
 		this.positionPressedY = evt.clientY;
 		this.positionFingerPressSliderX = this.positionPressedX - this.slider.getBoundingClientRect().x;
 		this.positionFingerPressSliderY = this.positionPressedY - this.slider.getBoundingClientRect().y;
+	}
+
+	checkNavigation() {
+		const navigation = this.slider.querySelector(".slider-navigation");
+
+		if ( navigation ) {
+			this.addNavigation();
+		};
 	}
 };

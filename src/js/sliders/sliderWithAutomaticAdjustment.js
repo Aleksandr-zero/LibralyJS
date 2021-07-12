@@ -47,7 +47,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.addOptions();
-		this.addNavigation();
+		super.checkNavigation();
 		super.checkIsPaginationSlider();
 		super.measuresMaximumSwipeOfSlider();
 
@@ -65,30 +65,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 
 	// Вспомогательные методы.
-	removeEventsSliderTrack() {
-		this.sliderTrack.removeEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
-
-		this.sliderTrack.removeEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
-
-		this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
-
-		this.sliderTrack.classList.remove("slider-active");
-	}
-
-	addEventsSliderTrack() {
-		this.sliderTrack.addEventListener("mousemove", this._swipeAction);
-		this.sliderTrack.addEventListener("touchmove", this._swipeAction, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseup", this._swipeEnd);
-		this.sliderTrack.addEventListener("touchend", this._swipeEnd, { passive: true });
-
-		this.sliderTrack.addEventListener("mouseout", this.goingOutBoundsSlider);
-
-		this.sliderTrack.classList.add("slider-active");
-	}
-
 	checkIsNavigation_Pagination() {
 		if ( this.isPagination ) {
 			super.watchSwipeSliderTrack_Pagination();
@@ -215,7 +191,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
-		this.addEventsSliderTrack();
+		super.addEventsSliderTrack();
 	}
 
 	swipeAction() {
@@ -260,7 +236,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	}
 
 	swipeEnd() {
-		this.removeEventsSliderTrack();
+		super.removeEventsSliderTrack();
 		this.isScrollingSlider = false;
 
 		if ( this.isReturnSlider ) {
@@ -273,15 +249,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		};
 
 		this.positionFinal = this.positionSliderTrack;
-	}
-
-
-	addNavigation() {
-		const navigation = this.slider.querySelector(".slider-navigation");
-
-		if ( navigation ) {
-			super.addNavigation();
-		};
 	}
 
 

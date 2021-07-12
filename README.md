@@ -66,6 +66,8 @@ Adding pagination for the slider
 
 ### Slider without fight
 
+*Component `Navigation` and `Pagination` is not typical for this slider.*
+
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
@@ -133,21 +135,28 @@ Connect:
 ```js
 const blockSliderWithFight = document.querySelector(".slider-with-fight");
 
-const newSliderWithFight = new SliderWithFight(blockSliderWithFight);
+const newSliderWithFight = new SliderWithFight(blockSliderWithFight, {
+  speed: 300,
+  percentageForSuccessfulScrolling: 40
+});
 newSliderWithoutFight.run();
 ```
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
+| `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)`    | `500`  |
 | `percentageForSuccessfulScrolling` | The percentage of slider scrolling to advance.| `35` |
 
 ```js
 new SliderWithFight(..., {
+  speed: 600,
   percentageForSuccessfulScrolling: 50
 });
 ```
 
 ### Endless slider
+
+*Component `Pagination` is not typical for this slider.*
 
 Connect:
 ```xml
@@ -174,24 +183,34 @@ Connect:
 ```js
 const blockSliderEndless = document.querySelector(".slider-endless");
 
-const newSliderEndless = new SliderEndLess(blockSliderEndless);
+const newSliderEndless = new SliderEndLess(blockSliderEndless, {
+  speed: 300,
+  timerAdvance: {
+    isInfinity: true,
+    periodTime: 2500
+  },
+  freezeSliderMouseHover: true,
+  freezeSliderOnLossFocus: true
+});
 newSliderEndless.run();
 ```
 
 | Option                         | Description     | Default |
 |--------------------------------|-----------------|---------|
 | `speed`						 | Slider scrolling speed. **Parameters**: `<int>(ms)`    | `200`	 |
-| `timerAdvance`		 | Automatic slider advancement by timer. **Parameters**: `[true / false, float(Msec)]`. | `[false]` |
-| `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance` must be `true`). | `false` |
-| `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance` must be `true`). | `false` |
+| `timerAdvance`		 | Automatic slider advancement by timer.  | `{}` |
+| `timerAdvance.isInfinity` | Turn on infinity.  | *`absent`* |
+| `timerAdvance.periodTime` | The period of time after how much the slider will be scrolled  | *`absent`* |
+| `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance.isInfinity` must be `true`). | `false` |
+| `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance.isInfinity` must be `true`). | `false` |
 
 ```js
 new SliderEndLess(..., {
   speed: 250,
-  timerAdvance: [
-    true,
-    3000
-  ],
+  timerAdvance: {
+    isInfinity: true,
+    periodTime: 2500
+  },
   freezeSliderMouseHover: true,
   freezeSliderOnLossFocus: true
 });
@@ -373,15 +392,13 @@ new SliderSplit(..., {
 });
 ```
 
-
-
 ### Slider with sections
 
 *Component `Navigation` is not typical for this slider.*<br>
 *Since it contains its own built-in.*
 
 ```xml
-<script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithSections.js"></script>
 ```
 
 ```xml
@@ -442,7 +459,7 @@ newSliderWithSections.run();
 | `breakpoints.scrollSlidesAtTime`| Scrolling slides in one go. (**Optional parameter**). | `scrollSlidesAtTime (default)` |
 
 ```js
-new SliderWithAutomaticAdjustment(..., {
+new SliderWithSections(..., {
   speed: 300,
   scrollSlidesAtTime: 3,
   slidesPerView: 3,
@@ -456,6 +473,59 @@ new SliderWithAutomaticAdjustment(..., {
       scrollSlidesAtTime: 1
     }
   }
+});
+```
+
+### Slider with previews
+
+```xml
+<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithPreviews.js"></script>
+```
+
+```xml
+<!-- Slider main container -->
+<div class="slider-with-previews">
+  <div class="slider-list">
+    <div class="slider-track">
+      <!-- Your slides -->
+      <div class="slide">1</div>
+      <div class="slide">2</div>
+      <div class="slide">3</div>
+      <div class="slide">4</div>
+      <div class="slide">5</div>
+      <!-- Your slides -->
+    </div>
+  </div>
+  <div class="slider-list-previews">
+    <div class="slider-track-previews">
+      <!-- Your slides preview -->
+      <div class="slide-preview">1</div>
+      <div class="slide-preview">2</div>
+      <div class="slide-preview">3</div>
+      <div class="slide-preview">4</div>
+      <div class="slide-preview">5</div>
+      <!-- Your slides preview -->
+    </div>
+  </div>
+</div>
+```
+
+```js
+const blockSliderWithPreviews = document.querySelector(".slider-with-previews");
+
+const newSliderWithPreviews = new SliderWithPreviews(blockSliderWithPreviews, {
+  speed: 300
+});
+newSliderWithPreviews.run();
+```
+
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)` | `200`   |
+
+```js
+new SliderWithPreviews(..., {
+  speed: 250
 });
 ```
 

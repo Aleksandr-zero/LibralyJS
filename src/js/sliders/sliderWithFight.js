@@ -95,6 +95,13 @@ export class SliderWithFight extends Slider {
 		this.checkIsNavigation_Pagination();
 	}
 
+	setsPropertyAllowSwipe() {
+		this.allowSwipe = false;
+		setTimeout(() => {
+			this.allowSwipe = true;
+		}, this.speed);
+	}
+
 
 	// Функционал слайдера.
 	pushingSlider() {
@@ -109,9 +116,6 @@ export class SliderWithFight extends Slider {
 
 	swipeStart() {
 		if ( !this.allowSwipe ) {
-			setTimeout(() => {
-				this.allowSwipe = true;
-			});
 			return;
 		};
 
@@ -147,7 +151,8 @@ export class SliderWithFight extends Slider {
 	swipeEnd() {
 		super.removeEventsSliderTrack();
 		this.isScrollingSlider = false;
-		this.allowSwipe = true;
+
+		this.setsPropertyAllowSwipe();
 
 		if ((Math.abs(this.singleSwipe) <= this.percentForSuccessfulScrolling)) {
 			this.newHandlerFight.returnsSliderBack(this.currentSlide, this.speed);

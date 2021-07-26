@@ -234,7 +234,7 @@ export class SliderEndLess extends Slider {
 	}
 
 	countsPositionSlider_Window() {
-		/* Выщитывает кординты блоков и вызвает проверку на зону видимости слайдера.  */
+		/* Выщитывает кординты блоков и вызывает проверку на зону видимости слайдера.  */
 
 		const positionSlider = {
 			top: window.pageYOffset + this.slider.getBoundingClientRect().top,
@@ -349,7 +349,7 @@ export class SliderEndLess extends Slider {
 		if ( !this.allowSwipe ) {
 			setTimeout(() => {
 				this.allowSwipe = true;
-			});
+			}, this.speed);
 			return;
 		};
 

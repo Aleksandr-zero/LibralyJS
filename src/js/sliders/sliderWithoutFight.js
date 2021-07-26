@@ -36,6 +36,7 @@ export class SliderWithoutFight extends Slider {
 		super.measuresMaximumSwipeOfSlider();
 		this.addOptions();
 
+		this._swipeStart = () => { this.swipeStart(); };
 		this._swipeAction = () => { this.swipeAction(); };
 		this._swipeEnd = () => { this.swipeEnd(); };
 

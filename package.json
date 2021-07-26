@@ -1,8 +1,8 @@
 {
   "name": "library-js",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A library of ready-made solutions for your site, here you can find: sliders, pop-ups, etc.",
+  "main": "gulpfile.js",
   "scripts": {
     "dev": "gulp serve",
     "build-rollup": "rollup --config ./rollup.config.js",
@@ -17,8 +17,11 @@
     "type": "git",
     "url": "git+https://github.com/Aleksandr-zero/LibraryJS.git"
   },
+  "bugs": {
+    "url": "https://github.com/Aleksandr-zero/LibraryJS/issues"
+  },
   "homepage": "https://github.com/Aleksandr-zero/LibraryJS#readme",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-env": "^7.14.2",

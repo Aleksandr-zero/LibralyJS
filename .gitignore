@@ -9,7 +9,7 @@ dist/
 doc/
 
 src/doc/
-src/scss/development/
+src/scss/
 src/index.html
 src/js/app.js
 

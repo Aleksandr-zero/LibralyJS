@@ -17,6 +17,7 @@ Connect all library:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/libraryOfGoodieJS.js"></script>
 ```
+Size script: `55,7 KB`
 
 ## Sliders
 
@@ -72,6 +73,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
 ```
+Size script: `13,0 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -114,6 +116,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
 ```
+Size script: `12,8 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -162,6 +165,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
 ```
+Size script: `16,2 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -222,6 +226,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
 ```
+Size script: `7,89 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -271,6 +276,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
 ```
+Size script: `14,7 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -314,6 +320,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderBeforeAfter.js"></script>
 ```
+Size script: `2,47 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -351,6 +358,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
 ```
+Size script: `2,92 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -400,6 +408,7 @@ new SliderSplit(..., {
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithSections.js"></script>
 ```
+Size script: `6,16 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -478,11 +487,12 @@ new SliderWithSections(..., {
 
 ### Slider with previews
 
-*Component `Navigation` is not typical for this slider.*
+*Component `Pagination` is not typical for this slider.*
 
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithPreviews.js"></script>
 ```
+Size script: `13,9 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -545,6 +555,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
 ```
+Size script: `3,87 KB`
 
 
 ```xml
@@ -581,6 +592,7 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
 ```
+Size script: `4,98 KB`
 
 ```xml
 <!-- Pop-up main container -->

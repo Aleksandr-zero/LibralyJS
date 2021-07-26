@@ -88,6 +88,13 @@ export class SliderWithPreviews extends Slider {
 		};
 	}
 
+	setsPropertyAllowSwipe() {
+		this.allowSwipe = false;
+		setTimeout(() => {
+			this.allowSwipe = true;
+		}, this.speed);
+	}
+
 	// Навешивание событий
 	addEvent_SliderPreviews() {
 		/* Добавляет прослушку на слайдер с првьюхами.  */
@@ -145,6 +152,11 @@ export class SliderWithPreviews extends Slider {
 	}
 
 	swipeStart() {
+		if ( !this.allowSwipe ) {
+			this.setsPropertyAllowSwipe();
+			return;
+		};
+
 		super.addEventsSliderTrack();
 
 		const evt = super.getEvent();
@@ -209,8 +221,9 @@ export class SliderWithPreviews extends Slider {
 		super.removeEventsSliderTrack();
 		this.addTransitionSliderTrack();
 
+		this.setsPropertyAllowSwipe();
+
 		this.isScrollingSlider = false;
-		this.allowSwipe = true;
 		this.singleSwipe = 0;
 	}
 

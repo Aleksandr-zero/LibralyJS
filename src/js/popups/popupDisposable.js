@@ -2,21 +2,17 @@ import Popup from "./popup.js";
 
 
 export class PopupDisposable extends Popup {
-    /**
+  /**
 	Одноразовый popup.
 	* @param popupContainer -> block "popup-disposable" ( type -> HTMLElement )
-    */
-
+  */
 	constructor(popupContainer) {
 		super();
 
 		this.popupContainer = popupContainer;
 		this.btnOpenPopup = this.popupContainer.querySelector(".popup-disposable-btn-open");
 
-
 		this.deletePopup = () => {
-			/* Происходит при клике на весь document.  */
-
 			if (!event.target.closest(".pop-up") && !event.target.classList.contains("popup-disposable-btn-open")) {
 				const popupContainer = document.querySelector('.popup-disposable');
 				popupContainer.classList.remove("popup-disposable-active");
@@ -32,11 +28,7 @@ export class PopupDisposable extends Popup {
 		};
 	}
 
-
-	// Отвечают за навешивание событий и их обработчиков.
 	addEventClickBtnOpenPopup() {
-		/* Добавляет событие клик на кнопку открытия popup  */
-
 		this.btnOpenPopup.addEventListener("click", () => { this.openPopup(); });
 	}
 
@@ -48,10 +40,8 @@ export class PopupDisposable extends Popup {
 	}
 
 	addEventClickDocument() {
-		/* Добавляет события клика для всего document (чтобы при клике закрывать popup).  */
 		document.addEventListener("click", this.deletePopup);
 	}
-
 
 	run() {
 		this.addEventClickBtnOpenPopup();

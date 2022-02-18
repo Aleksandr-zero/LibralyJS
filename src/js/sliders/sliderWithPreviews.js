@@ -2,12 +2,11 @@ import Slider from "./slider.js";
 
 
 export class SliderWithPreviews extends Slider {
-    /**
+  /**
 	* @param slider - block "slider-with-previews" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
 	Слайдер с превьюхами
 	*/
-
 	constructor(slider, options) {
 		super();
 
@@ -54,8 +53,6 @@ export class SliderWithPreviews extends Slider {
 		this.lastVisibleSlidePreviews = this.slidesPreviewPerView;
 
 		this.goingOutBoundsSlider = () => {
-			/* Выход за границы слайдера мышкой. */
-
 			this.swipeEnd();
 			this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
 		};
@@ -71,21 +68,14 @@ export class SliderWithPreviews extends Slider {
 		};
 	}
 
-	// Вспомогательные методы
 	checkDataForMovement() {
-		if ( this.currentSlide < 0 ) {
-			this.currentSlide = 0;
-		} else if ( this.currentSlide > this.slides.length - 1 ) {
-			this.currentSlide = this.slides.length - 1;
-		};
+		if ( this.currentSlide < 0 ) this.currentSlide = 0
+		else if ( this.currentSlide > this.slides.length - 1 ) this.currentSlide = this.slides.length - 1;
 	}
 
 	addNavigation() {
 		const navigation = this.slider.querySelector(".slider-navigation");
-
-		if ( navigation ) {
-			super.addNavigation();
-		};
+		if ( navigation ) super.addNavigation();
 	}
 
 	setsPropertyAllowSwipe() {
@@ -95,10 +85,7 @@ export class SliderWithPreviews extends Slider {
 		}, this.speed);
 	}
 
-	// Навешивание событий
 	addEvent_SliderPreviews() {
-		/* Добавляет прослушку на слайдер с првьюхами.  */
-
 		this.slidesPreviewsArr = Array.prototype.slice.call(this.slidesPreviews);
 
 		this.sliderTrackPreviews.addEventListener("click", () => {
@@ -118,11 +105,7 @@ export class SliderWithPreviews extends Slider {
 		});
 	}
 
-
-	// Передвижение слайдера с превьюхами.
 	pushingSliderPreviews() {
-		/* Передвижение слайдера с превьюхами.  */
-
 		if ( this.lastVisibleSlidePreviews > this.slidesPreviews.length ) {
 			this.lastVisibleSlidePreviews = this.slidesPreviews.length;
 			this.currentSlidePreview = this.slidesPreviews.length - this.slidesPreviewPerView;
@@ -139,8 +122,6 @@ export class SliderWithPreviews extends Slider {
 		}, 0);
 	}
 
-
-	// Передвижение обычного слайдера.
 	pushingSlider() {
 		this.singleSwipe = this.positionSliderTrack - this.positionFinal;
 
@@ -158,9 +139,7 @@ export class SliderWithPreviews extends Slider {
 		};
 
 		super.addEventsSliderTrack();
-
-		const evt = super.getEvent();
-		super.calculatesTouchCoordinates_SwipeStart(evt);
+		super.calculatesTouchCoordinates_SwipeStart(super.getEvent());
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 	}
@@ -169,9 +148,7 @@ export class SliderWithPreviews extends Slider {
 		const evt = super.getEvent();
 		super.checkSliderCanBeMoved(evt);
 
-		if (!this.allowSwipe) {
-			return
-		};
+		if (!this.allowSwipe) return;
 
 		this.positionSliderTrack = this.positionPressedX - evt.clientX + this.positionFinal;
 
@@ -226,7 +203,6 @@ export class SliderWithPreviews extends Slider {
 		this.isScrollingSlider = false;
 		this.singleSwipe = 0;
 	}
-
 
 	run() {
 		this.sliderTrack.addEventListener("touchstart", this._swipeStart, { passive: true });

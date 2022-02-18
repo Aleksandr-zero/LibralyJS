@@ -3,7 +3,6 @@ export default class Navigation {
 	* @param slider -> block "slider" ( type -> HTMLElement )
 	Создаёт навигацию для слайдера.
 	*/
-
 	constructor(slider, speed) {
 		this.slider = slider;
 		this.sliderTrack = this.slider.querySelector(".slider-track");
@@ -18,8 +17,6 @@ export default class Navigation {
 	}
 
 	measuresMaximumSwipeOfSlider() {
-		/* Измеряет максимальную длину прокрутки слайдера.  */
-
 		this.sliderTrack.querySelectorAll(".slide").forEach((slide) => {
 			this.maximumSwipingAtSlider += slide.offsetWidth;
 		});
@@ -49,7 +46,7 @@ export default class Navigation {
 
 		setTimeout(() => {
 			this.sliderTrack.style.transition = `transform 0s ease`;
-		},  this.speed);
+		}, this.speed);
 	}
 
 	checkNewPosition(newPosition) {
@@ -69,11 +66,7 @@ export default class Navigation {
 		};
 
 		const newCurrentSlide = (direction === "next") ? currentSlide + 1 : currentSlide - 1;
-
 		const newPosition = this.getNewPositionSliderTrack(newCurrentSlide);
-
-		const widthCurrentSlide = Math.round(this.slides[currentSlide].getBoundingClientRect().width);
-		const positionSliderTrack = Math.abs(getComputedStyle(this.sliderTrack).transform.split(",")[4]);
 
 		this.addTransitionSliderTrack(newPosition);
 

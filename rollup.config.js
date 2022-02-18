@@ -12,14 +12,11 @@ const paths = {
 	library: {
 		slider_all: "./src/js/libraryOfGoodieJS.js",
 		slider_1: "./src/js/sliders/sliderWithoutFight.js",
-		slider_2: "./src/js/sliders/sliderWithFight.js",
-		slider_3: "./src/js/sliders/sliderEndLess.js",
-		slider_4: "./src/js/sliders/sliderSelfScrolling.js",
-		slider_5: "./src/js/sliders/sliderWithAutomaticAdjustment.js",
-		slider_6: "./src/js/sliders/sliderBeforeAfter.js",
-		slider_7: "./src/js/sliders/sliderSplit.js",
-		slider_8: "./src/js/sliders/sliderWithSections.js",
-		slider_9: "./src/js/sliders/sliderWithPreviews.js",
+		slider_2: "./src/js/sliders/sliderSelfScrolling.js",
+		slider_3: "./src/js/sliders/sliderWithAutomaticAdjustment.js",
+		slider_4: "./src/js/sliders/sliderBeforeAfter.js",
+		slider_5: "./src/js/sliders/sliderSplit.js",
+		slider_6: "./src/js/sliders/sliderWithPreviews.js",
 		popup_1: "./src/js/popups/popupDisposable.js",
 		popup_2: "./src/js/popups/popupMultiple.js",
 	},
@@ -98,33 +95,6 @@ export default [
 	    output: [
 	    	{
 	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_6)}.js`,
-	    		format: 'es'
-	    	}
-	    ],
-	    plugins: getPlugins(),
-	},{
-	    input: paths.library.slider_7,
-	    output: [
-	    	{
-	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_7)}.js`,
-	    		format: 'es'
-	    	}
-	    ],
-	    plugins: getPlugins(),
-	},{
-	    input: paths.library.slider_8,
-	    output: [
-	    	{
-	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_8)}.js`,
-	    		format: 'es'
-	    	}
-	    ],
-	    plugins: getPlugins(),
-	},{
-	    input: paths.library.slider_9,
-	    output: [
-	    	{
-	    		file: `${paths.build.js_sliders}/${getNameScript(paths.library.slider_9)}.js`,
 	    		format: 'es'
 	    	}
 	    ],

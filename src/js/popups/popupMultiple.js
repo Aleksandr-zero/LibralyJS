@@ -2,13 +2,12 @@ import Popup from "./popup.js";
 
 
 export class PopupMuliple extends Popup {
-    /**
+  /**
 	Многоразовай pop-up.
 	* @param popupContainer -> block "popup-multiple" ( type -> HTMLElement )
 	* @param templatePopup -> template popup ( type -> String )
 	* @param options -> custom settings ( type -> Object )
-    */
-
+  */
 	constructor(popupContainer, templatePopup, options) {
 		super();
 
@@ -23,8 +22,6 @@ export class PopupMuliple extends Popup {
 		};
 
 		this.deletePopup = () => {
-			/* Происходит при клике на весь document.  */
-
 			if (!event.target.closest(".popup")) {
 				const popupContainer = document.querySelector('.popup-multiple');
 				popupContainer.classList.remove("popup-multiple-active");
@@ -42,24 +39,17 @@ export class PopupMuliple extends Popup {
 	}
 
 	addOptions() {
-		this.numberOfPopup = (this.options.numberOfPopup) ? this.options.numberOfPopup : 2;
+		this.numberOfPopup = Object.keys(this.options.popups).length;
 	}
 
-
-	// Отвечают за навешивание событий и их обработчиков.
 	addEventClick_BtnsOpenPopup() {
-		/* Добавляет события клика на кнопки открытия popup.  */
-
 		const btnsPopup = this.popupContainer.querySelectorAll(".popup-multiple-btn-open");
-
 		btnsPopup.forEach((btn) => {
 			btn.addEventListener("click", () => { this.pressedBtnOpenPopup(); });
 		});
 	}
 
 	pressedBtnOpenPopup() {
-		/* Срабатывает при клике на кнопку.   */
-
 		const numberPopup = event.currentTarget.dataset.popupNumber;
 		const data = this.options.popups[numberPopup];
 
@@ -75,20 +65,13 @@ export class PopupMuliple extends Popup {
 	}
 
 	addEventClickDocument() {
-		/* Добавляет события клика для всего document (чтобы при клике закрывать popup).  */
 		document.addEventListener("click", this.deletePopup);
 	}
 
-
-	// Отвечают за функционал.
 	createPopup(data) {
-		/* Создаёт указанный popup.  */
-
 		let newPopup = this.templatePopup;
 
 		for (const key in data) {
-
-			// Если в настройки будет передан обьект.
 			if (typeof data[key] === "object") {
 				for (const keyObj in data[key]) {
 					newPopup = newPopup.replace(`{{ ${key}.${keyObj} }}`, data[key][keyObj]);
@@ -96,7 +79,6 @@ export class PopupMuliple extends Popup {
 
 				continue;
 			};
-
 			newPopup = newPopup.replace(`{{ ${key} }}`, data[key]);
 		};
 
@@ -104,12 +86,9 @@ export class PopupMuliple extends Popup {
 	}
 
 	insertsNewPopup_In_Container(newPopup) {
-		/* Помещает новый popup в контейнер.  */
-
 		this.popupContainerContent.insertAdjacentHTML("beforeend", newPopup);
 		this.popupContainer.classList.add("popup-multiple-active");
 	}
-
 
 	run() {
 		this.addEventClick_BtnsOpenPopup();

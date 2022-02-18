@@ -4,7 +4,6 @@ export default class HandlerFight {
 	* @param sliderTrack -> block <slider.querySelector(".slider-track")>
 	Обработчик для боя.
 	*/
-
 	constructor(slider, sliderTrack) {
 		this.slider = slider;
 		this.sliderTrack = sliderTrack;

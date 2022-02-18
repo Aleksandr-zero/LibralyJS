@@ -7,7 +7,6 @@ export class SliderWithoutFight extends Slider {
 	* @param slider -> block "slider-without-fight" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
 	*/
-
 	constructor(slider, options) {
 		super();
 
@@ -41,46 +40,31 @@ export class SliderWithoutFight extends Slider {
 		this._swipeEnd = () => { this.swipeEnd(); };
 
 		this.goingOutBoundsSlider = () => {
-			/* Выход за границы слайдера мышкой. */
-
 			this.swipeEnd();
 			this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
 		};
 	}
 
 	addOptions() {
-		/* Добавляет пользовательские настройки для слайдера.  */
 		this.scrollAfterAbruptStop = (this.options) ? this.options.scrollAfterAbruptStop : true;
 	}
 
-
-	// Вспомогательные методы.
 	checksOutOfBounds() {
-		/* Если палец будет заходить за границы слайдера то запрещаем его двигать.  */
-
 		if (
 			(this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX && this.positionSliderTrack - this.positionFinal > 0) ||
 			(this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
-			) {
-
+		) {
 			this.measuresSpeedTrafficSliderTrack();
 			this.removeEventsSliderTrack();
 		};
 	}
 
-
-	// Автоматическая прокрутка.
 	measuresSpeedTrafficSliderTrack() {
-		/* Измеряет скорость движение трека.  */
-
 		const speedSlider = (this.singleSwipe / this.swipeSlider_Time).toFixed(2);
-
 		this.autoPushingSlider(speedSlider);
 	}
 
 	autoPushingSlider(speedSlider) {
-		/* Автоматически пролистывает слайдер  */
-
 		if (speedSlider <= 0.6 || this.positionSliderTrack > this.maximumSwipingAtSlider) {
 			return;
 		};
@@ -105,8 +89,6 @@ export class SliderWithoutFight extends Slider {
 	}
 
 	setsStyle_For_autoPushingSlider(newPosition) {
-		/* Устанавливает стили для автоматической прокрутки.  */
-
 		this.sliderTrack.style.transform = `translate3d(-${newPosition}px, 0px, 0px)`;
 		this.sliderTrack.style.transition = `transform 1s ease-out`;
 
@@ -117,8 +99,6 @@ export class SliderWithoutFight extends Slider {
 	}
 
 	stopsAutoScrolling() {
-		/* Останавливает автоматическую прокрутку при захвата слайдера.  */
-
 		const curretnPositionSliderTrack = Math.abs(
 			Math.round(this.sliderTrack.getBoundingClientRect().x) - Math.round(this.slider.getBoundingClientRect().x)
 		);
@@ -127,8 +107,6 @@ export class SliderWithoutFight extends Slider {
 		this.sliderTrack.style.transform = `translate3d(-${this.positionFinal}px, 0px, 0px)`
 	}
 
-
-	// Функционал слайдера.
 	pushingSlider() {
 		this.singleSwipe = Math.abs(this.positionSliderTrack - this.positionFinal);
 
@@ -147,8 +125,7 @@ export class SliderWithoutFight extends Slider {
 		this.allowSwipe = true;
 		this.time_1 = performance.now();
 
-		const evt = super.getEvent();
-        super.calculatesTouchCoordinates_SwipeStart(evt)
+    super.calculatesTouchCoordinates_SwipeStart(super.getEvent())
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 		this.sliderTrack.style.transition = `none`;
@@ -162,9 +139,7 @@ export class SliderWithoutFight extends Slider {
 
 		super.checkSliderCanBeMoved(evt);
 
-		if (!this.allowSwipe) {
-			return
-		};
+		if (!this.allowSwipe) return;
 
 		if (event.type === "touchmove") {
 			this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
@@ -186,7 +161,6 @@ export class SliderWithoutFight extends Slider {
 		};
 
 		this.singleSwipe = Math.abs(this.positionSliderTrack - this.positionFinal);
-
 		this.positionFinal = this.positionSliderTrack;
 
 		// если мы будем тянуть слайдер, когда уже начало или конец слайдер, то мы будем
@@ -208,7 +182,6 @@ export class SliderWithoutFight extends Slider {
 
 		super.removeEventsSliderTrack();
 	}
-
 
 	run() {
 		this.sliderTrack.addEventListener("touchstart", () => { this.swipeStart(); }, { passive: true });

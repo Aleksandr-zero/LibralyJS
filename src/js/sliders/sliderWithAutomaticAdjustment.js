@@ -7,7 +7,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	* @param slider -> block "slider-automatic-adjustment" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
 	*/
-
 	constructor(slider, options) {
 		super();
 
@@ -52,8 +51,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		super.measuresMaximumSwipeOfSlider();
 
 		this.goingOutBoundsSlider = () => {
-			/* Выход за границы слайдера мышкой. */
-
 			this.swipeEnd();
 			this.sliderTrack.removeEventListener("mouseout", this.goingOutBoundsSlider);
 		};
@@ -63,8 +60,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		this.speed = (this.options.speed) ? this.options.speed : 200;
 	}
 
-
-	// Вспомогательные методы.
 	checkIsNavigation_Pagination() {
 		if ( this.isPagination ) {
 			super.watchSwipeSliderTrack_Pagination();
@@ -72,8 +67,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	}
 
 	setsTransition_For_PushingWithFight() {
-		/* Устанавливает плавную прокрутку для передвижения слайдера с боем.  */
-
 		this.checks_In_WhichDirectionMoveSlider();
 
 		const newPosition = this.calculatesPositionSliderTrack();
@@ -95,33 +88,29 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	}
 
     checks_In_WhichDirectionMoveSlider() {
-    	/* Проверяет, в каком направлении перемещать слайдер.  */
-
     	if ( this.directionSliderTrack === "right" && this.currentSlide !== this.numberSlides ) {
     		this.currentSlide++;
     	} else if ( this.directionSliderTrack === "left" && this.currentSlide !== 0 ) {
     		this.currentSlide--;
     	};
 
-		this.checkIsNavigation_Pagination();
+			this.checkIsNavigation_Pagination();
     }
 
     returnsSliderBack() {
-    	/* Возвращает слайдер на место если есть предел.  */
-
     	this.allowSwipe = false;
     	this.positionSliderTrack = this.positionFinal = this.maximumSwipingAtSlider;
 
-		this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;
+			this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;
 
-		setTimeout(() => {
-			this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
-		}, 0);
+			setTimeout(() => {
+				this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
+			}, 0);
 
-		setTimeout(() => {
-			this.allowSwipe = true;
-			this.sliderTrack.style.transition = `none`;
-		}, this.speed);
+			setTimeout(() => {
+				this.allowSwipe = true;
+				this.sliderTrack.style.transition = `none`;
+			}, this.speed);
     }
 
     calculatesPositionSliderTrack() {
@@ -137,16 +126,11 @@ export class SliderWithAutomaticAdjustment extends Slider {
         return newPosition;
     }
 
-
-	// Функционал слайдера.
-	pushingSliderWithFight() {
-		/* Продвигает слайдер с боем.  */
-		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
-	}
+		pushingSliderWithFight() {
+			this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
+		}
 
 	pushingSliderWithoutFight() {
-		/* Продвигает слайдер без боя.  */
-
 		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
 		let positionCurrentSlide = this.slider.getBoundingClientRect().x - this.slides[this.currentSlide].getBoundingClientRect().x;
@@ -171,13 +155,11 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	swipeStart() {
 		if (!this.allowSwipe) {
 			this.allowSwipe = true;
-            return;
-        };
-
-		const evt = super.getEvent();
+      return;
+    };
 
 		super.calculatesTouchCoordinates_SwipeStart(
-			this.evt = evt
+			this.evt = super.getEvent()
 		);
 
 		if ( this.currentSlide === this.numberSlides - 1 ) {
@@ -250,7 +232,6 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 		this.positionFinal = this.positionSliderTrack;
 	}
-
 
 	run() {
 		this.sliderTrack.addEventListener("mousedown", this._swipeStart);

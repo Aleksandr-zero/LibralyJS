@@ -1,10 +1,9 @@
 export class SliderSplit {
-    /**
+  /**
     * @param slider -> block "slider-split" ( type -> HTMLElement )
     * @param options -> custom settings ( type -> Object )
-	Разделённый слайдер в одной плоскости.
-    */
-
+		Разделённый слайдер в одной плоскости.
+  */
 	constructor(slider, options) {
 		this.slider = slider;
 		this.options = options;
@@ -22,7 +21,6 @@ export class SliderSplit {
 		this._mouseMovement_On_Slider = () => { this.mouseMovement_On_Slider(); };
 
 		this.addOptions();
-
 		this.setsZIndex_For_Slides();
 	}
 
@@ -38,16 +36,12 @@ export class SliderSplit {
 		};
 	}
 
-
-	// Вспомогательные методы.
 	getEvent() {
 		return (event.type.search('touch') != -1) ? event.touches[0] : event;
 	}
 
 	findSlide_CurrentLocationsCursor(evt) {
-		/* Находит слайд в зависимости расположения курсора мыши.  */
-
-		const positionCurrentCursor = (evt.clientX - this.slider.getBoundingClientRect().x).toFixed(2);
+		const positionCurrentCursor = parseFloat(Math.abs(evt.clientX - this.slider.getBoundingClientRect().x).toFixed(2));
 		const currentSlide = Math.floor(positionCurrentCursor / this.percentageForChangingSlides);
 
 		if ( this.currentSlide !== currentSlide ) {
@@ -59,19 +53,13 @@ export class SliderSplit {
 	}
 
 	setsActiveSlide() {
-		this.slides.forEach((slide) => {
-			slide.classList.remove("slide-split-active");
-		});
-
-		this.slides[this.currentSlide].classList.add("slide-split-active");
+		this.slides.forEach(slide => slide.classList.remove("slide-split-active"));
+		if ( this.currentSlide >= 0 ) this.slides[this.currentSlide].classList.add("slide-split-active");
 	}
 
 	setsActiveBtn() {
-		this.sliderBtns.forEach((btn) => {
-			btn.classList.remove("split-btn-active");
-		});
-
-		this.sliderBtns[this.currentSlide].classList.add("split-btn-active");
+		this.sliderBtns.forEach(btn => btn.classList.remove("split-btn-active"));
+		if ( this.currentSlide >= 0 ) this.sliderBtns[this.currentSlide].classList.add("split-btn-active");
 	}
 
 	setsZIndex_For_Slides() {
@@ -83,15 +71,9 @@ export class SliderSplit {
 		});
 	}
 
-
-	// Отвечает за функционал.
 	mouseMovement_On_Slider() {
-		/* Движение курсора по области слайдера.  */
-
-		const evt = this.getEvent();
-
 		this.findSlide_CurrentLocationsCursor(
-			this.evt = evt
+			this.evt = this.getEvent()
 		);
 	}
 
@@ -106,7 +88,6 @@ export class SliderSplit {
 		this.setsActiveBtn();
 		this.setsActiveSlide();
 	}
-
 
 	run() {
 		if ( this.sliderActivationOnHover ) {

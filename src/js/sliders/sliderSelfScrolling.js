@@ -1,9 +1,9 @@
 export class SliderSelfScrolling {
-    /**
+  /**
 	Самопрокручиваемый слайдер.
 	* @param slider - block "slider-automatic-adjustment" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
-    */
+  */
 
 	constructor(slider, options) {
 		this.slider = slider;
@@ -26,8 +26,6 @@ export class SliderSelfScrolling {
 	}
 
 	addOptions() {
-		/* Устанавливает пользовательские настройки.  */
-
 		this.duration = (this.options.duration) ? this.options.duration : 10;
 		this.temporaryFunction = (this.options.temporaryFunction) ? this.options.temporaryFunction : "linear";
 		this.delay = (this.options.delay) ? this.options.delay : 0;
@@ -35,28 +33,20 @@ export class SliderSelfScrolling {
 		this.repeatSlider = (this.options.repeatSlider) ? this.options.repeatSlider : false;
 	}
 
-	// Вспомогательные методы.
-    getSpeedSliderTrack() {
-    	/* Вычисляет скорость прокрутки слайдера (px/s).  */
-    	this.speedSliderTrack = this.maximumSwipingAtSlider / (this.duration);
-    }
+  getSpeedSliderTrack() {
+    this.speedSliderTrack = this.maximumSwipingAtSlider / (this.duration);
+  }
 
 	measuresMaximumSwipeOfSlider() {
-        /* Измеряет максимальную длину прокрутки слайдера.  */
+		this.maximumSwipingAtSlider = 0;
 
-        this.maximumSwipingAtSlider = 0;
+		this.sliderTrack.querySelectorAll(".slide").forEach(slide => this.maximumSwipingAtSlider += slide.offsetWidth);
 
-        this.sliderTrack.querySelectorAll(".slide").forEach((slide) => {
-            this.maximumSwipingAtSlider += slide.offsetWidth;
-        });
-
-        this.maximumSwipingAtSlider -= this.slider.querySelector(".slider-list").offsetWidth;
-        this.positionSliderTrack = this.maximumSwipingAtSlider;
-    }
+		this.maximumSwipingAtSlider -= this.slider.querySelector(".slider-list").offsetWidth;
+		this.positionSliderTrack = this.maximumSwipingAtSlider;
+	}
 
 	countsTimeSinceStartOfSlider() {
-		/* Считает время после запуска слайдера.  */
-
 		this.numberSecondsAfterStartingSlider =
 			(!this.isHideSlider_For_FirstTime) ?
 			((this.time_2 - this.time_1) / 1000 - this.delay) :
@@ -69,8 +59,6 @@ export class SliderSelfScrolling {
 	}
 
 	calculateDistanceAfterStartingSlider() {
-		/* Выщитывает пройденное расстояние от начала запуска слайдера.  */
-
 		this.positionSliderTrack = (!this.isHideSlider_For_FirstTime) ?
 				this.numberSecondsAfterStartingSlider * this.speedSliderTrack :
 				this.positionSliderTrack + this.numberSecondsAfterStartingSlider * this.speedSliderTrack;
@@ -78,29 +66,21 @@ export class SliderSelfScrolling {
 	}
 
 	resetTimers() {
-		/* Сбрасывает таймеры.  */
 		this.time_2 = 0;
 		this.time_1 = 0;
 	}
 
 	deleteStyleSlider() {
-		/* Удаляет стили (transform и transition) для слайдера.  */
 		this.sliderTrack.removeAttribute("style");
 	}
 
-
-	// Отвечают за функционал слайдера.
-    addEventScrollWindow() {
-    	/* Добавляет события скролла на всё окно для измерения области видимиости слайдера.  */
-
-    	window.addEventListener("scroll", () => {
+	addEventScrollWindow() {
+		window.addEventListener("scroll", () => {
 			this.countsPositionSlider_Window();
 		});
-    }
+	}
 
-   	countsPositionSlider_Window() {
-		/* Выщитывает кординты блоков и вызвает проверку на зону видимости слайдера.  */
-
+  countsPositionSlider_Window() {
 		const positionSlider = {
 			top: window.pageYOffset + this.slider.getBoundingClientRect().top,
 			bottom: window.pageXOffset + this.slider.getBoundingClientRect().bottom,
@@ -115,11 +95,7 @@ export class SliderSelfScrolling {
 	}
 
 	checks_If_SliderVisible(positionSlider, positionWindow) {
-		/* Проверяет находится ли слайдер в зоне видимости.  */
-
-		if (!this.isSwiping) {
-			return;
-		};
+		if (!this.isSwiping) return;
 
 		if (positionWindow.top - this.slider.clientHeight <= positionSlider.top &&
 			positionSlider.top < positionWindow.bottom) {
@@ -134,9 +110,7 @@ export class SliderSelfScrolling {
 			};
 
 			this.isVisible = true;
-
 		} else {
-
 			if (this.isVisible) {
 				this.time_2 = performance.now();
 				this.blockingSlider();
@@ -149,18 +123,11 @@ export class SliderSelfScrolling {
 	}
 
 	blockingSlider() {
-		/* Производит блокировку слайдера.  */
-
-		if (!this.repeatSlider) {
-			this.blockingSlider_For_OneEnd();
-		} else if (this.repeatSlider) {
-			this.blockingSlider_For_EndLess();
-		};
+		if (!this.repeatSlider) this.blockingSlider_For_OneEnd()
+		else if (this.repeatSlider) this.blockingSlider_For_EndLess();
 	}
 
 	blockingSlider_For_OneEnd() {
-		/* Блокирует слайдер в один конец.  */
-
 		this.deleteStyleSlider();
 		window.clearTimeout(this.setTimeoutStartSlider);
 
@@ -182,18 +149,11 @@ export class SliderSelfScrolling {
 	}
 
 	unblockingSlider() {
-		/* Производит разблокировку слайдера  */
-
-		if (!this.repeatSlider) {
-			this.unblockingSlider_For_OneEnd();
-		} else if (this.repeatSlider) {
-			this.unblockingSlider_For_EndLess();
-		};
+		if (!this.repeatSlider) this.unblockingSlider_For_OneEnd()
+		else if (this.repeatSlider) this.unblockingSlider_For_EndLess();
 	}
 
 	unblockingSlider_For_OneEnd() {
-		/* Производит разблокировку для обычного слайдера в один конец.  */
-
 		if (!this.isHideSlider_For_FirstTime) {
 			this.setsTransition_For_SliderOneEnd();
 		};
@@ -213,22 +173,16 @@ export class SliderSelfScrolling {
 	}
 
 	unblockingSlider_For_EndLess() {
-		/* Производит разблокировку для бесконечного слайдера.  */
-
 		this.setsTransition_For_SliderEndLess();
 	};
 
 
 	prohibitsMovingSliderAfter_TheEndTransition() {
-		/* Запрещает двигать слайдер после окончании transition.  */
-
 		this.isSwiping = false;
 		this.resetTimers();
 	}
 
 	setsTransition_For_SliderOneEnd() {
-		/* Устанавливает плавную анимацию для слайдера в один конец.  */
-
 		if (!this.isHideSlider_For_FirstTime) {
 			this.sliderTrack.style.transition = `transform ${this.duration}s ${this.temporaryFunction} ${this.delay}s`;
 		} else if (this.isHideSlider_For_FirstTime) {
@@ -237,8 +191,6 @@ export class SliderSelfScrolling {
 	}
 
 	setsTransition_For_SliderEndLess() {
-		/* Устанавливает плавную анимацию для слайдера с бесконечной прокруткой.  */
-
 		this.slides = this.sliderTrack.children;
 
 		const timeToPassOneSlide = this.duration / (this.sliderTrack.querySelectorAll(".slide").length - 1);
@@ -250,10 +202,7 @@ export class SliderSelfScrolling {
 	}
 
 	checks_If_UserOnSite() {
-		/* Проверяет находится ли пользователь на сайте. Если нет, то заморозим слайдер.  */
-
 		document.addEventListener("visibilitychange", () => {
-
 			if (!this.isVisible || !this.isSwiping) {
 				return;
 			};
@@ -267,11 +216,7 @@ export class SliderSelfScrolling {
 		});
 	}
 
-
-	// Методы для реализации пользоватеских команд.
 	transitionEndAtSlider(timeToPassOneSlide) {
-		/* Анимация закончилась.  */
-
 		this.movesFirstSlide_TheEnd();
 
 		this.nullifiesCssSliderTrack();
@@ -281,8 +226,6 @@ export class SliderSelfScrolling {
 	}
 
 	movesFirstSlide_TheEnd() {
-		/* Премещает первый слайд в самый конец.  */
-
 		const firstSlide = this.slides[0];
 		firstSlide.remove();
 
@@ -290,15 +233,11 @@ export class SliderSelfScrolling {
 	}
 
 	calculatesTransitTimeOneSlide() {
-		/* Вычисляет время прохождения одного слайда.  */
-
 		const timeToPassOneSlide = this.duration / (this.sliderTrack.querySelectorAll(".slide").length - 1);
 		return timeToPassOneSlide;
 	}
 
 	setsInteval_For_EndLessSlider(timeToPassOneSlide) {
-		/* Устанавливает setInterval чтобы наш слайдер передвигался беконечно.  */
-
 		setInterval(() => {
 			this.movesFirstSlide_TheEnd();
 			this.nullifiesCssSliderTrack();
@@ -306,19 +245,14 @@ export class SliderSelfScrolling {
 	}
 
 	nullifiesCssSliderTrack() {
-		/* Обнуляет все стили у блока - sliderTrack  */
-
 		this.sliderTrack.style.transition = "none";
 		this.sliderTrack.style.transform = `translate3d(0px, 0px, 0px)`;
 	}
 
 	setsStyle_For_SliderEndLess(timeToPassOneSlide) {
-		/* Устанавливает стили для бесконечной прокрутки  слайдера.  */
-
 		this.sliderTrack.style.transition = `transform ${timeToPassOneSlide}s ${this.temporaryFunction}`;
 		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 	}
-
 
 	run() {
 		this.measuresMaximumSwipeOfSlider();

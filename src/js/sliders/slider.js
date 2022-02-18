@@ -31,8 +31,6 @@ export default class Slider {
 	}
 
 	measuresMaximumSwipeOfSlider() {
-		/* Измеряет максимальную длину прокрутки слайдера.  */
-
 		this.sliderTrack.querySelectorAll(".slide").forEach((slide) => {
 			this.maximumSwipingAtSlider += slide.offsetWidth;
 		});
@@ -40,11 +38,7 @@ export default class Slider {
 		this.maximumSwipingAtSlider -= this.sliderWidth;
 	}
 
-
-	// Навешивание событий
 	removeEventsSliderTrack() {
-		/* Удаляет события у блока - sliderTrack и у самого слайдер  */
-
 		this.sliderTrack.removeEventListener("touchmove", this._swipeAction);
 		this.sliderTrack.removeEventListener("touchend", this._swipeEnd);
 
@@ -66,20 +60,13 @@ export default class Slider {
 		this.slider.classList.add("slider-active");
 	}
 
-
-	// Вспомогательные методы.
 	getPaginationSlider() {
 		return this.slider.querySelector(".slider-pagination");
 	}
 
 	checkIsPaginationSlider() {
-		/* Проверяет есть ли у слайдера пагинация.  */
-
 		const pagination = this.getPaginationSlider();
-
-		if ( pagination ) {
-			this.addPagination();
-		};
+		if ( pagination ) this.addPagination();
 	}
 
 	watchSwipeSliderTrack_Pagination() {
@@ -91,16 +78,14 @@ export default class Slider {
 		this.newPagination = new Pagination(this.slider);
 	}
 
-
 	addNavigation() {
 		this.isNavigation = true;
 		this.newNavigation = new Navigation(this.slider, this.speed);
 
-        const btnPrev = this.slider.querySelector(".btn-slider-push-last");
-        const btnNext = this.slider.querySelector(".btn-slider-push-next");
-
-        btnPrev.addEventListener("click", () => {this.pressedBtnPushSlider(); });
-        btnNext.addEventListener("click", () => { this.pressedBtnPushSlider(); });
+    const btnPrev = this.slider.querySelector(".btn-slider-push-last");
+    const btnNext = this.slider.querySelector(".btn-slider-push-next");
+    btnPrev.addEventListener("click", () => {this.pressedBtnPushSlider(); });
+    btnNext.addEventListener("click", () => { this.pressedBtnPushSlider(); });
 	}
 
 	pressedBtnPushSlider() {
@@ -109,7 +94,6 @@ export default class Slider {
 		};
 
 		const direction = event.currentTarget.dataset.direction;
-
 		const dataset = this.newNavigation.pushingSliderTrack(direction, this.currentSlide);
 
 		if ( dataset ) {
@@ -134,7 +118,6 @@ export default class Slider {
 		}, 500);
 	}
 
-
 	checkSliderCanBeMoved(evt) {
 		/**
 		* @param evt -> fun "getEvent"
@@ -142,8 +125,6 @@ export default class Slider {
 		*/
 
 		if ( Math.abs(evt.clientY - this.positionPressedY) >= 5 && event.type === "touchmove" ) {
-			// Если пользователь будет  скроллить страницу.
-
 			if ( !this.isScrollingSlider ) {
 				this.allowSwipe = false;
 				this.removeEventsSliderTrack();
@@ -155,8 +136,6 @@ export default class Slider {
 	}
 
 	checksOutOfBounds() {
-		/* Если палец будет заходить за границы слайдера то запрещаем его двигать.  */
-
 		if (
 			(this.positionX_FingetCurrentMoment_OnSlider >= this.positionFingerPressSliderX && this.positionSliderTrack - this.positionFinal > 0) ||
 			(this.positionX_FingetCurrentMoment_OnSlider >= (this.sliderWidth - this.positionFingerPressSliderX)) && this.positionSliderTrack - this.positionFinal < 0
@@ -175,7 +154,6 @@ export default class Slider {
 		* @slider -> SliderWithAutomaticAdjustment
 		* @slider -> SliderWithPreviews
 		*/
-
 		this.positionPressedX = evt.clientX;
 		this.positionPressedY = evt.clientY;
 		this.positionFingerPressSliderX = this.positionPressedX - this.slider.getBoundingClientRect().x;
@@ -184,9 +162,6 @@ export default class Slider {
 
 	checkNavigation() {
 		const navigation = this.slider.querySelector(".slider-navigation");
-
-		if ( navigation ) {
-			this.addNavigation();
-		};
+		if ( navigation ) this.addNavigation();
 	}
 };

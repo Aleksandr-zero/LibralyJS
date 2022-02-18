@@ -17,7 +17,6 @@ Connect all library:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/libraryOfGoodieJS.js"></script>
 ```
-Size script: `55,7 KB`
 
 ## Sliders
 
@@ -73,7 +72,6 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithoutFight.js"></script>
 ```
-Size script: `13,0 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -110,53 +108,6 @@ new SliderWithoutFight(..., {
 });
 ```
 
-### Slider with fight
-
-Connect:
-```xml
-<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithFight.js"></script>
-```
-Size script: `12,8 KB`
-
-```xml
-<!-- Slider main container -->
-<div class="slider-with-fight">
-  <div class="slider-list">
-    <div class="slider-track">
-      <!-- Your slides -->
-      <div class="slide">1</div>
-      <div class="slide">2</div>
-      <div class="slide">3</div>
-      <div class="slide">4</div>
-      <div class="slide">5</div>
-      <!-- Your slides -->
-    </div>
-  </div>
-</div>
-```
-
-```js
-const blockSliderWithFight = document.querySelector(".slider-with-fight");
-
-const newSliderWithFight = new SliderWithFight(blockSliderWithFight, {
-  speed: 300,
-  percentageForSuccessfulScrolling: 40
-});
-newSliderWithoutFight.run();
-```
-
-| Option                         | Description     | Default |
-|--------------------------------|-----------------|---------|
-| `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)`    | `500`  |
-| `percentageForSuccessfulScrolling` | The percentage of slider scrolling to advance.| `35` |
-
-```js
-new SliderWithFight(..., {
-  speed: 600,
-  percentageForSuccessfulScrolling: 50
-});
-```
-
 ### Endless slider
 
 *Component `Navigation` is not typical for this slider.*
@@ -165,7 +116,6 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
 ```
-Size script: `16,2 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -276,7 +226,6 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
 ```
-Size script: `14,7 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -320,28 +269,27 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderBeforeAfter.js"></script>
 ```
-Size script: `2,47 KB`
 
 ```xml
 <!-- Slider main container -->
 <div class="slider-before-after">
-  <div class="slider-list">
-    <div class="slider-track">
+	<div class="slider-list">
+		<div class="slider-track">
       <!-- Yout slide before -->
-      <div class="slide-before">
-        before
-      </div>
-
+			<div class="slide-before">
+				<div class="slide-before-body">
+					BEFORE
+				</div>
+			</div>
       <!-- Yout slide after -->
-      <div class="slide-after">
-        after
-      </div>
-
-      <div class="slider-switch">
-        <span>Switch</span>
-      </div>
-    </div>
-  </div>
+			<div class="slide-after">
+				AFTER
+			</div>
+			<div class="slider-switch">
+				<span>Switch</span>
+			</div>
+		</div>
+	</div>
 </div>
 ```
 
@@ -400,91 +348,6 @@ new SliderSplit(..., {
 });
 ```
 
-### Slider with sections
-
-*Component `Navigation` is not typical for this slider.*<br>
-*Since it contains its own built-in.*
-
-```xml
-<script src="LibraryOfGoodieJS/scripts/sliders/sliderWithSections.js"></script>
-```
-Size script: `6,16 KB`
-
-```xml
-<!-- Slider main container -->
-<div class="slider-with-sections">
-  <div class="slider-list">
-    <div class="slider-track">
-      <!-- Your slides -->
-      <div class="slide">1</div>
-      <div class="slide">2</div>
-      <div class="slide">3</div>
-      <div class="slide">4</div>
-      <div class="slide">5</div>
-      <div class="slide">6</div>
-      <!-- Your slides -->
-    </div>
-  </div>
-  <div class="slider-with-sections-navigation">
-    <div class="back-btn-slider-push back-btn-slider-push-left">
-      <button data-direction="last" type="button" class="btn-slider-push btn-slider-push-last">Button</button>
-    </div>
-    <div class="back-btn-slider-push back-btn-slider-push-right">
-      <button data-direction="next" type="button" class="btn-slider-push btn-slider-push-next">Button</button>
-    </div>
-  </div>
-</div>
-```
-
-```js
-const blockSliderWithSections = document.querySelector(".slider-with-sections");
-
-const newSliderWithSections = new SliderWithSections(blockSliderWithSections, {
-  speed: 350,
-  scrollSlidesAtTime: 2,
-  visibleSlides: 3,
-  breakpoints: {
-    900: {
-      slidesPerView: 2,
-      scrollSlidesAtTime: 1
-    },
-    560: {
-      slidesPerView: 1,
-      scrollSlidesAtTime: 1
-    },
-  }
-});
-newSliderWithSections.run();
-```
-
-| Option                         | Description     | Default   |
-|--------------------------------|-----------------|-----------|
-| `speed`                        | Slider scrolling speed. **Parameters**: `<int>(ms)`. | `200` |
-| `scrollSlidesAtTime`           | Scrolling slides in one go. | `1` |
-| `slidesPerView`                | Number of visible slides. (**Required parameter**). | *`absent`* |
-| `breakpoints`                  | Object for slider control when changing the screen width. | `{}` |
-| `breakpoints.<int>`            | Specifies at what width to change the slider settings. | *`absent`* |
-| `breakpoints.slidesPerView`    | Number of visible slides. (**Required parameter**). | *`absent`* |
-| `breakpoints.scrollSlidesAtTime`| Scrolling slides in one go. (**Optional parameter**). | `scrollSlidesAtTime (default)` |
-
-```js
-new SliderWithSections(..., {
-  speed: 300,
-  scrollSlidesAtTime: 3,
-  slidesPerView: 3,
-  breakpoints: {
-    768: {
-      slidesPerView: 2,
-      scrollSlidesAtTime: 2
-    },
-    560: {
-      slidesPerView: 1,
-      scrollSlidesAtTime: 1
-    }
-  }
-});
-```
-
 ### Slider with previews
 
 *Component `Pagination` is not typical for this slider.*
@@ -492,7 +355,6 @@ new SliderWithSections(..., {
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithPreviews.js"></script>
 ```
-Size script: `13,9 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -555,8 +417,6 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
 ```
-Size script: `3,87 KB`
-
 
 ```xml
 <!-- Pop-up main container -->
@@ -592,15 +452,14 @@ Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
 ```
-Size script: `4,98 KB`
 
 ```xml
 <!-- Pop-up main container -->
 <div class="popup-multiple">
   <!-- Buttons for opening pop-ups -->
-  <button data-popup-number="one" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 1</button>
-  <button data-popup-number="two" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 2</button>
-  <button data-popup-number="three" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 3</button>
+  <button data-popup-number="1" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 1</button>
+  <button data-popup-number="2" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 2</button>
+  <button data-popup-number="3" type="button" class="popup-multiple-btn-open btn-open-popup">Open popup 3</button>
   <div class="popup-multiple__container popup-container">
      <!-- This is where the generation will take place -->
     <div class="popup-multiple__container-content">
@@ -625,9 +484,8 @@ const templatePopup = `
 </div>
 `;
 const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
-  numberOfPopup: 3,
   popups: {
-    one: {
+    1: {
       title: "Popup 1",
       text: "Popup text at number 1",
       img: {
@@ -635,7 +493,7 @@ const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
         altImg: "popup 1"
       }
     },
-    two: {
+    2: {
       title: "Popup 2",
       text: "Popup text at number 2",
       img: {
@@ -643,7 +501,7 @@ const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
         altImg: "popup 2"
       }
     },
-    three: {
+    3: {
       title: "Popup 3",
       text: "Popup text at number 3",
       img: {

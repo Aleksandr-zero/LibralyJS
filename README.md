@@ -15,7 +15,6 @@ Connect all library:
 ```
 
 ## Sliders
-
 ### Components
 
 #### Navigation
@@ -138,7 +137,6 @@ newSliderSelfScrolling.run();
 | `temporaryFunction`| Temporary function for *style* **transition**.   | `linear` |
 | `delay`            | Delay for *style* **transition**.                | `0` |
 | `delayBeforeStartingAfterHiding`| Delay the slider before starting it after hiding it. **Parameters**: `<float>(sec)`. | `1.5` |
-| `repeatSlider`     | Repeating the scrolling of the slider after it has finished. | `false` |
 
 ```js
 new SliderSelfScrolling(..., {
@@ -146,7 +144,6 @@ new SliderSelfScrolling(..., {
   temporaryFunction: "linear",
   delay: 2,
   delayBeforeStartingAfterHiding: 2,
-  repeatSlider: false,
 });
 ```
 
@@ -240,13 +237,13 @@ Connect:
 <div class="slider-split">
   <div class="slider-list">
     <!-- Your slides -->
-    <div class="slide slide-split-active">1</div>
+    <div class="slide">1</div>
     <div class="slide">2</div>
     <div class="slide">3</div>
     <!-- Your slides -->
   </div>
   <div class="slider-split-back-btns">
-    <button type="button" class="slider-split-btn split-btn-active">Btn slider 1</button>
+    <button type="button" class="slider-split-btn">Btn slider 1</button>
     <button type="button" class="slider-split-btn">Btn slider 2</button>
     <button type="button" class="slider-split-btn">Btn slider 3</button>
   </div>
@@ -257,23 +254,25 @@ Connect:
 const blockSliderSplit = document.querySelector(".slider-split");
 
 const newSliderSplit = new SliderSplit(blockSliderSplit, {
-  sliderActivationNnHover: true,
-  changeSlidesByButtons: false
+  sliderActivationOnHover: true,
+  changeSlidesByButtons: false,
+  initial: 2,
+  activeClass: "slide--active",
+  activeClassBtn: "split-btn--active"
 });
 newSliderSplit.run();
 ```
 
 | Option                         | Description     | Default   |
 |--------------------------------|-----------------|-----------|
-| `sliderActivationOnHover`      | When you hover over the slide area, it is activated. | `false` |
-| `changeSlidesByButtons` | Change buttons only by button clicks. **Parameter `sliderActivationOnHover` is ignored.** | `true` |
+| `blockSliderSplit` | Main container for slider. **Parameters**: `HTMLElement` | `undefined` ||
+| `options` | Custom settings. **Parameters**: `Object` | `{}` |
+| `options.sliderActivationOnHover` | When you hover over the slide area, it is activated. | `false` |
+| `options.changeSlidesByButtons` | Change buttons only by button clicks. **Parameter `sliderActivationOnHover` is ignored.** | `true` |
+| `options.initial` | Initial slide index. **Parameters**: `int` | `1` |
+| `options.activeClass` | Active class for current slide. **Parameters**: `String` | `slide--active` |
+| `options.activeClassBtn` | Active class for current button. **Parameters**: `String` | `split-btn--active` |
 
-```js
-new SliderSplit(..., {
-  sliderActivationOnHover: true,
-  changeSlidesByButtons: false
-});
-```
 
 ### Slider with previews
 *Component `Pagination` is not typical for this slider.*
@@ -325,7 +324,7 @@ newSliderWithPreviews.run();
 |--------------------------------|-----------------|---------|
 | `speed`            | Slider scrolling speed. **Parameters**: `<int>(ms)` | `200`   |
 | `movementClickingOnPreview` | When you click on the preview, they will move to this slide. | `false` |
-| `slidesPreviewPerView` | Visible slides on the preview. (**Required parameter**). (*`Recommendation`*): The most appropriate value is *`3`*! | *`absent`* |
+| `slidesPreviewPerView` | Visible slides on the preview. (**Required parameter**). (*`Recommendation`*): The most appropriate value is *`3`*! | `undefined` |
 
 ```js
 new SliderWithPreviews(..., {
@@ -358,10 +357,20 @@ const btnOpenPopupDisposable = document.querySelector(".popup-disposable-btn-ope
 
 const newPopupDisposable = new PopupDisposable(
   blockPopupDisposable,
-  btnOpenPopupDisposable
+  btnOpenPopupDisposable,
+  {
+    activeClass: "popup-disposable--active"
+  }
 );
 newPopupDisposable.run();
 ```
+
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `popup` | Main container for Popup. (**Required**). **Parameters**: `HTMLElement`  |  `undefined`  |
+| `btnOpen` | Button to open popup. (**Required**). **Parameters**: `HTMLElement`  |  `undefined`  |
+| `options` | Custom settigs. **Parameters**: `Object` | `{}` |
+| `options.activeClass` | Active class for popup. **Parameters**: `String` | `popup-disposable--active` |
 
 ### Reusable pop up
 Connect:
@@ -430,6 +439,13 @@ const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
 newPopupMuliple.run();
 ```
 
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `blockPopupMuliple` | Main container for popup. (**Required**). **Parameters**: `HTMLElement`  |  `undefined`  |
+| `templatePopup` | The main template, *popup* is generated based on it. **Parameters**: `String` | `undefined` |
+| `options` | Custom settigs. **Parameters**: `Object` | `{}` |
+| `options.popups.<int>` | Number popup. **Parameters**: `int` | `undefined` |
+
 ### Identical popup
 Connect:
 ```xml
@@ -467,6 +483,16 @@ Connect:
 ```js
 const btnsOpenPopupIdentical = document.querySelectorAll(".popup-identical-btn-open");
 
-const newPopupIdentical = new PopupIdentical(btnsOpenPopupIdentical);
+const newPopupIdentical = new PopupIdentical(btnsOpenPopupIdentical, {
+  activeClass: "popup-identical--active",
+  idPopupSearch: "popup-identical-"
+});
 newPopupIdentical.run();
 ```
+
+| Option                         | Description     | Default |
+|--------------------------------|-----------------|---------|
+| `btnsOpen` | Buttons to open popups. (**Required**). **Parameters**: `HTMLElement`  |  `undefined`  |
+| `options` | Custom settigs. **Parameters**: `Object` | `{}` |
+| `options.activeClass` | Active class for popup. **Parameters**: `String` | `popup-identical--active` |
+| `options.idPopupSearch` | Id for search popup. **Parameters**: `String` | `popup-identical-` |

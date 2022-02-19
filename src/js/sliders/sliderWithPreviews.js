@@ -26,26 +26,26 @@ export class SliderWithPreviews extends Slider {
 
 		this.slidePreviewsMarRight = parseInt(getComputedStyle(this.slidesPreviews[this.currentSlidePreview]).marginRight);
 
-    	this.positionPressedX;
-    	this.positionPressedY;
-    	this.positionFingerPressSliderX;
-    	this.positionFingerPressSliderY;
-    	this.positionX_FingetCurrentMoment_OnSlider;
-    	this.positionY_FingetCurrentMoment_OnSlider;
+		this.positionPressedX;
+		this.positionPressedY;
+		this.positionFingerPressSliderX;
+		this.positionFingerPressSliderY;
+		this.positionX_FingetCurrentMoment_OnSlider;
+		this.positionY_FingetCurrentMoment_OnSlider;
 
-    	this.positionSliderTrack = 0;
-    	this.positionFinal = 0;
+		this.positionSliderTrack = 0;
+		this.positionFinal = 0;
 
-    	this.positionSliderTrackPreview = 0;
+		this.positionSliderTrackPreview = 0;
 
 		this.allowSwipe = true;
 
 		this.allowSwipe = true;
 		this.isScrollingSlider = false;
 
-    	this._swipeStart = () => { this.swipeStart(); };
-    	this._swipeAction = () => { this.swipeAction(); };
-    	this._swipeEnd = () => { this.swipeEnd(); };
+		this._swipeStart = () => this.swipeStart();
+		this._swipeAction = () => this.swipeAction();
+		this._swipeEnd = () => this.swipeEnd();
 
 		this.addOptions();
 		this.addNavigation();
@@ -64,7 +64,7 @@ export class SliderWithPreviews extends Slider {
 		this.slidesPreviewPerView = this.options.slidesPreviewPerView;
 
 		if ( !this.slidesPreviewPerView ) {
-			throw "You did not specify a parameter <slidesPreviewPerView>"
+			throw "You did not specify a parameter <slidesPreviewPerView>";
 		};
 	}
 
@@ -89,9 +89,7 @@ export class SliderWithPreviews extends Slider {
 		this.slidesPreviewsArr = Array.prototype.slice.call(this.slidesPreviews);
 
 		this.sliderTrackPreviews.addEventListener("click", () => {
-			if ( !this.allowSwipe ) {
-				return;
-			};
+			if ( !this.allowSwipe ) return;
 
 			if ( event.target.classList.contains("slide-preview") ) {
 				const pressedSlidePreview = this.slidesPreviewsArr.indexOf(event.target) + 1;
@@ -110,11 +108,10 @@ export class SliderWithPreviews extends Slider {
 			this.lastVisibleSlidePreviews = this.slidesPreviews.length;
 			this.currentSlidePreview = this.slidesPreviews.length - this.slidesPreviewPerView;
 		};
-
 		this.sliderTrackPreviews.style.transition = `transform 0.${this.speed}s ease`;
 
 		this.positionSliderTrackPreview = this.currentSlidePreview * this.slidesPreviews[0].offsetWidth;
-		this.positionSliderTrackPreview += ( this.currentSlidePreview === 1 ) ?
+		this.positionSliderTrackPreview += (this.currentSlidePreview === 1) ?
 			this.slidePreviewsMarRight : this.slidePreviewsMarRight * this.currentSlidePreview;
 
 		setTimeout(() => {
@@ -127,9 +124,7 @@ export class SliderWithPreviews extends Slider {
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
 
-		if (Math.abs(this.singleSwipe) >= 5) {
-			this.isScrollingSlider = true;
-		};
+		if ( Math.abs(this.singleSwipe) >= 5 ) this.isScrollingSlider = true;
 	}
 
 	swipeStart() {

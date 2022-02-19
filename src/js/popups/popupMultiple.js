@@ -3,7 +3,7 @@ import Popup from "./popup.js";
 
 export class PopupMuliple extends Popup {
   /**
-	Многоразовай pop-up.
+	Многоразовай popup.
 	* @param popupContainer -> block "popup-multiple" ( type -> HTMLElement )
 	* @param templatePopup -> template popup ( type -> String )
 	* @param options -> custom settings ( type -> Object )
@@ -17,28 +17,28 @@ export class PopupMuliple extends Popup {
 		this.templatePopup = templatePopup;
 		this.options = options;
 
-		if (this.options) {
-			this.addOptions();
-		};
+		if ( this.options ) this.setOptions();
 
-		this.deletePopup = () => {
-			if (!event.target.closest(".popup")) {
-				const popup = document.querySelector('.popup-multiple');
-				popup.classList.remove("popup-multiple-active");
-				popup.classList.add('popup-multiple-delete-popup');
+		this._deletePopup = () => this.deletePopup();
+	}
 
-				document.removeEventListener("click", this.deletePopup);
+	deletePopup() {
+		if (!event.target.closest(".popup")) {
+			const popup = document.querySelector('.popup-multiple');
+			popup.classList.remove("popup-multiple-active");
+			popup.classList.add('popup-multiple-delete-popup');
 
-				setTimeout(() => {
-					document.querySelector(".popup").remove();
-					popup.classList.remove('popup-multiple-delete-popup');
-					super.hides_showVerticalScrolling();
-				}, 300);
-			};
+			document.removeEventListener("click", this._deletePopup);
+
+			setTimeout(() => {
+				document.querySelector(".popup").remove();
+				popup.classList.remove('popup-multiple-delete-popup');
+				super.hides_showVerticalScrolling();
+			}, 300);
 		};
 	}
 
-	addOptions() {
+	setOptions() {
 		this.numberOfPopup = Object.keys(this.options.popups).length;
 	}
 
@@ -63,7 +63,7 @@ export class PopupMuliple extends Popup {
 	}
 
 	addEventClickDocument() {
-		document.addEventListener("click", this.deletePopup);
+		document.addEventListener("click", this._deletePopup);
 	}
 
 	createPopup(data) {
@@ -78,7 +78,6 @@ export class PopupMuliple extends Popup {
 			};
 			newPopup = newPopup.replace(`{{ ${key} }}`, data[key]);
 		};
-
 		return newPopup;
 	}
 

@@ -3,34 +3,46 @@ import Popup from "./popup.js";
 
 export class PopupIdentical extends Popup {
   /**
-	Идентичный pop-up.
+	Идентичный popup.
 	* @param btnsOpen -> block "popup-identical-btn-open" ( type -> HTMLElement )
   */
-	constructor(btnsOpen) {
+	constructor(btnsOpen, options) {
 		super();
 
 		this.popupContainer = document.querySelector(".popup-identical");
 		this.btnsOpen = btnsOpen;
 		this.popup;
+		this.options = options;
 
-		this.deletePopup = () => {
-			if (event.target.classList.contains("popup-identical") && !event.target.classList.contains("popup-identical-btn-open")) {
-				this.popup.classList.remove("popup-identical--active");
+		if ( this.options ) this.setOptions();
 
-				document.removeEventListener("click", this.deletePopup);
+		this._deletePopup = () => this.deletePopup();
+	}
 
-				setTimeout(() => {
-					super.hides_showVerticalScrolling();
-					this.popup = false;
-				}, 300);
-			};
+	deletePopup() {
+		if (event.target.classList.contains("popup-identical") && !event.target.classList.contains("popup-identical-btn-open")) {
+			this.popup.classList.remove(this.activeClass);
+
+			document.removeEventListener("click", this._deletePopup);
+
+			setTimeout(() => {
+				super.hides_showVerticalScrolling();
+				this.popup = false;
+			}, 300);
 		};
+	}
+
+	setOptions() {
+		if ( !this.btnsOpen && !this.btnsOpen[0].nodeType ) throw "Invalid parameter <btnsOpen>"
+
+		this.activeClass = ( this.options && "activeClass" in this.options ) ? this.options.activeClass : "popup-identical--active";
+		this.idPopupSearch = ( this.options && "idPopupSearch" in this.options ) ? this.options.idPopupSearch : "popup-identical-";
 	}
 
 	openPopup(popup) {
 		this.popup = popup;
 
-		this.popup.classList.add("popup-identical--active");
+		this.popup.classList.add(this.activeClass);
 		super.hides_showVerticalScrolling();
 		this.addEventClickDocument();
 	}
@@ -39,15 +51,15 @@ export class PopupIdentical extends Popup {
 		this.btnsOpen.forEach(btn => {
 			btn.addEventListener("click", () => {
 				const numberPopup = event.currentTarget.dataset.numberPopup;
-				const popup = document.querySelector(`#popup-identical-${numberPopup}`);
+				const popup = document.querySelector(`#${this.idPopupSearch}${numberPopup}`);
 				
-				this.openPopup(popup);
+				if ( popup ) this.openPopup(popup);
 			});
 		});
 	}
 
 	addEventClickDocument() {
-		document.addEventListener("click", this.deletePopup);
+		document.addEventListener("click", this._deletePopup);
 	}
 
 	run() {

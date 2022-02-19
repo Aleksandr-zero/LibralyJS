@@ -61,7 +61,7 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	}
 
 	checkIsNavigation_Pagination() {
-		if ( this.isPagination ) {
+		if (this.isPagination) {
 			super.watchSwipeSliderTrack_Pagination();
 		};
 	}
@@ -87,48 +87,48 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		}, this.speed);
 	}
 
-    checks_In_WhichDirectionMoveSlider() {
-    	if ( this.directionSliderTrack === "right" && this.currentSlide !== this.numberSlides ) {
-    		this.currentSlide++;
-    	} else if ( this.directionSliderTrack === "left" && this.currentSlide !== 0 ) {
-    		this.currentSlide--;
-    	};
+	checks_In_WhichDirectionMoveSlider() {
+		if (this.directionSliderTrack === "right" && this.currentSlide !== this.numberSlides) {
+			this.currentSlide++;
+		} else if (this.directionSliderTrack === "left" && this.currentSlide !== 0) {
+			this.currentSlide--;
+		};
 
-			this.checkIsNavigation_Pagination();
-    }
+		this.checkIsNavigation_Pagination();
+	}
 
-    returnsSliderBack() {
-    	this.allowSwipe = false;
-    	this.positionSliderTrack = this.positionFinal = this.maximumSwipingAtSlider;
+	returnsSliderBack() {
+		this.allowSwipe = false;
+		this.positionSliderTrack = this.positionFinal = this.maximumSwipingAtSlider;
 
-			this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;
+		this.sliderTrack.style.transition = `transform 0.${this.speed}s ease`;
 
-			setTimeout(() => {
-				this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
-			}, 0);
-
-			setTimeout(() => {
-				this.allowSwipe = true;
-				this.sliderTrack.style.transition = `none`;
-			}, this.speed);
-    }
-
-    calculatesPositionSliderTrack() {
-    	let newPosition = 0;
-
-        for(let i = 0; this.currentSlide > i; i++){
-        	const widthSlide =  Math.round(this.slides[i].getBoundingClientRect().width);
-        	newPosition += widthSlide;
-        };
-
-        newPosition = (newPosition > this.maximumSwipingAtSlider) ? this.maximumSwipingAtSlider : newPosition;
-
-        return newPosition;
-    }
-
-		pushingSliderWithFight() {
+		setTimeout(() => {
 			this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
-		}
+		}, 0);
+
+		setTimeout(() => {
+			this.allowSwipe = true;
+			this.sliderTrack.style.transition = `none`;
+		}, this.speed);
+	}
+
+	calculatesPositionSliderTrack() {
+		let newPosition = 0;
+
+		for (let i = 0; this.currentSlide > i; i++) {
+			const widthSlide = Math.round(this.slides[i].getBoundingClientRect().width);
+			newPosition += widthSlide;
+		};
+
+		newPosition = (newPosition > this.maximumSwipingAtSlider) ? this.maximumSwipingAtSlider : newPosition;
+
+		return newPosition;
+	}
+
+	pushingSliderWithFight() {
+		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
+	}
 
 	pushingSliderWithoutFight() {
 		this.sliderTrack.style.transform = `translate3d(${-this.positionSliderTrack}px, 0px, 0px)`;
@@ -136,12 +136,12 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		let positionCurrentSlide = this.slider.getBoundingClientRect().x - this.slides[this.currentSlide].getBoundingClientRect().x;
 		positionCurrentSlide = Math.round(positionCurrentSlide);
 
-		if ( (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) <= positionCurrentSlide || positionCurrentSlide < 0) {
+		if ((this.slides[this.currentSlide].offsetWidth - this.sliderWidth) <= positionCurrentSlide || positionCurrentSlide < 0) {
 			let finalPosition = this.calculatesPositionSliderTrack();
 
 			finalPosition = (this.directionSliderTrack === "right") ?
-							finalPosition + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) :
-							finalPosition;
+				finalPosition + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) :
+				finalPosition;
 
 			this.sliderTrack.style.transform = `translate3d(${-finalPosition}px, 0px, 0px)`;
 
@@ -155,21 +155,21 @@ export class SliderWithAutomaticAdjustment extends Slider {
 	swipeStart() {
 		if (!this.allowSwipe) {
 			this.allowSwipe = true;
-      return;
-    };
+			return;
+		};
 
 		super.calculatesTouchCoordinates_SwipeStart(
 			this.evt = super.getEvent()
 		);
 
-		if ( this.currentSlide === this.numberSlides - 1 ) {
+		if (this.currentSlide === this.numberSlides - 1) {
 			this.isReturnSlider = true;
 		};
 
 		this.isSliderWithFight = (this.sliderWidth >= this.slides[this.currentSlide].offsetWidth) ?
-								 true : false;
+			true : false;
 		this.isSliderWithoutFight = (this.sliderWidth <= this.slides[this.currentSlide].offsetWidth) ?
-									true : false;
+			true : false;
 
 		this.sliderTrack.style.transform = `translate3d(${-this.positionFinal}px, 0px, 0px)`;
 
@@ -193,24 +193,24 @@ export class SliderWithAutomaticAdjustment extends Slider {
 
 		this.isScrollingSlider = (Math.abs(this.singleSwipe) >= 5) ? true : false;
 
-		if ( this.isPushSliderWithFight ) {
+		if (this.isPushSliderWithFight) {
 			this.isPushSliderWithFight = false;
 
 			if (this.positionSliderTrack <= this.calculatesPositionSliderTrack() ||
-				this.positionSliderTrack >= this.calculatesPositionSliderTrack() + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth) ) {
+				this.positionSliderTrack >= this.calculatesPositionSliderTrack() + (this.slides[this.currentSlide].offsetWidth - this.sliderWidth)) {
 				this.isPushSliderWithFight = true;
 			};
 		};
 
 		this.isReturnSlider = (this.singleSwipe < 0 && this.isReturnSlider) ? false : this.isReturnSlider;
 
-		if ( this.isSliderWithFight || this.isPushSliderWithFight ) {
+		if (this.isSliderWithFight || this.isPushSliderWithFight) {
 			this.pushingSliderWithFight();
-		} else if ( this.isSliderWithoutFight && !this.isPushSliderWithFight ) {
+		} else if (this.isSliderWithoutFight && !this.isPushSliderWithFight) {
 			this.pushingSliderWithoutFight();
 		};
 
-		if ( event.type === "touchmove" ) {
+		if (event.type === "touchmove") {
 			this.positionX_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedX - evt.clientX);
 			this.positionY_FingetCurrentMoment_OnSlider = Math.abs(this.positionPressedY - evt.clientY);
 			super.checksOutOfBounds();
@@ -221,12 +221,12 @@ export class SliderWithAutomaticAdjustment extends Slider {
 		super.removeEventsSliderTrack();
 		this.isScrollingSlider = false;
 
-		if ( this.isReturnSlider ) {
+		if (this.isReturnSlider) {
 			this.returnsSliderBack();
 			return;
 		};
 
-		if ( this.isSliderWithFight || this.isPushSliderWithFight ) {
+		if (this.isSliderWithFight || this.isPushSliderWithFight) {
 			this.setsTransition_For_PushingWithFight();
 		};
 

@@ -1,13 +1,9 @@
 # Library JS
 
-Library of goodies for your site ;)</br>
-There is everything that your heart desires!
-
-Actually, here are some interesting solutions when I came across<br>
+Actually, here are some interesting solutions when I stumbled upon <br>
 website development. I also added my own improvements and changes to these solutions.
 
 ## Getting started
-
 Connect common CSS:
 ```xml
 <link rel="stylesheet" href="LibraryOfGoodieJS/css/libraryOfGoodieJS.css">
@@ -23,7 +19,6 @@ Connect all library:
 ### Components
 
 #### Navigation
-
 Adding navigation for the slider
 
 ```xml
@@ -65,7 +60,6 @@ Adding pagination for the slider
 ```
 
 ### Slider without fight
-
 *Component `Navigation` and `Pagination` is not typical for this slider.*
 
 Connect:
@@ -108,75 +102,11 @@ new SliderWithoutFight(..., {
 });
 ```
 
-### Endless slider
-
-*Component `Navigation` is not typical for this slider.*
-
-Connect:
-```xml
-<script src="LibraryOfGoodieJS/scripts/sliders/sliderEndLess.js"></script>
-```
-
-```xml
-<!-- Slider main container -->
-<div class="slider-endless">
-  <div class="slider-list">
-    <div class="slider-track">
-      <!-- Your slides -->
-      <div class="slide">1</div>
-      <div class="slide">2</div>
-      <div class="slide">3</div>
-      <div class="slide">4</div>
-      <div class="slide">5</div>
-      <!-- Your slides -->
-    </div>
-  </div>
-</div>
-```
-
-```js
-const blockSliderEndless = document.querySelector(".slider-endless");
-
-const newSliderEndless = new SliderEndLess(blockSliderEndless, {
-  speed: 300,
-  timerAdvance: {
-    isInfinity: true,
-    periodTime: 2500
-  },
-  freezeSliderMouseHover: true,
-  freezeSliderOnLossFocus: true
-});
-newSliderEndless.run();
-```
-
-| Option                         | Description     | Default |
-|--------------------------------|-----------------|---------|
-| `speed`						 | Slider scrolling speed. **Parameters**: `<int>(ms)`    | `200`	 |
-| `timerAdvance`		 | Automatic slider advancement by timer.  | `{}` |
-| `timerAdvance.isInfinity` | Turn on infinity.  | *`absent`* |
-| `timerAdvance.periodTime` | The period of time after how much the slider will be scrolled  | *`absent`* |
-| `freezeSliderMouseHover`  | Freeze slider on mouse hover   (`timerAdvance.isInfinity` must be `true`). | `false` |
-| `freezeSliderOnLossFocus` | Freeze slider on loss of focus (`timerAdvance.isInfinity` must be `true`). | `false` |
-
-```js
-new SliderEndLess(..., {
-  speed: 250,
-  timerAdvance: {
-    isInfinity: true,
-    periodTime: 2500
-  },
-  freezeSliderMouseHover: true,
-  freezeSliderOnLossFocus: true
-});
-```
-
 ### Self scrolling slider
-
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSelfScrolling.js"></script>
 ```
-Size script: `7,89 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -221,7 +151,6 @@ new SliderSelfScrolling(..., {
 ```
 
 ### Slider with automatic adjustment
-
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderWithAutomaticAdjustment.js"></script>
@@ -273,23 +202,23 @@ Connect:
 ```xml
 <!-- Slider main container -->
 <div class="slider-before-after">
-	<div class="slider-list">
-		<div class="slider-track">
+  <div class="slider-list">
+    <div class="slider-track">
       <!-- Yout slide before -->
-			<div class="slide-before">
-				<div class="slide-before-body">
-					BEFORE
-				</div>
-			</div>
+      <div class="slide-before">
+        <div class="slide-before-body">
+          BEFORE
+        </div>
+      </div>
       <!-- Yout slide after -->
-			<div class="slide-after">
-				AFTER
-			</div>
-			<div class="slider-switch">
-				<span>Switch</span>
-			</div>
-		</div>
-	</div>
+      <div class="slide-after">
+        AFTER
+      </div>
+      <div class="slider-switch">
+        <span>Switch</span>
+      </div>
+    </div>
+  </div>
 </div>
 ```
 
@@ -301,12 +230,10 @@ newSliderBeforeAfter.run();
 ```
 
 ### Slider split
-
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/sliders/sliderSplit.js"></script>
 ```
-Size script: `2,92 KB`
 
 ```xml
 <!-- Slider main container -->
@@ -349,7 +276,6 @@ new SliderSplit(..., {
 ```
 
 ### Slider with previews
-
 *Component `Pagination` is not typical for this slider.*
 
 ```xml
@@ -410,44 +336,34 @@ new SliderWithPreviews(..., {
 ```
 
 ## Pop up
-
 ### Disposable popup
-
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupDisposable.js"></script>
 ```
 
 ```xml
+<button type="button" class="popup-disposable-btn-open btn-open-popup">Open popup</button>
 <!-- Pop-up main container -->
 <div class="popup-disposable">
-  <button type="button" class="popup-disposable-btn-open btn-open-popup">Open popup</button>
   <div class="popup-disposable__container popup-container">
-    <div class="popup-disposable__container-content">
-      <!-- Your pop-up -->
-      <div class="pop-up">
-        <h2 class="pop-up__title">Hello</h2>
-        <div class="pop-up__description">
-          <p>
-            One-time popup demo
-          </p>
-        </div>
-      </div>
-      <!-- Your pop-up -->  
-    </div>
+    <!-- Content -->
   </div>
 </div>
 ```
 
 ```js
 const blockPopupDisposable = document.querySelector(".popup-disposable");
+const btnOpenPopupDisposable = document.querySelector(".popup-disposable-btn-open");
 
-const newPopupDisposable = new PopupDisposable(blockPopupDisposable);
+const newPopupDisposable = new PopupDisposable(
+  blockPopupDisposable,
+  btnOpenPopupDisposable
+);
 newPopupDisposable.run();
 ```
 
 ### Reusable pop up
-
 Connect:
 ```xml
 <script src="LibraryOfGoodieJS/scripts/popups/popupMultiple.js"></script>
@@ -512,4 +428,45 @@ const newPopupMuliple = new PopupMuliple(blockPopupMuliple, templatePopup, {
   }
 });
 newPopupMuliple.run();
+```
+
+### Identical popup
+Connect:
+```xml
+<script src="LibraryOfGoodieJS/scripts/popups/popupIdentical.js"></script>
+```
+
+```xml
+<!-- Pop-up main container -->
+<button type="button" data-number-popup="1" class="popup-identical-btn-open btn-open-popup">Open popup 1</button>
+<button type="button" data-number-popup="2" class="popup-identical-btn-open btn-open-popup">Open popup 2</button>
+<button type="button" data-number-popup="3" class="popup-identical-btn-open btn-open-popup">Open popup 3</button>
+<div id="popup-identical-1" class="popup-identical">
+  <div class="popup-identical__container popup__container">
+    <div class="popup-identical-content">
+      <!-- Content -->
+    </div>
+  </div>
+</div>
+<div id="popup-identical-2" class="popup-identical">
+  <div class="popup-identical__container popup__container">
+    <div class="popup-identical-content">
+      <!-- Content -->
+    </div>
+  </div>
+</div>
+<div id="popup-identical-3" class="popup-identical">
+  <div class="popup-identical__container popup__container">
+    <div class="popup-identical-content">
+      <!-- Content -->
+    </div>
+  </div>
+</div>
+```
+
+```js
+const btnsOpenPopupIdentical = document.querySelectorAll(".popup-identical-btn-open");
+
+const newPopupIdentical = new PopupIdentical(btnsOpenPopupIdentical);
+newPopupIdentical.run();
 ```

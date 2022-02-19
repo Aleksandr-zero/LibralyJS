@@ -7,6 +7,7 @@ import { SliderWithPreviews } from "./sliders/sliderWithPreviews.js";
 
 import { PopupDisposable } from "./popups/popupDisposable.js";
 import { PopupMuliple } from "./popups/popupMultiple.js";
+import { PopupIdentical } from "./popups/popupIdentical.js";
 
 
 new SliderWithoutFight();
@@ -18,3 +19,4 @@ new SliderWithPreviews();
 
 new PopupDisposable();
 new PopupMuliple();
+new PopupIdentical();

@@ -19,6 +19,7 @@ const paths = {
 		slider_6: "./src/js/sliders/sliderWithPreviews.js",
 		popup_1: "./src/js/popups/popupDisposable.js",
 		popup_2: "./src/js/popups/popupMultiple.js",
+		popup_3: "./src/js/popups/popupIdentical.js",
 	},
 	build: {
 		js_all: "./LibraryOfGoodieJS/scripts",
@@ -117,5 +118,14 @@ export default [
 	    	}
 	    ],
 	    plugins: getPlugins(),
-	}
+	},{
+		input: paths.library.popup_3,
+		output: [
+			{
+				file: `${paths.build.js_popup}/popupIdentical.js`,
+				format: 'es'
+			}
+		],
+		plugins: getPlugins(),
+	},
 ];

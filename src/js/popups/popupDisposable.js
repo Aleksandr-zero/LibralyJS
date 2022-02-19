@@ -5,23 +5,22 @@ export class PopupDisposable extends Popup {
   /**
 	Одноразовый popup.
 	* @param popupContainer -> block "popup-disposable" ( type -> HTMLElement )
+	* @param btnOpen -> block "popup-disposable-btn-open" ( type -> HTMLElement )
   */
-	constructor(popupContainer) {
+	constructor(popupContainer, btnOpen) {
 		super();
 
 		this.popupContainer = popupContainer;
-		this.btnOpenPopup = this.popupContainer.querySelector(".popup-disposable-btn-open");
+		this.btnOpenPopup = btnOpen;
 
 		this.deletePopup = () => {
-			if (!event.target.closest(".pop-up") && !event.target.classList.contains("popup-disposable-btn-open")) {
+			if ( event.target.classList.contains("popup-disposable") && !event.target.classList.contains("popup-disposable-btn-open") ) {
 				const popupContainer = document.querySelector('.popup-disposable');
-				popupContainer.classList.remove("popup-disposable-active");
-				popupContainer.classList.add('popup-disposable-delete-popup')
+				popupContainer.classList.remove("popup-disposable--active");
 
 				document.removeEventListener("click", this.deletePopup);
 
 				setTimeout(() => {
-					popupContainer.classList.remove('popup-disposable-delete-popup');
 					super.hides_showVerticalScrolling();
 				}, 300);
 			};
@@ -33,7 +32,7 @@ export class PopupDisposable extends Popup {
 	}
 
 	openPopup() {
-		this.popupContainer.classList.add("popup-disposable-active")
+		this.popupContainer.classList.add("popup-disposable--active")
 
 		super.hides_showVerticalScrolling();
 		this.addEventClickDocument();

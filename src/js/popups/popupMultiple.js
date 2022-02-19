@@ -11,9 +11,9 @@ export class PopupMuliple extends Popup {
 	constructor(popupContainer, templatePopup, options) {
 		super();
 
-		this.popupContainer = popupContainer;
-		this.popupBlockContainer = this.popupContainer.querySelector(".popup-multiple__container");
-		this.popupContainerContent = this.popupContainer.querySelector(".popup-multiple__container-content");
+		this.popup = popupContainer;
+		this.popupContainer = this.popup.querySelector(".popup-multiple__container");
+		this.popupContainerContent = this.popup.querySelector(".popup-multiple__container-content");
 		this.templatePopup = templatePopup;
 		this.options = options;
 
@@ -23,15 +23,15 @@ export class PopupMuliple extends Popup {
 
 		this.deletePopup = () => {
 			if (!event.target.closest(".popup")) {
-				const popupContainer = document.querySelector('.popup-multiple');
-				popupContainer.classList.remove("popup-multiple-active");
-				popupContainer.classList.add('popup-multiple-delete-popup')
+				const popup = document.querySelector('.popup-multiple');
+				popup.classList.remove("popup-multiple-active");
+				popup.classList.add('popup-multiple-delete-popup');
 
 				document.removeEventListener("click", this.deletePopup);
 
 				setTimeout(() => {
 					document.querySelector(".popup").remove();
-					popupContainer.classList.remove('popup-multiple-delete-popup');
+					popup.classList.remove('popup-multiple-delete-popup');
 					super.hides_showVerticalScrolling();
 				}, 300);
 			};
@@ -43,7 +43,7 @@ export class PopupMuliple extends Popup {
 	}
 
 	addEventClick_BtnsOpenPopup() {
-		const btnsPopup = this.popupContainer.querySelectorAll(".popup-multiple-btn-open");
+		const btnsPopup = this.popup.querySelectorAll(".popup-multiple-btn-open");
 		btnsPopup.forEach((btn) => {
 			btn.addEventListener("click", () => { this.pressedBtnOpenPopup(); });
 		});
@@ -53,9 +53,7 @@ export class PopupMuliple extends Popup {
 		const numberPopup = event.currentTarget.dataset.popupNumber;
 		const data = this.options.popups[numberPopup];
 
-		const newPopup = this.createPopup(
-			this.data = data
-		);
+		const newPopup = this.createPopup(data);
 
 		this.insertsNewPopup_In_Container(newPopup);
 		super.hides_showVerticalScrolling();
@@ -76,7 +74,6 @@ export class PopupMuliple extends Popup {
 				for (const keyObj in data[key]) {
 					newPopup = newPopup.replace(`{{ ${key}.${keyObj} }}`, data[key][keyObj]);
 				};
-
 				continue;
 			};
 			newPopup = newPopup.replace(`{{ ${key} }}`, data[key]);
@@ -87,7 +84,7 @@ export class PopupMuliple extends Popup {
 
 	insertsNewPopup_In_Container(newPopup) {
 		this.popupContainerContent.insertAdjacentHTML("beforeend", newPopup);
-		this.popupContainer.classList.add("popup-multiple-active");
+		this.popup.classList.add("popup-multiple-active");
 	}
 
 	run() {

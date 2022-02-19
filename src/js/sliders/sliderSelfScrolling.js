@@ -4,7 +4,6 @@ export class SliderSelfScrolling {
 	* @param slider - block "slider-automatic-adjustment" ( type -> HTMLElement )
 	* @param options -> custom settings ( type -> Object )
   */
-
 	constructor(slider, options) {
 		this.slider = slider;
 		this.options = options;
@@ -108,8 +107,8 @@ export class SliderSelfScrolling {
 					this.sliderTrack.addEventListener("transitionend", () => { this.prohibitsMovingSliderAfter_TheEndTransition(); });
 				};
 			};
-
 			this.isVisible = true;
+
 		} else {
 			if (this.isVisible) {
 				this.time_2 = performance.now();
@@ -117,14 +116,12 @@ export class SliderSelfScrolling {
 
 				this.isHideSlider_For_FirstTime = true;
 			};
-
 			this.isVisible = false;
 		};
 	}
 
 	blockingSlider() {
-		if (!this.repeatSlider) this.blockingSlider_For_OneEnd()
-		else if (this.repeatSlider) this.blockingSlider_For_EndLess();
+		if (!this.repeatSlider) this.blockingSlider_For_OneEnd();
 	}
 
 	blockingSlider_For_OneEnd() {
@@ -144,13 +141,8 @@ export class SliderSelfScrolling {
 		this.calculateDistanceAfterStartingSlider();
 	}
 
-	blockingSlider_For_EndLess() {
-		/* Производит блокировку для бесконечного слайдера.  */
-	}
-
 	unblockingSlider() {
-		if (!this.repeatSlider) this.unblockingSlider_For_OneEnd()
-		else if (this.repeatSlider) this.unblockingSlider_For_EndLess();
+		if (!this.repeatSlider) this.unblockingSlider_For_OneEnd();
 	}
 
 	unblockingSlider_For_OneEnd() {
@@ -171,11 +163,6 @@ export class SliderSelfScrolling {
 			}, this.delayBeforeStartingAfterHiding * 1000);
 		};
 	}
-
-	unblockingSlider_For_EndLess() {
-		this.setsTransition_For_SliderEndLess();
-	};
-
 
 	prohibitsMovingSliderAfter_TheEndTransition() {
 		this.isSwiping = false;
@@ -199,21 +186,6 @@ export class SliderSelfScrolling {
 		this.sliderTrack.style.transform = `translate3d(-${this.slider.clientWidth}px, 0px, 0px)`;
 
 		this.sliderTrack.addEventListener("transitionend", () => { this.transitionEndAtSlider(timeToPassOneSlide); });
-	}
-
-	checks_If_UserOnSite() {
-		document.addEventListener("visibilitychange", () => {
-			if (!this.isVisible || !this.isSwiping) {
-				return;
-			};
-
-			if (document.hidden){
-				this.time_2 = performance.now();
-				this.blockingSlider();
-			} else {
-				this.unblockingSlider();
-			};
-		});
 	}
 
 	transitionEndAtSlider(timeToPassOneSlide) {
@@ -261,6 +233,5 @@ export class SliderSelfScrolling {
 		this.countsPositionSlider_Window();
 
 		this.addEventScrollWindow();
-		this.checks_If_UserOnSite();
 	}
 };

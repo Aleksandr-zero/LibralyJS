@@ -20,7 +20,8 @@ const REGEX_FOR_REPLACE = new RegExp(`
 			SliderSplit|
 			SliderWithPreviews|
 			PopupMuliple|
-			PopupDisposable)};`.replace(/\n|\t+|\s+/g, ""), "g");
+			PopupDisposable|
+			PopupIdentical)};`.replace(/\n|\t+|\s+/g, ""), "g");
 
 const NAME_FILE_CSS = "style.css";
 const NAME_FILE_HTML = "index.html";
